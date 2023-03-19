@@ -1,6 +1,8 @@
 # Todolist
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![CI](https://github.com/DenisKulik/todolist/actions/workflows/github-actions.yml/badge.svg)
+
+[Demo](https://deniskulik.github.io/todolist/)
 
 ## Available Scripts
 
