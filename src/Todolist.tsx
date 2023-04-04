@@ -1,6 +1,7 @@
 type PropsType = {
     title: string
     tasks: TaskType[]
+    deleteTask: (taskId: number) => void
 }
 
 type TaskType = {
@@ -9,23 +10,26 @@ type TaskType = {
     isDone: boolean
 }
 
-const Todolist = ({ title, tasks }: PropsType) => {
-    const taskItem = tasks.map((task) => (
-        <li key={task.id}>
-            <input type="checkbox" checked={task.isDone} />
-            <span>{task.title}</span>
-        </li>
-    ));
+const Todolist = ({ title, tasks, deleteTask }: PropsType) => {
+    const taskItem = tasks.map(task => {
+        return (
+            <li key={ task.id }>
+                <input type="checkbox" checked={ task.isDone } />
+                <span>{ task.title }</span>
+                <button onClick={ () => deleteTask(task.id) }>X</button>
+            </li>
+        );
+    });
 
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>{ title }</h3>
             <div>
                 <input />
                 <button>+</button>
             </div>
             <ul>
-                {taskItem}
+                { taskItem }
             </ul>
             <div>
                 <button>All</button>
