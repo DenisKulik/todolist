@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import Button from './Button';
 
-type PropsType = {
+type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     addTask: (titleTask: string) => void
@@ -15,7 +16,7 @@ type TaskType = {
 
 type filterType = 'all' | 'active' | 'completed'
 
-const Todolist = (props: PropsType) => {
+const Todolist = (props: TodolistPropsType) => {
     const { title, tasks, addTask, deleteTask } = props;
 
     const [ filterType, setFilterType ] = useState<filterType>('all');
@@ -52,7 +53,8 @@ const Todolist = (props: PropsType) => {
             <li key={ task.id }>
                 <input type="checkbox" checked={ task.isDone } />
                 <span>{ task.title }</span>
-                <button onClick={ () => deleteTaskHandler(task.id) }>X</button>
+                <Button name={ 'X' }
+                        callback={ () => deleteTaskHandler(task.id) } />
             </li>
         );
     });
@@ -63,21 +65,18 @@ const Todolist = (props: PropsType) => {
             <div>
                 <input onChange={ onChangeHandler } onKeyUp={ onKeyUpHandler }
                        value={ value } />
-                <button onClick={ AddTaskHandler }>+</button>
+                <Button name={ '+' } callback={ AddTaskHandler } />
             </div>
             <ul>
                 { taskItem }
             </ul>
             <div>
-                <button onClick={ () => setFilterType('all') }>
-                    All
-                </button>
-                <button onClick={ () => setFilterType('active') }>
-                    Active
-                </button>
-                <button onClick={ () => setFilterType('completed') }>
-                    Completed
-                </button>
+                <Button name={ 'All' }
+                        callback={ () => setFilterType('all') } />
+                <Button name={ 'Active' }
+                        callback={ () => setFilterType('active') } />
+                <Button name={ 'Completed' }
+                        callback={ () => setFilterType('completed') } />
             </div>
         </div>
     );

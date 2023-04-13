@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.scss';
-import Todolist from './Todolist';
+import Todolist from './components/Todolist';
 
 const App = () => {
     const title = 'What to learn';
