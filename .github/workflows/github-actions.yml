@@ -1,6 +1,9 @@
 name: GitHub Actions
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - main
 
 permissions:
   checks: write
