@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import Button from './Button';
 import { filterType } from '../App';
+import styles from './Todolist.module.scss';
 
 type TodolistPropsType = {
     title: string
@@ -28,14 +29,19 @@ const Todolist = (props: TodolistPropsType) => {
     } = props;
 
     const [ value, setValue ] = useState('');
+    const [ error, setError ] = useState<null | string>(null);
 
     const AddTaskHandler = () => {
-        if (value.trim() === '') return;
+        if (value.trim() === '') {
+            setError('Field is required');
+            return;
+        }
 
         addTask(value);
         setValue('');
     };
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setError('Field is required');
         setValue(e.currentTarget.value);
     };
     const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -50,7 +56,8 @@ const Todolist = (props: TodolistPropsType) => {
 
         return (
             <li key={ task.id }>
-                <input type="checkbox" checked={ task.isDone }
+                <input type="checkbox"
+                       checked={ task.isDone }
                        onChange={ onChangeHandler } />
                 <span>{ task.title }</span>
                 <Button name={ 'X' }
@@ -63,10 +70,18 @@ const Todolist = (props: TodolistPropsType) => {
         <div>
             <h3>{ title }</h3>
             <div>
-                <input onChange={ onChangeHandler } onKeyUp={ onKeyUpHandler }
+                <input className={ error ? styles.error : '' }
+                       onChange={ onChangeHandler }
+                       onKeyUp={ onKeyUpHandler }
                        value={ value } />
                 <Button name={ '+' } callback={ AddTaskHandler } />
             </div>
+            {
+                error &&
+                <div className={ error ? styles.errorMessage : '' }>
+                    { error }
+                </div>
+            }
             <ul>
                 { taskItem }
             </ul>
