@@ -26,6 +26,11 @@ const App = () => {
 
     const changeFilter = (value: filterType) => setFilterType(value);
 
+    const changeTaskStatus = (taskId: string, value: boolean) => {
+        setTask([ ...tasks.map(
+            item => item.id === taskId ? { ...item, isDone: value } : item) ]);
+    };
+
     let tasksForTodolist = tasks;
 
     switch (filterType) {
@@ -46,7 +51,8 @@ const App = () => {
                       tasks={ tasksForTodolist }
                       addTask={ addTask }
                       deleteTask={ deleteTask }
-                      changeFilter={ changeFilter } />
+                      changeFilter={ changeFilter }
+                      changeTaskStatus={ changeTaskStatus } />
         </div>
     );
 };
