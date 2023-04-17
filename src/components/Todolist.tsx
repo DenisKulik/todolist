@@ -1,11 +1,13 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import Button from './Button';
+import { filterType } from '../App';
 
 type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     addTask: (titleTask: string) => void
     deleteTask: (taskId: string) => void
+    changeFilter: (value: filterType) => void
 }
 
 type TaskType = {
@@ -14,12 +16,9 @@ type TaskType = {
     isDone: boolean
 }
 
-type filterType = 'all' | 'active' | 'completed'
-
 const Todolist = (props: TodolistPropsType) => {
-    const { title, tasks, addTask, deleteTask } = props;
+    const { title, tasks, addTask, deleteTask, changeFilter } = props;
 
-    const [ filterType, setFilterType ] = useState<filterType>('all');
     const [ value, setValue ] = useState('');
 
     const AddTaskHandler = () => {
@@ -34,21 +33,7 @@ const Todolist = (props: TodolistPropsType) => {
     };
     const deleteTaskHandler = (id: string) => deleteTask(id);
 
-    let filteredTasks = tasks;
-
-    switch (filterType) {
-        case 'all':
-            filteredTasks = tasks;
-            break;
-        case 'active':
-            filteredTasks = tasks.filter(task => !task.isDone);
-            break;
-        case 'completed':
-            filteredTasks = tasks.filter(task => task.isDone);
-            break;
-    }
-
-    const taskItem = filteredTasks.map(task => {
+    const taskItem = tasks.map(task => {
         return (
             <li key={ task.id }>
                 <input type="checkbox" checked={ task.isDone } />
@@ -72,11 +57,11 @@ const Todolist = (props: TodolistPropsType) => {
             </ul>
             <div>
                 <Button name={ 'All' }
-                        callback={ () => setFilterType('all') } />
+                        callback={ () => changeFilter('all') } />
                 <Button name={ 'Active' }
-                        callback={ () => setFilterType('active') } />
+                        callback={ () => changeFilter('active') } />
                 <Button name={ 'Completed' }
-                        callback={ () => setFilterType('completed') } />
+                        callback={ () => changeFilter('completed') } />
             </div>
         </div>
     );
