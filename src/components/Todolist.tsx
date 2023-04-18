@@ -1,7 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import styles from './Todolist.module.scss';
+import Checkbox from './Checkbox';
 import Button from './Button';
 import { filterType } from '../App';
-import styles from './Todolist.module.scss';
 
 type TodolistPropsType = {
     title: string
@@ -50,17 +51,16 @@ const Todolist = (props: TodolistPropsType) => {
         return e.key === 'Enter' && AddTaskHandler();
     };
     const deleteTaskHandler = (id: string) => deleteTask(id);
+    const changeTaskStatusHandler = (status: boolean, id: string) => {
+        changeTaskStatus(id, status);
+    };
 
     const taskItem = tasks.map(task => {
-        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            changeTaskStatus(task.id, e.currentTarget.checked);
-        };
-
         return (
             <li className={ task.isDone ? styles.isDone : '' } key={ task.id }>
-                <input type="checkbox"
-                       checked={ task.isDone }
-                       onChange={ onChangeHandler } />
+                <Checkbox isDone={ task.isDone }
+                          callback={ (changedIsDone) => changeTaskStatusHandler(
+                              changedIsDone, task.id) } />
                 <span>{ task.title }</span>
                 <Button name={ 'X' }
                         callback={ () => deleteTaskHandler(task.id) } />
