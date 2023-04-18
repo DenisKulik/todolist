@@ -57,7 +57,7 @@ const Todolist = (props: TodolistPropsType) => {
         };
 
         return (
-            <li key={ task.id }>
+            <li className={ task.isDone ? styles.isDone : '' } key={ task.id }>
                 <input type="checkbox"
                        checked={ task.isDone }
                        onChange={ onChangeHandler } />
