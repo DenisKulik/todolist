@@ -1,14 +1,20 @@
+import styles from './Button.module.scss';
+import { filterType } from '../App';
+
 type ButtonPropsType = {
     name: string
     callback: () => void
+    filter?: filterType
 }
 
 const Button = (props: ButtonPropsType) => {
-    const { name, callback } = props;
+    const { name, callback, ...rest } = props;
 
     const onClickHandler = () => callback();
     return (
-        <button onClick={ onClickHandler }>{ name }</button>
+        <button
+            className={ rest.filter === name ? styles.activeFilter : undefined }
+            onClick={ onClickHandler }>{ name }</button>
     );
 };
 

@@ -6,7 +6,7 @@ import Todolist from './components/Todolist';
 export type filterType = 'all' | 'active' | 'completed'
 
 const App = () => {
-    const [ filterType, setFilterType ] = useState<filterType>('all');
+    const [ filter, setFilter ] = useState<filterType>('all');
 
     const [ tasks, setTask ] = useState([
         { id: v1(), title: 'HTML&CSS', isDone: true },
@@ -24,7 +24,7 @@ const App = () => {
         setTask(tasks.filter(task => task.id !== taskId));
     };
 
-    const changeFilter = (value: filterType) => setFilterType(value);
+    const changeFilter = (value: filterType) => setFilter(value);
 
     const changeTaskStatus = (taskId: string, value: boolean) => {
         setTask([ ...tasks.map(
@@ -33,7 +33,7 @@ const App = () => {
 
     let tasksForTodolist = tasks;
 
-    switch (filterType) {
+    switch (filter) {
         case 'all':
             tasksForTodolist = tasks;
             break;
@@ -49,6 +49,7 @@ const App = () => {
         <div className="App">
             <Todolist title={ 'What to learn' }
                       tasks={ tasksForTodolist }
+                      filter={ filter }
                       addTask={ addTask }
                       deleteTask={ deleteTask }
                       changeFilter={ changeFilter }

@@ -6,6 +6,7 @@ import styles from './Todolist.module.scss';
 type TodolistPropsType = {
     title: string
     tasks: TaskType[]
+    filter: filterType
     addTask: (titleTask: string) => void
     deleteTask: (taskId: string) => void
     changeFilter: (value: filterType) => void
@@ -22,6 +23,7 @@ const Todolist = (props: TodolistPropsType) => {
     const {
         title,
         tasks,
+        filter,
         addTask,
         deleteTask,
         changeFilter,
@@ -86,11 +88,11 @@ const Todolist = (props: TodolistPropsType) => {
                 { taskItem }
             </ul>
             <div>
-                <Button name={ 'All' }
+                <Button name={ 'all' } filter={ filter }
                         callback={ () => changeFilter('all') } />
-                <Button name={ 'Active' }
+                <Button name={ 'active' } filter={ filter }
                         callback={ () => changeFilter('active') } />
-                <Button name={ 'Completed' }
+                <Button name={ 'completed' } filter={ filter }
                         callback={ () => changeFilter('completed') } />
             </div>
         </div>
