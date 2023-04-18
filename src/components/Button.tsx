@@ -13,7 +13,7 @@ const Button = (props: ButtonPropsType) => {
     const onClickHandler = () => callback();
     return (
         <button
-            className={ rest.filter === name ? styles.activeFilter : undefined }
+            className={ rest.filter === name ? styles.activeFilter : '' }
             onClick={ onClickHandler }>{ name }</button>
     );
 };
