@@ -1,8 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styles from './Todolist.module.scss';
-import Checkbox from './Checkbox';
-import Button from './Button';
-import { filterType } from '../App';
+import Checkbox from '../Checkbox/Checkbox';
+import Button from '../Button/Button';
+import { filterType } from '../../App';
 
 type TodolistPropsType = {
     title: string

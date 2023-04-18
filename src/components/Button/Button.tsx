@@ -1,5 +1,5 @@
 import styles from './Button.module.scss';
-import { filterType } from '../App';
+import { filterType } from '../../App';
 
 type ButtonPropsType = {
     name: string
