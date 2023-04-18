@@ -29,7 +29,7 @@ const Todolist = (props: TodolistPropsType) => {
     } = props;
 
     const [ value, setValue ] = useState('');
-    const [ error, setError ] = useState<null | string>(null);
+    const [ error, setError ] = useState<string | null>(null);
 
     const AddTaskHandler = () => {
         if (value.trim() === '') {
@@ -41,7 +41,7 @@ const Todolist = (props: TodolistPropsType) => {
         setValue('');
     };
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError('Field is required');
+        setError(null);
         setValue(e.currentTarget.value);
     };
     const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
