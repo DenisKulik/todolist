@@ -1,10 +1,10 @@
 import styles from './Button.module.scss';
-import { filterType } from '../../App';
+import { FilterType } from '../../App';
 
 type ButtonPropsType = {
     name: string
     callback: () => void
-    filter?: filterType
+    filter?: FilterType
 }
 
 const Button = (props: ButtonPropsType) => {

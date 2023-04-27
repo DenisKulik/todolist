@@ -2,15 +2,15 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styles from './Todolist.module.scss';
 import Checkbox from '../Checkbox/Checkbox';
 import Button from '../Button/Button';
-import { filterType } from '../../App';
+import { FilterType } from '../../App';
 
 type TodolistPropsType = {
     title: string
     tasks: TaskType[]
-    filter: filterType
+    filter: FilterType
     addTask: (titleTask: string) => void
     deleteTask: (taskId: string) => void
-    changeFilter: (value: filterType) => void
+    changeFilter: (value: FilterType) => void
     changeTaskStatus: (taskId: string, checkValue: boolean) => void
 }
 
