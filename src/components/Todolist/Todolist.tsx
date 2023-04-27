@@ -2,36 +2,35 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styles from './Todolist.module.scss';
 import Checkbox from '../Checkbox/Checkbox';
 import Button from '../Button/Button';
-import { FilterType } from '../../App';
+import { FilterType, TaskType } from '../../App';
 
 type TodolistPropsType = {
+    todolistId: string
     title: string
     tasks: TaskType[]
     filter: FilterType
-    addTask: (titleTask: string) => void
-    deleteTask: (taskId: string) => void
-    changeFilter: (value: FilterType) => void
-    changeTaskStatus: (taskId: string, checkValue: boolean) => void
-}
-
-type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
+    addTask: (title: string, todolistId: string) => void
+    deleteTask: (taskId: string, todolistId: string) => void
+    changeTaskStatus: (taskId: string, value: boolean,
+                       todolistId: string) => void
+    changeTodolistFilter: (value: FilterType, todolistId: string) => void
+    deleteTodolist: (todolistId: string) => void
 }
 
 const Todolist = (props: TodolistPropsType) => {
     const {
+        todolistId,
         title,
         tasks,
         filter,
         addTask,
         deleteTask,
-        changeFilter,
+        deleteTodolist,
+        changeTodolistFilter,
         changeTaskStatus
     } = props;
 
-    const [ value, setValue ] = useState('');
+    const [ value, setValue ] = useState<string>('');
     const [ error, setError ] = useState<string | null>(null);
 
     const AddTaskHandler = () => {
@@ -40,22 +39,23 @@ const Todolist = (props: TodolistPropsType) => {
             return;
         }
 
-        addTask(value);
+        addTask(value, todolistId);
         setValue('');
     };
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setError(null);
         setValue(e.currentTarget.value);
     };
     const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         return e.key === 'Enter' && AddTaskHandler();
     };
-    const deleteTaskHandler = (id: string) => deleteTask(id);
+    const deleteTaskHandler = (id: string) => deleteTask(id, todolistId);
+    const deleteTodolistHandler = () => deleteTodolist(todolistId);
     const changeTaskStatusHandler = (status: boolean, id: string) => {
-        changeTaskStatus(id, status);
+        changeTaskStatus(id, status, todolistId);
     };
 
-    const taskItem = tasks.map(task => {
+    const taskItems: JSX.Element[] = tasks.map(task => {
         return (
             <li className={ task.isDone ? styles.isDone : '' } key={ task.id }>
                 <Checkbox isDone={ task.isDone }
@@ -70,10 +70,13 @@ const Todolist = (props: TodolistPropsType) => {
 
     return (
         <div>
-            <h3>{ title }</h3>
+            <header className={ styles.todolistHeader }>
+                <h3>{ title }</h3>
+                <Button name={ 'X' } callback={ deleteTodolistHandler } />
+            </header>
             <div>
                 <input className={ error ? styles.error : '' }
-                       onChange={ onChangeHandler }
+                       onChange={ onChangeInputHandler }
                        onKeyUp={ onKeyUpHandler }
                        value={ value } />
                 <Button name={ '+' } callback={ AddTaskHandler } />
@@ -85,15 +88,18 @@ const Todolist = (props: TodolistPropsType) => {
                 </div>
             }
             <ul>
-                { taskItem }
+                { taskItems }
             </ul>
             <div>
                 <Button name={ 'all' } filter={ filter }
-                        callback={ () => changeFilter('all') } />
+                        callback={ () => changeTodolistFilter('all',
+                            todolistId) } />
                 <Button name={ 'active' } filter={ filter }
-                        callback={ () => changeFilter('active') } />
+                        callback={ () => changeTodolistFilter('active',
+                            todolistId) } />
                 <Button name={ 'completed' } filter={ filter }
-                        callback={ () => changeFilter('completed') } />
+                        callback={ () => changeTodolistFilter('completed',
+                            todolistId) } />
             </div>
         </div>
     );

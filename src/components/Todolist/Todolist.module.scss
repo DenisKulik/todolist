@@ -1,3 +1,9 @@
+.todolistHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .error {
   border: red 1px solid;
 }
