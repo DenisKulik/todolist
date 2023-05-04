@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import styles from '../Todolist/Todolist.module.scss';
+import styles from './AddItemForm.module.scss';
 import Button from '../Button/Button';
 
 type AddItemFormType = {
@@ -33,15 +33,15 @@ const AddItemForm = ({ addItem }: AddItemFormType) => {
         <>
             <div className="AddItemForm">
                 <input
-                    className={ error ? styles.error : '' }
-                    onChange={ setTitleHandler }
-                    onKeyUp={ addItemOnEnterHandler }
-                    value={ title }
+                    className={error ? styles.error : ''}
+                    onChange={setTitleHandler}
+                    onKeyUp={addItemOnEnterHandler}
+                    value={title}
                     placeholder="Please, enter title"
                 />
-                <Button name={ '+' } callback={ AddItemHandler } />
+                <Button name={'+'} callback={AddItemHandler} />
             </div>
-            { error && <div className={ styles.errorMessage }>{ error }</div> }
+            {error && <div className={styles.errorMessage}>{error}</div>}
         </>
     );
 };
