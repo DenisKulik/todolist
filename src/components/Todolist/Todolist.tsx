@@ -3,6 +3,7 @@ import styles from './Todolist.module.scss';
 import Checkbox from '../Checkbox/Checkbox';
 import Button from '../Button/Button';
 import { FilterType, TaskType } from '../../App';
+import AddItemForm from '../AddItemForm/AddItemForm';
 
 type TodolistPropsType = {
     todolistId: string
@@ -30,25 +31,7 @@ const Todolist = (props: TodolistPropsType) => {
         changeTaskStatus
     } = props;
 
-    const [ value, setValue ] = useState<string>('');
-    const [ error, setError ] = useState<string | null>(null);
-
-    const AddTaskHandler = () => {
-        if (value.trim() === '') {
-            setError('Field is required');
-            return;
-        }
-
-        addTask(value, todolistId);
-        setValue('');
-    };
-    const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null);
-        setValue(e.currentTarget.value);
-    };
-    const onKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        return e.key === 'Enter' && AddTaskHandler();
-    };
+    const addTaskHandler = (title: string) => addTask(title, todolistId);
     const deleteTaskHandler = (id: string) => deleteTask(id, todolistId);
     const deleteTodolistHandler = () => deleteTodolist(todolistId);
     const changeTaskStatusHandler = (status: boolean, id: string) => {
@@ -74,19 +57,7 @@ const Todolist = (props: TodolistPropsType) => {
                 <h3>{ title }</h3>
                 <Button name={ 'X' } callback={ deleteTodolistHandler } />
             </header>
-            <div>
-                <input className={ error ? styles.error : '' }
-                       onChange={ onChangeInputHandler }
-                       onKeyUp={ onKeyUpHandler }
-                       value={ value } />
-                <Button name={ '+' } callback={ AddTaskHandler } />
-            </div>
-            {
-                error &&
-                <div className={ error ? styles.errorMessage : '' }>
-                    { error }
-                </div>
-            }
+            <AddItemForm addItem={ addTaskHandler } />
             <ul>
                 { taskItems }
             </ul>
