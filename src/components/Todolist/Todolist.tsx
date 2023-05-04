@@ -37,39 +37,45 @@ const Todolist = (props: TodolistPropsType) => {
         changeTaskStatus(id, status, todolistId);
     };
 
-    const taskItems: JSX.Element[] = tasks.map(task => {
+    const tasksItems: JSX.Element[] = tasks.map(task => {
         return (
-            <li className={ task.isDone ? styles.isDone : '' } key={ task.id }>
-                <Checkbox isDone={ task.isDone }
-                          callback={ (changedIsDone) => changeTaskStatusHandler(
-                              changedIsDone, task.id) } />
-                <span>{ task.title }</span>
-                <Button name={ 'X' }
-                        callback={ () => deleteTaskHandler(task.id) } />
+            <li className={task.isDone ? styles.isDone : ''} key={task.id}>
+                <Checkbox
+                    isDone={task.isDone}
+                    callback={(changedIsDone) => changeTaskStatusHandler(
+                        changedIsDone, task.id)}
+                />
+                <span>{task.title}</span>
+                <Button name="X" callback={() => deleteTaskHandler(task.id)} />
             </li>
         );
     });
 
     return (
         <div>
-            <header className={ styles.todolistHeader }>
-                <h3>{ title }</h3>
-                <Button name={ 'X' } callback={ deleteTodolistHandler } />
+            <header className={styles.todolistHeader}>
+                <h3>{title}</h3>
+                <Button name={'X'} callback={deleteTodolistHandler} />
             </header>
-            <AddItemForm addItem={ addTaskHandler } />
-            <ul>
-                { taskItems }
-            </ul>
+            <AddItemForm addItem={addTaskHandler} />
+            <ul>{tasksItems}</ul>
             <div>
-                <Button name={ 'all' } filter={ filter }
-                        callback={ () => changeTodolistFilter('all',
-                            todolistId) } />
-                <Button name={ 'active' } filter={ filter }
-                        callback={ () => changeTodolistFilter('active',
-                            todolistId) } />
-                <Button name={ 'completed' } filter={ filter }
-                        callback={ () => changeTodolistFilter('completed',
-                            todolistId) } />
+                <Button
+                    name={'all'}
+                    filter={filter}
+                    callback={() => changeTodolistFilter('all', todolistId)}
+                />
+                <Button
+                    name={'active'}
+                    filter={filter}
+                    callback={() => changeTodolistFilter('active', todolistId)}
+                />
+                <Button
+                    name={'completed'}
+                    filter={filter}
+                    callback={() => changeTodolistFilter('completed',
+                        todolistId)}
+                />
             </div>
         </div>
     );
