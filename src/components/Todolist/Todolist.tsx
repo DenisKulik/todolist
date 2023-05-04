@@ -1,4 +1,3 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styles from './Todolist.module.scss';
 import Checkbox from '../Checkbox/Checkbox';
 import Button from '../Button/Button';

@@ -63,21 +63,15 @@ const App = () => {
         setTask({ ...tasks, [todolistId]: updTasks });
     };
 
-    const changeTaskTitle = () => {};
-
     const changeTodolistFilter = (value: FilterType, todolistId: string) => {
         setTodolists(todolists.map(todolist => todolist.id === todolistId ?
             { ...todolist, filter: value } : todolist));
     };
 
-    const addTodolist = () => {};
-
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistId));
         delete tasks[todolistId];
     };
-
-    const changeTodolistTitle = () => {};
 
     const getFilteredTasks = (tasks: TaskType[],
                               filter: FilterType): TaskType[] => {
