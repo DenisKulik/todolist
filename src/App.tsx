@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { v1 } from 'uuid';
-import './App.scss';
+import styled from 'styled-components';
 import Todolist from './components/Todolist/Todolist';
 import AddItemForm from './components/AddItemForm/AddItemForm';
+import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
 
 export type FilterType = 'all' | 'active' | 'completed'
 
@@ -131,11 +132,15 @@ const App = () => {
     });
 
     return (
-        <div className="App">
+        <StyledApp>
+            <ButtonAppBar />
             <AddItemForm addItem={addTodolist} />
             {todolistsItems}
-        </div>
+        </StyledApp>
     );
 };
+
+const StyledApp = styled.div`
+`;
 
 export default App;
