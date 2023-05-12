@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { v1 } from 'uuid';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Todolist from './components/Todolist/Todolist';
 import AddItemForm from './components/AddItemForm/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
+import styled from 'styled-components';
 
 export type FilterType = 'all' | 'active' | 'completed'
 
@@ -116,20 +118,22 @@ const App = () => {
 
         return (
             <Grid item>
-                <Todolist
-                    key={todolist.id}
-                    todolistId={todolist.id}
-                    title={todolist.title}
-                    tasks={tasksForTodolist}
-                    filter={todolist.filter}
-                    addTask={addTask}
-                    deleteTask={deleteTask}
-                    deleteTodolist={deleteTodolist}
-                    changeTaskTitle={changeTaskTitle}
-                    changeTaskStatus={changeTaskStatus}
-                    changeTodolistTitle={changeTodolistTitle}
-                    changeTodolistFilter={changeTodolistFilter}
-                />
+                <StyledPaper elevation={3}>
+                    <Todolist
+                        key={todolist.id}
+                        todolistId={todolist.id}
+                        title={todolist.title}
+                        tasks={tasksForTodolist}
+                        filter={todolist.filter}
+                        addTask={addTask}
+                        deleteTask={deleteTask}
+                        deleteTodolist={deleteTodolist}
+                        changeTaskTitle={changeTaskTitle}
+                        changeTaskStatus={changeTaskStatus}
+                        changeTodolistTitle={changeTodolistTitle}
+                        changeTodolistFilter={changeTodolistFilter}
+                    />
+                </StyledPaper>
             </Grid>
         );
     });
@@ -138,9 +142,9 @@ const App = () => {
         <div>
             <ButtonAppBar />
             <Container fixed>
-                <Grid container>
+                <StyledGrid container>
                     <AddItemForm addItem={addTodolist} />
-                </Grid>
+                </StyledGrid>
                 <Grid container spacing={3}>
                     {todolistsItems}
                 </Grid>
@@ -148,5 +152,13 @@ const App = () => {
         </div>
     );
 };
+
+const StyledPaper = styled(Paper)`
+  padding: 10px;
+`;
+
+const StyledGrid = styled(Grid)`
+  padding: 20px;
+`;
 
 export default App;
