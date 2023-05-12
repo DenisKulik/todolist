@@ -88,7 +88,7 @@ const Todolist = (props: TodolistPropsType) => {
                     </IconButton>
                 </Header>
                 <AddItemForm addItem={addTaskHandler} />
-                <ul>{tasksItems}</ul>
+                <div>{tasksItems}</div>
                 <div>
                     <Button
                         variant={filter === 'all' ? 'outlined' : 'text'}
@@ -127,7 +127,7 @@ const Header = styled.header`
   gap: 10px;
 `;
 
-const ListItem = styled.li`
+const ListItem = styled.div`
   &.isDone {
     opacity: 0.5;
   }

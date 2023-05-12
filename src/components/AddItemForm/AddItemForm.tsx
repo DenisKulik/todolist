@@ -2,6 +2,8 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
 
 type AddItemFormType = {
     addItem: (title: string) => void
@@ -42,12 +44,11 @@ const AddItemForm = ({ addItem }: AddItemFormType) => {
                 variant="standard"
                 size="small"
             />
-            <StyledButton
-                variant="outlined"
-                onClick={AddItemHandler}
-            >
-                +
-            </StyledButton>
+            <IconButton
+                color="primary"
+                onClick={AddItemHandler}>
+                <AddIcon />
+            </IconButton>
         </StyledAddItemForm>
     );
 };
@@ -56,15 +57,6 @@ const StyledAddItemForm = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-`;
-
-const StyledButton = styled(Button)`
-  && {
-    max-width: 30px;
-    max-height: 30px;
-    min-width: 30px;
-    min-height: 30px;
-  }
 `;
 
 const StyledInput = styled(TextField)`

@@ -117,10 +117,9 @@ const App = () => {
             todolist.filter);
 
         return (
-            <Grid item>
+            <Grid item key={todolist.id}>
                 <StyledPaper elevation={3}>
                     <Todolist
-                        key={todolist.id}
                         todolistId={todolist.id}
                         title={todolist.title}
                         tasks={tasksForTodolist}
