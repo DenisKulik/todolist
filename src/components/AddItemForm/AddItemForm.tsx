@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 type AddItemFormType = {
     addItem: (title: string) => void
@@ -30,26 +31,32 @@ const AddItemForm = ({ addItem }: AddItemFormType) => {
     };
 
     return (
-        <>
-            <div className="AddItemForm">
-                <Input
-                    className={error ? 'error' : ''}
-                    onChange={setTitleHandler}
-                    onKeyUp={addItemOnEnterHandler}
-                    value={title}
-                    placeholder="Please, enter title"
-                />
-                <StyledButton
-                    variant="outlined"
-                    onClick={AddItemHandler}
-                >
-                    +
-                </StyledButton>
-            </div>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
-        </>
+        <StyledAddItemForm>
+            <StyledInput
+                value={title}
+                onChange={setTitleHandler}
+                onKeyUp={addItemOnEnterHandler}
+                error={!!error}
+                id="standard-basic"
+                label={error ? 'Title is required' : 'Enter title'}
+                variant="standard"
+                size="small"
+            />
+            <StyledButton
+                variant="outlined"
+                onClick={AddItemHandler}
+            >
+                +
+            </StyledButton>
+        </StyledAddItemForm>
     );
 };
+
+const StyledAddItemForm = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
 
 const StyledButton = styled(Button)`
   && {
@@ -60,14 +67,10 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Input = styled.input`
+const StyledInput = styled(TextField)`
   &.error {
     border: red 1px solid;
   }
-`;
-
-const ErrorMessage = styled.div`
-  color: red;
 `;
 
 export default AddItemForm;
