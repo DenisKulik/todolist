@@ -1,11 +1,12 @@
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Checkbox from '@mui/material/Checkbox';
 import styled from 'styled-components';
 import { FilterType, TaskType } from '../../App';
 import AddItemForm from '../AddItemForm/AddItemForm';
 import EditableSpan from '../EditableSpan/EditableSpan';
-import Checkbox from '../Checkbox/Checkbox';
+import { ChangeEvent } from 'react';
 
 type TodolistPropsType = {
     todolistId: string
@@ -43,9 +44,9 @@ const Todolist = (props: TodolistPropsType) => {
         const changeTodolistTitleHandler = (title: string) => {
             changeTodolistTitle(title, todolistId);
         };
-        const changeTaskStatusHandler = (status: boolean, id: string) => {
-            changeTaskStatus(id, status, todolistId);
-        };
+        const changeTaskStatusHandler = (
+            e: ChangeEvent<HTMLInputElement>, id: string
+        ) => changeTaskStatus(id, e.currentTarget.checked, todolistId);
         const changeTaskTitleHandler = (title: string, id: string) => {
             changeTaskTitle(id, title, todolistId);
         };
@@ -54,9 +55,10 @@ const Todolist = (props: TodolistPropsType) => {
             return (
                 <ListItem className={task.isDone ? 'isDone' : ''} key={task.id}>
                     <Checkbox
-                        isDone={task.isDone}
-                        callback={(changedIsDone) => changeTaskStatusHandler(
-                            changedIsDone, task.id)}
+                        checked={task.isDone}
+                        color="success"
+                        size="small"
+                        onChange={(e) => changeTaskStatusHandler(e, task.id)}
                     />
                     <EditableSpan
                         title={task.title}
