@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { v1 } from 'uuid';
-import styled from 'styled-components';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import Todolist from './components/Todolist/Todolist';
 import AddItemForm from './components/AddItemForm/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
@@ -114,33 +115,38 @@ const App = () => {
             todolist.filter);
 
         return (
-            <Todolist
-                key={todolist.id}
-                todolistId={todolist.id}
-                title={todolist.title}
-                tasks={tasksForTodolist}
-                filter={todolist.filter}
-                addTask={addTask}
-                deleteTask={deleteTask}
-                deleteTodolist={deleteTodolist}
-                changeTaskTitle={changeTaskTitle}
-                changeTaskStatus={changeTaskStatus}
-                changeTodolistTitle={changeTodolistTitle}
-                changeTodolistFilter={changeTodolistFilter}
-            />
+            <Grid item>
+                <Todolist
+                    key={todolist.id}
+                    todolistId={todolist.id}
+                    title={todolist.title}
+                    tasks={tasksForTodolist}
+                    filter={todolist.filter}
+                    addTask={addTask}
+                    deleteTask={deleteTask}
+                    deleteTodolist={deleteTodolist}
+                    changeTaskTitle={changeTaskTitle}
+                    changeTaskStatus={changeTaskStatus}
+                    changeTodolistTitle={changeTodolistTitle}
+                    changeTodolistFilter={changeTodolistFilter}
+                />
+            </Grid>
         );
     });
 
     return (
-        <StyledApp>
+        <div>
             <ButtonAppBar />
-            <AddItemForm addItem={addTodolist} />
-            {todolistsItems}
-        </StyledApp>
+            <Container fixed>
+                <Grid container>
+                    <AddItemForm addItem={addTodolist} />
+                </Grid>
+                <Grid container spacing={3}>
+                    {todolistsItems}
+                </Grid>
+            </Container>
+        </div>
     );
 };
-
-const StyledApp = styled.div`
-`;
 
 export default App;
