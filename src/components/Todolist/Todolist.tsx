@@ -1,9 +1,11 @@
-import styles from './Todolist.module.scss';
-import Checkbox from '../Checkbox/Checkbox';
-import Button from '../Button/Button';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import styled from 'styled-components';
 import { FilterType, TaskType } from '../../App';
 import AddItemForm from '../AddItemForm/AddItemForm';
 import EditableSpan from '../EditableSpan/EditableSpan';
+import Checkbox from '../Checkbox/Checkbox';
 
 type TodolistPropsType = {
     todolistId: string
@@ -50,7 +52,7 @@ const Todolist = (props: TodolistPropsType) => {
 
         const tasksItems: JSX.Element[] = tasks.map(task => {
             return (
-                <li className={task.isDone ? styles.isDone : ''} key={task.id}>
+                <ListItem className={task.isDone ? 'isDone' : ''} key={task.id}>
                     <Checkbox
                         isDone={task.isDone}
                         callback={(changedIsDone) => changeTaskStatusHandler(
@@ -60,45 +62,73 @@ const Todolist = (props: TodolistPropsType) => {
                         title={task.title}
                         callback={(title) => changeTaskTitleHandler(title, task.id)}
                     />
-                    <Button name="X" callback={() => deleteTaskHandler(task.id)} />
-                </li>
+                    <IconButton
+                        size="small"
+                        onClick={() => deleteTaskHandler(task.id)}
+                    >
+                        <DeleteIcon fontSize="inherit" />
+                    </IconButton>
+                </ListItem>
             );
         });
 
         return (
             <div>
-                <header className={styles.todolistHeader}>
+                <Header>
                     <h3>
                         <EditableSpan
                             title={title}
                             callback={changeTodolistTitleHandler}
                         />
                     </h3>
-                    <Button name="X" callback={deleteTodolistHandler} />
-                </header>
+                    <IconButton onClick={deleteTodolistHandler}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Header>
                 <AddItemForm addItem={addTaskHandler} />
                 <ul>{tasksItems}</ul>
                 <div>
                     <Button
-                        name="all"
-                        filter={filter}
-                        callback={() => changeTodolistFilter('all', todolistId)}
-                    />
+                        variant={filter === 'all' ? 'outlined' : 'text'}
+                        color="primary"
+                        size="small"
+                        onClick={() => changeTodolistFilter('all', todolistId)}
+                    >
+                        all
+                    </Button>
                     <Button
-                        name="active"
-                        filter={filter}
-                        callback={() => changeTodolistFilter('active', todolistId)}
-                    />
+                        variant={filter === 'active' ? 'outlined' : 'text'}
+                        color="secondary"
+                        size="small"
+                        onClick={() => changeTodolistFilter('active', todolistId)}
+                    >
+                        active
+                    </Button>
                     <Button
-                        name="completed"
-                        filter={filter}
-                        callback={() => changeTodolistFilter('completed',
+                        variant={filter === 'completed' ? 'outlined' : 'text'}
+                        color="success"
+                        size="small"
+                        onClick={() => changeTodolistFilter('completed',
                             todolistId)}
-                    />
+                    >
+                        completed
+                    </Button>
                 </div>
             </div>
         );
     }
 ;
+
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const ListItem = styled.li`
+  &.isDone {
+    opacity: 0.5;
+  }
+`;
 
 export default Todolist;

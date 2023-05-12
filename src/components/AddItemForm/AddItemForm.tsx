@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import styles from './AddItemForm.module.scss';
-import Button from '../Button/Button';
+import styled from 'styled-components';
+import Button from '@mui/material/Button';
 
 type AddItemFormType = {
     addItem: (title: string) => void
@@ -32,19 +32,43 @@ const AddItemForm = ({ addItem }: AddItemFormType) => {
     return (
         <>
             <div className="AddItemForm">
-                <input
-                    className={error ? styles.error : ''}
+                <Input
+                    className={error ? 'error' : ''}
                     onChange={setTitleHandler}
                     onKeyUp={addItemOnEnterHandler}
                     value={title}
                     placeholder="Please, enter title"
                 />
-                <Button name={'+'} callback={AddItemHandler} />
+                <StyledButton
+                    variant="outlined"
+                    onClick={AddItemHandler}
+                >
+                    +
+                </StyledButton>
             </div>
-            {error && <div className={styles.errorMessage}>{error}</div>}
+            {error && <ErrorMessage>{error}</ErrorMessage>}
         </>
     );
 };
+
+const StyledButton = styled(Button)`
+  && {
+    max-width: 30px;
+    max-height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+  }
+`;
+
+const Input = styled.input`
+  &.error {
+    border: red 1px solid;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+`;
 
 export default AddItemForm;
 
