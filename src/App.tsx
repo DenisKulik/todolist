@@ -27,21 +27,19 @@ export type TaskType = {
 }
 
 const App = () => {
-    const todolistId_1 = v1();
-    const todolistId_2 = v1();
     const [ todolists, setTodolists ] = useState<TodolistType[]>([
-        { id: todolistId_1, title: 'What to learn', filter: 'all' },
-        { id: todolistId_2, title: 'What to buy', filter: 'all' },
+        { id: v1(), title: 'What to learn', filter: 'all' },
+        { id: v1(), title: 'What to buy', filter: 'all' },
     ]);
     const [ tasks, setTask ] = useState<TasksStateType>({
-        [todolistId_1]: [
+        [todolists[0].id]: [
             { id: v1(), title: 'HTML&CSS', isDone: true },
             { id: v1(), title: 'JS', isDone: true },
             { id: v1(), title: 'ReactJS', isDone: false },
             { id: v1(), title: 'Rest API', isDone: false },
             { id: v1(), title: 'GraphQL', isDone: false },
         ],
-        [todolistId_2]: [
+        [todolists[1].id]: [
             { id: v1(), title: 'Milk', isDone: true },
             { id: v1(), title: 'Bread', isDone: true },
             { id: v1(), title: 'Butter', isDone: false },
