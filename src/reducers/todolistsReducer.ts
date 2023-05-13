@@ -1,0 +1,64 @@
+import { FilterType, TodolistType } from '../App';
+
+const todolistsReducer = (
+    state: TodolistType[],
+    action: ActionTypes
+): TodolistType[] => {
+    switch (action.type) {
+        case 'ADD-TODOLIST':
+            return [ action.payload.newTodolist, ...state ];
+        case 'DELETE-TODOLIST':
+            return state.filter(
+                todolist => todolist.id !== action.payload.todolistId);
+        case 'CHANGE-TODOLIST-FILTER':
+            return state.map(
+                todolist => todolist.id === action.payload.todolistId ?
+                    { ...todolist, filter: action.payload.value } : todolist);
+        case 'CHANGE-TODOLIST-TITLE':
+            return state.map(
+                todolist => todolist.id === action.payload.todolistId ?
+                    { ...todolist, title: action.payload.title } : todolist);
+        default:
+            throw new Error('Action was not found');
+    }
+};
+
+type ActionTypes = addTodolistACType | deleteTodolistACType
+    | changeTodolistFilterACType | changeTodolistTitleACType;
+type addTodolistACType = ReturnType<typeof addTodolistAC>;
+type deleteTodolistACType = ReturnType<typeof deleteTodolistAC>;
+type changeTodolistFilterACType = ReturnType<typeof changeTodolistFilterAC>;
+type changeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>;
+
+export const addTodolistAC = (newTodolist: TodolistType) => {
+    return {
+        type: 'ADD-TODOLIST',
+        payload: { newTodolist }
+    } as const;
+};
+
+export const deleteTodolistAC = (todolistId: string) => {
+    return {
+        type: 'DELETE-TODOLIST',
+        payload: { todolistId }
+    } as const;
+};
+
+export const changeTodolistFilterAC = (
+    value: FilterType,
+    todolistId: string
+) => {
+    return {
+        type: 'CHANGE-TODOLIST-FILTER',
+        payload: { value, todolistId }
+    } as const;
+};
+
+export const changeTodolistTitleAC = (title: string, todolistId: string) => {
+    return {
+        type: 'CHANGE-TODOLIST-TITLE',
+        payload: { title, todolistId }
+    } as const;
+};
+
+export default todolistsReducer;
