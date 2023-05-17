@@ -1,12 +1,11 @@
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Checkbox from '@mui/material/Checkbox';
 import styled from 'styled-components';
 import { FilterType, TaskType } from '../../App';
 import AddItemForm from '../AddItemForm/AddItemForm';
 import EditableSpan from '../EditableSpan/EditableSpan';
-import { ChangeEvent } from 'react';
+import CustomCheckbox from '../ChexboxItem/CustomCheckbox';
 
 type TodolistPropsType = {
     todolistId: string
@@ -17,7 +16,7 @@ type TodolistPropsType = {
     deleteTask: (taskId: string, todolistId: string) => void
     changeTaskTitle: (taskId: string, title: string, todolistId: string) => void
     changeTaskStatus: (taskId: string, value: boolean,
-                       todolistId: string) => void
+        todolistId: string) => void
     changeTodolistFilter: (value: FilterType, todolistId: string) => void
     changeTodolistTitle: (title: string, todolistId: string) => void
     deleteTodolist: (todolistId: string) => void
@@ -44,9 +43,9 @@ const Todolist = (props: TodolistPropsType) => {
         const changeTodolistTitleHandler = (title: string) => {
             changeTodolistTitle(title, todolistId);
         };
-        const changeTaskStatusHandler = (
-            e: ChangeEvent<HTMLInputElement>, id: string
-        ) => changeTaskStatus(id, e.currentTarget.checked, todolistId);
+        const changeTaskStatusHandler = (status: boolean, id: string) => {
+            changeTaskStatus(id, status, todolistId);
+        };
         const changeTaskTitleHandler = (title: string, id: string) => {
             changeTaskTitle(id, title, todolistId);
         };
@@ -54,11 +53,11 @@ const Todolist = (props: TodolistPropsType) => {
         const tasksItems: JSX.Element[] = tasks.map(task => {
             return (
                 <ListItem className={task.isDone ? 'isDone' : ''} key={task.id}>
-                    <Checkbox
+                    <CustomCheckbox
                         checked={task.isDone}
-                        color="success"
-                        size="small"
-                        onChange={(e) => changeTaskStatusHandler(e, task.id)}
+                        callback={(status) => {
+                            changeTaskStatusHandler(status, task.id);
+                        }}
                     />
                     <EditableSpan
                         title={task.title}
