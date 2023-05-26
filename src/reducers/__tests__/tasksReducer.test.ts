@@ -1,7 +1,6 @@
 import tasksReducer, {
     addTaskAC,
     deleteTaskAC,
-    createNewTasksTemplateAC,
     changeTaskStatusAC,
     changeTaskTitleAC,
 } from '../tasksReducer';
@@ -25,13 +24,11 @@ describe('tasksReducer', () => {
     });
 
     it('should add task correctly', () => {
-        const newTask = { id: '4', title: 'Redux', isDone: false };
-        const action = addTaskAC(newTask, 'todolistId2');
+        const action = addTaskAC('Redux', 'todolistId2');
 
         const endState = tasksReducer(startState, action);
 
         expect(endState['todolistId2'].length).toBe(4);
-        expect(endState['todolistId2'][0].id).toBe('4');
         expect(endState['todolistId2'][0].title).toBe('Redux');
         expect(endState['todolistId2'][0].isDone).toBe(false);
     });
@@ -43,14 +40,6 @@ describe('tasksReducer', () => {
 
         expect(endState['todolistId2'].length).toBe(2);
         expect(endState['todolistId2'].every(t => t.id !== '2')).toBeTruthy();
-    });
-
-    it('should create new tasks template correctly', () => {
-        const action = createNewTasksTemplateAC('todolistId2');
-
-        const endState = tasksReducer(startState, action);
-
-        expect(endState['todolistId2'].length).toBe(0);
     });
 
     it('should change task status correctly', () => {

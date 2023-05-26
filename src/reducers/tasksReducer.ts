@@ -1,4 +1,6 @@
-import { TasksStateType, TaskType } from '../App';
+import { TasksStateType } from '../App';
+import { addTodolistACType } from './todolistsReducer';
+import { v1 } from 'uuid';
 
 const tasksReducer = (
     state: TasksStateType,
@@ -8,7 +10,11 @@ const tasksReducer = (
         case 'ADD-TASK':
             return {
                 ...state,
-                [action.payload.todolistId]: [ action.payload.newTask,
+                [action.payload.todolistId]: [ {
+                    id: v1(),
+                    title: action.payload.title,
+                    isDone: false
+                },
                     ...state[action.payload.todolistId] ]
             };
         case 'DELETE-TASK':
@@ -17,8 +23,6 @@ const tasksReducer = (
                 [action.payload.todolistId]: state[action.payload.todolistId].filter(
                     task => task.id !== action.payload.taskId)
             };
-        case 'CREATE-NEW-TASKS-TEMPLATE':
-            return { ...state, [action.payload.todolistId]: [] };
         case 'CHANGE-TASK-STATUS':
             return {
                 ...state,
@@ -33,24 +37,24 @@ const tasksReducer = (
                     task => task.id === action.payload.taskId ?
                         { ...task, title: action.payload.title } : task)
             };
+        case 'ADD-TODOLIST':
+            return { ...state, [action.payload.todolistId]: [] };
         default:
             throw new Error('Action was not found');
     }
 };
 
-type ActionTypes = addTaskACType | deleteTaskACType
-    | createNewTasksTemplateACType | changeTaskStatusACType
-    | changeTaskTitleACType;
+type ActionTypes = addTaskACType | deleteTaskACType | changeTaskStatusACType
+    | changeTaskTitleACType | addTodolistACType;
 type addTaskACType = ReturnType<typeof addTaskAC>;
 type deleteTaskACType = ReturnType<typeof deleteTaskAC>;
-type createNewTasksTemplateACType = ReturnType<typeof createNewTasksTemplateAC>;
 type changeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>;
 type changeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>;
 
-export const addTaskAC = (newTask: TaskType, todolistId: string) => {
+export const addTaskAC = (title: string, todolistId: string) => {
     return {
         type: 'ADD-TASK',
-        payload: { newTask, todolistId }
+        payload: { title, todolistId }
     } as const;
 };
 
@@ -58,13 +62,6 @@ export const deleteTaskAC = (taskId: string, todolistId: string) => {
     return {
         type: 'DELETE-TASK',
         payload: { taskId, todolistId }
-    } as const;
-};
-
-export const createNewTasksTemplateAC = (todolistId: string) => {
-    return {
-        type: 'CREATE-NEW-TASKS-TEMPLATE',
-        payload: { todolistId }
     } as const;
 };
 

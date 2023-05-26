@@ -17,17 +17,11 @@ describe('todolistsReducer', () => {
     });
 
     it('should add todolist correctly', () => {
-        const newTodolist: TodolistType = {
-            id: '3',
-            title: 'New Todolist',
-            filter: 'all'
-        };
-        const action = addTodolistAC(newTodolist);
+        const action = addTodolistAC('New Todolist');
 
         const endState = todolistsReducer(startState, action);
 
         expect(endState.length).toBe(3);
-        expect(endState[0].id).toBe('3');
         expect(endState[0].title).toBe('New Todolist');
         expect(endState[0].filter).toBe('all');
     });

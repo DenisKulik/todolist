@@ -12,8 +12,7 @@ import todolistsReducer, {
     deleteTodolistAC
 } from './reducers/todolistsReducer';
 import tasksReducer, {
-    addTaskAC, changeTaskStatusAC, changeTaskTitleAC, createNewTasksTemplateAC,
-    deleteTaskAC
+    addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC
 } from './reducers/tasksReducer';
 
 export type FilterType = 'all' | 'active' | 'completed'
@@ -35,20 +34,23 @@ export type TaskType = {
 }
 
 const App = () => {
+    const todolistsId1 = v1();
+    const todolistsId2 = v1();
+
     const [ todolists, dispachTodolists ] = useReducer(todolistsReducer, [
-        { id: v1(), title: 'What to learn', filter: 'all' },
-        { id: v1(), title: 'What to buy', filter: 'all' },
+        { id: todolistsId1, title: 'What to learn', filter: 'all' },
+        { id: todolistsId2, title: 'What to buy', filter: 'all' },
     ]);
 
     const [ tasks, dispachTasks ] = useReducer(tasksReducer, {
-        [todolists[0].id]: [
+        [todolistsId1]: [
             { id: v1(), title: 'HTML&CSS', isDone: true },
             { id: v1(), title: 'JS', isDone: true },
             { id: v1(), title: 'ReactJS', isDone: false },
             { id: v1(), title: 'Rest API', isDone: false },
             { id: v1(), title: 'GraphQL', isDone: false },
         ],
-        [todolists[1].id]: [
+        [todolistsId2]: [
             { id: v1(), title: 'Milk', isDone: true },
             { id: v1(), title: 'Bread', isDone: true },
             { id: v1(), title: 'Butter', isDone: false },
@@ -58,9 +60,9 @@ const App = () => {
     });
 
     const addTodolist = (title: string) => {
-        const newTodolist: TodolistType = { id: v1(), title, filter: 'all' };
-        dispachTodolists(addTodolistAC(newTodolist));
-        dispachTasks(createNewTasksTemplateAC(newTodolist.id));
+        const action = addTodolistAC(title);
+        dispachTodolists(action);
+        dispachTasks(action);
     };
 
     const deleteTodolist = (todolistId: string) => {
@@ -77,8 +79,7 @@ const App = () => {
     };
 
     const addTask = (title: string, todolistId: string) => {
-        const newTask: TaskType = { id: v1(), title, isDone: false };
-        dispachTasks(addTaskAC(newTask, todolistId));
+        dispachTasks(addTaskAC(title, todolistId));
     };
 
     const deleteTask = (taskId: string, todolistId: string): void => {
