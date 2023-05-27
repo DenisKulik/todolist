@@ -1,5 +1,5 @@
 import { TasksStateType } from '../App';
-import { addTodolistACType } from './todolistsReducer';
+import { addTodolistACType, deleteTodolistACType } from './todolistsReducer';
 import { v1 } from 'uuid';
 
 const tasksReducer = (
@@ -39,13 +39,17 @@ const tasksReducer = (
             };
         case 'ADD-TODOLIST':
             return { ...state, [action.payload.todolistId]: [] };
+        case 'DELETE-TODOLIST':
+            const stateCopy = { ...state };
+            delete stateCopy[action.payload.todolistId];
+            return stateCopy;
         default:
             throw new Error('Action was not found');
     }
 };
 
 type ActionTypes = addTaskACType | deleteTaskACType | changeTaskStatusACType
-    | changeTaskTitleACType | addTodolistACType;
+    | changeTaskTitleACType | addTodolistACType | deleteTodolistACType;
 type addTaskACType = ReturnType<typeof addTaskAC>;
 type deleteTaskACType = ReturnType<typeof deleteTaskAC>;
 type changeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>;

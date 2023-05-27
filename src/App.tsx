@@ -66,8 +66,9 @@ const App = () => {
     };
 
     const deleteTodolist = (todolistId: string) => {
-        dispachTodolists(deleteTodolistAC(todolistId));
-        delete tasks[todolistId];
+        const action = deleteTodolistAC(todolistId);
+        dispachTodolists(action);
+        dispachTasks(action);
     };
 
     const changeTodolistFilter = (value: FilterType, todolistId: string) => {

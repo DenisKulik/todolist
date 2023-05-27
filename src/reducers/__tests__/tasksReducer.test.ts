@@ -4,6 +4,7 @@ import tasksReducer, {
     changeTaskStatusAC,
     changeTaskTitleAC,
 } from '../tasksReducer';
+import { deleteTodolistAC } from '../todolistsReducer';
 
 describe('tasksReducer', () => {
     let startState = {};
@@ -56,6 +57,17 @@ describe('tasksReducer', () => {
         const endState = tasksReducer(startState, action);
 
         expect(endState['todolistId2'][1].title).toBe('water');
+    });
+
+    it('should delete tasks for todolist correctly', () => {
+        const action = deleteTodolistAC('todolistId2');
+
+        const endState = tasksReducer(startState, action);
+
+        const keys = Object.keys(endState);
+
+        expect(keys.length).toBe(1);
+        expect(endState['todolistId2']).not.toBeDefined();
     });
 
     it('should throw an error for incorrect action type', () => {

@@ -31,7 +31,7 @@ const todolistsReducer = (
 type ActionTypes = addTodolistACType | deleteTodolistACType
     | changeTodolistFilterACType | changeTodolistTitleACType;
 export type addTodolistACType = ReturnType<typeof addTodolistAC>;
-type deleteTodolistACType = ReturnType<typeof deleteTodolistAC>;
+export type deleteTodolistACType = ReturnType<typeof deleteTodolistAC>;
 type changeTodolistFilterACType = ReturnType<typeof changeTodolistFilterAC>;
 type changeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>;
 
