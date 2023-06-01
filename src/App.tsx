@@ -5,11 +5,11 @@ import Paper from '@mui/material/Paper';
 import Todolist from './components/Todolist/Todolist';
 import AddItemForm from './components/AddItemForm/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
-import todolistsReducer, {
+import {
     addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC,
     deleteTodolistAC
 } from './state/todolistsReducer';
-import tasksReducer, {
+import {
     addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC
 } from './state/tasksReducer';
 import { useDispatch, useSelector } from 'react-redux';
