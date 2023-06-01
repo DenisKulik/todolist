@@ -40,44 +40,44 @@ const App = () => {
     const tasks = useSelector<AppRootStateType, TasksStateType>(
         state => state.tasks);
 
-    const dispach = useDispatch();
+    const dispatch = useDispatch();
 
     const addTodolist = (title: string) => {
         const action = addTodolistAC(title);
-        dispach(action);
+        dispatch(action);
     };
 
     const deleteTodolist = (todolistId: string) => {
         const action = deleteTodolistAC(todolistId);
-        dispach(action);
+        dispatch(action);
     };
 
     const changeTodolistFilter = (value: FilterType, todolistId: string) => {
-        dispach(changeTodolistFilterAC(value, todolistId));
+        dispatch(changeTodolistFilterAC(value, todolistId));
     };
 
     const changeTodolistTitle = (title: string, todolistId: string) => {
-        dispach(changeTodolistTitleAC(title, todolistId));
+        dispatch(changeTodolistTitleAC(title, todolistId));
     };
 
     const addTask = (title: string, todolistId: string) => {
-        dispach(addTaskAC(title, todolistId));
+        dispatch(addTaskAC(title, todolistId));
     };
 
     const deleteTask = (taskId: string, todolistId: string): void => {
-        dispach(deleteTaskAC(taskId, todolistId));
+        dispatch(deleteTaskAC(taskId, todolistId));
     };
 
     const changeTaskStatus = (
         taskId: string, value: boolean, todolistId: string
     ) => {
-        dispach(changeTaskStatusAC(taskId, value, todolistId));
+        dispatch(changeTaskStatusAC(taskId, value, todolistId));
     };
 
     const changeTaskTitle = (
         taskId: string, title: string, todolistId: string
     ) => {
-        dispach(changeTaskTitleAC(taskId, title, todolistId));
+        dispatch(changeTaskTitleAC(taskId, title, todolistId));
     };
 
     const getFilteredTasks = (
