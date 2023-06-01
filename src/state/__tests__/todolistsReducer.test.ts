@@ -50,12 +50,12 @@ describe('todolistsReducer', () => {
 
         expect(endState[1].title).toBe('New Title');
     });
+    it('should return the same state if action type is incorrect', () => {
+        const action = { type: 'UNKNOWN_ACTION_TYPE' };
 
-    it('should throw an error for incorrect action type', () => {
+        // @ts-ignore
+        const endState = todolistsReducer(startState, action);
 
-        expect(
-            // @ts-ignore
-            () => todolistsReducer(startState, { type: 'UNKNOWN_ACTION_TYPE' }))
-        .toThrow();
+        expect(endState).toBe(startState);
     });
 });

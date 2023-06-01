@@ -71,9 +71,12 @@ describe('tasksReducer', () => {
         expect(endState['todolistId2']).not.toBeDefined();
     });
 
-    it('should throw an error for incorrect action type', () => {
+    it('should return the same state if action type is incorrect', () => {
+        const action = { type: 'UNKNOWN_ACTION_TYPE' };
+
         // @ts-ignore
-        expect(() => tasksReducer(startState, { type: 'UNKNOWN_ACTION_TYPE' }))
-        .toThrow();
+        const endState = tasksReducer(startState, action);
+
+        expect(endState).toBe(startState);
     });
 });

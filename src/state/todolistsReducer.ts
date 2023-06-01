@@ -1,8 +1,10 @@
 import { FilterType, TodolistType } from '../App';
 import { v1 } from 'uuid';
 
+const initialState: TodolistType[] = [];
+
 const todolistsReducer = (
-    state: TodolistType[],
+    state: TodolistType[] = initialState,
     action: ActionTypes
 ): TodolistType[] => {
     switch (action.type) {
@@ -24,7 +26,7 @@ const todolistsReducer = (
                 todolist => todolist.id === action.payload.todolistId ?
                     { ...todolist, title: action.payload.title } : todolist);
         default:
-            throw new Error('Action was not found');
+            return state;
     }
 };
 

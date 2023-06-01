@@ -1,9 +1,11 @@
-import { TasksStateType } from '../App';
+import { TasksStateType, TaskType } from '../App';
 import { addTodolistACType, deleteTodolistACType } from './todolistsReducer';
 import { v1 } from 'uuid';
 
+const initialState: TasksStateType = {};
+
 const tasksReducer = (
-    state: TasksStateType,
+    state: TasksStateType = initialState,
     action: ActionTypes
 ): TasksStateType => {
     switch (action.type) {
@@ -44,7 +46,7 @@ const tasksReducer = (
             delete stateCopy[action.payload.todolistId];
             return stateCopy;
         default:
-            throw new Error('Action was not found');
+            return state;
     }
 };
 
