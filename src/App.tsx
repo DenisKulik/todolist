@@ -10,10 +10,10 @@ import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
 import todolistsReducer, {
     addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC,
     deleteTodolistAC
-} from './reducers/todolistsReducer';
+} from './state/todolistsReducer';
 import tasksReducer, {
     addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC
-} from './reducers/tasksReducer';
+} from './state/tasksReducer';
 
 export type FilterType = 'all' | 'active' | 'completed'
 
