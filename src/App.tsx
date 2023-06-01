@@ -42,14 +42,10 @@ const App = () => {
 
     const dispatch = useDispatch();
 
-    const addTodolist = (title: string) => {
-        const action = addTodolistAC(title);
-        dispatch(action);
-    };
+    const addTodolist = (title: string) => dispatch(addTodolistAC(title));
 
     const deleteTodolist = (todolistId: string) => {
-        const action = deleteTodolistAC(todolistId);
-        dispatch(action);
+        dispatch(deleteTodolistAC(todolistId));
     };
 
     const changeTodolistFilter = (value: FilterType, todolistId: string) => {
@@ -64,7 +60,7 @@ const App = () => {
         dispatch(addTaskAC(title, todolistId));
     };
 
-    const deleteTask = (taskId: string, todolistId: string): void => {
+    const deleteTask = (taskId: string, todolistId: string) => {
         dispatch(deleteTaskAC(taskId, todolistId));
     };
 
