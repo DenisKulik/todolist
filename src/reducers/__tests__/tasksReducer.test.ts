@@ -5,9 +5,10 @@ import tasksReducer, {
     changeTaskTitleAC,
 } from '../tasksReducer';
 import { deleteTodolistAC } from '../todolistsReducer';
+import { TasksStateType } from '../../App';
 
 describe('tasksReducer', () => {
-    let startState = {};
+    let startState: TasksStateType = {};
 
     beforeEach(() => {
         startState = {
