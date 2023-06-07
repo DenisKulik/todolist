@@ -97,18 +97,18 @@ const Todolist = (props: TodolistPropsType) => {
     return (
         <div>
             <Header>
-                <h3>
+                <Title>
                     <EditableSpan
                         title={title}
                         callback={changeTodolistTitleHandler}
                     />
-                </h3>
+                </Title>
                 <IconButton onClick={deleteTodolistHandler}>
                     <DeleteIcon />
                 </IconButton>
             </Header>
             <AddItemForm addItem={addTaskHandler} />
-            <div>{tasksItems}</div>
+            <TasksWrapper>{tasksItems}</TasksWrapper>
             <div>
                 <Button
                     variant={filter === 'all' ? 'outlined' : 'text'}
@@ -145,6 +145,14 @@ const Header = styled.header`
   align-items: center;
   gap: 10px;
 `;
+
+export const Title = styled.h3`
+  margin: 0;
+`;
+
+const TasksWrapper = styled.div`
+  margin-bottom: 10px;
+`
 
 const ListItem = styled.div`
   &.isDone {
