@@ -16,7 +16,7 @@ import {
     changeTodolistTitleAC, deleteTodolistAC
 } from '../../state/todolistsReducer';
 
-type TodolistWithReduxPropsType = {
+type TodolistPropsType = {
     todolistId: string
     title: string
     filter: FilterType
@@ -28,7 +28,7 @@ export type TaskType = {
     isDone: boolean
 }
 
-const Todolist = (props: TodolistWithReduxPropsType) => {
+const Todolist = (props: TodolistPropsType) => {
     const { todolistId, title, filter, } = props;
 
     const tasks = useSelector<AppRootStateType, TaskType[]>(
