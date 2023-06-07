@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
-import { FilterType, TaskType } from '../../App';
+import { FilterType } from '../../App';
 import AddItemForm from '../AddItemForm/AddItemForm';
 import EditableSpan from '../EditableSpan/EditableSpan';
 import CustomCheckbox from '../ChexboxItem/CustomCheckbox';
@@ -20,6 +20,12 @@ type TodolistWithReduxPropsType = {
     todolistId: string
     title: string
     filter: FilterType
+}
+
+export type TaskType = {
+    id: string
+    title: string,
+    isDone: boolean
 }
 
 const Todolist = (props: TodolistWithReduxPropsType) => {

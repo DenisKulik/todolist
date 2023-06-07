@@ -1,6 +1,10 @@
-import { TasksStateType } from '../App';
+import { TaskType } from '../components/Todolist/Todolist';
 import { addTodolistACType, deleteTodolistACType } from './todolistsReducer';
 import { v1 } from 'uuid';
+
+export type TasksStateType = {
+    [todolistId: string]: TaskType[]
+}
 
 const initialState: TasksStateType = {};
 

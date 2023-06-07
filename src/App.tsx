@@ -17,16 +17,6 @@ export type TodolistType = {
     filter: FilterType
 }
 
-export type TasksStateType = {
-    [todolistId: string]: TaskType[]
-}
-
-export type TaskType = {
-    id: string
-    title: string,
-    isDone: boolean
-}
-
 const App = () => {
     const todolists = useSelector<AppRootStateType, TodolistType[]>(
         state => state.todolists);
