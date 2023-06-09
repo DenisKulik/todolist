@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, memo, useState } from 'react';
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
@@ -64,5 +64,5 @@ const StyledInput = styled(TextField)`
   }
 `;
 
-export default AddItemForm;
+export default memo(AddItemForm);
 
