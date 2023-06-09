@@ -39,46 +39,46 @@ const Todolist = (props: TodolistPropsType) => {
 
     const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, todolistId));
-    }, [ todolistId ]);
+    }, [ dispatch, todolistId ]);
 
     const deleteTaskHandler = useCallback((id: string) => {
         dispatch(deleteTaskAC(id, todolistId));
-    }, [ todolistId ]);
+    }, [ dispatch, todolistId ]);
 
     const deleteTodolistHandler = useCallback(() => {
         dispatch(deleteTodolistAC(todolistId));
-    }, [ todolistId ]);
+    }, [ dispatch, todolistId ]);
 
     const changeTodolistTitle = useCallback((title: string) => {
         dispatch(changeTodolistTitleAC(title, todolistId));
-    }, [ todolistId ]);
+    }, [ dispatch, todolistId ]);
 
     const changeTaskStatus = useCallback((status: boolean, id: string) => {
         dispatch(changeTaskStatusAC(id, status, todolistId));
-    }, [ todolistId ]);
+    }, [ dispatch, todolistId ]);
 
     const changeTaskTitle = useCallback((title: string, id: string) => {
         dispatch(changeTaskTitleAC(id, title, todolistId));
-    }, [ todolistId ]);
+    }, [ dispatch, todolistId ]);
 
-    const changeTodolistFilterHandler = (
+    const changeTodolistFilterHandler = useCallback((
         value: FilterType,
         todolistId: string
     ) => {
         dispatch(changeTodolistFilterAC(value, todolistId));
-    };
+    }, [ dispatch ]);
 
     const onAllClickHandler = useCallback(() => {
         changeTodolistFilterHandler('all', todolistId);
-    }, []);
+    }, [ changeTodolistFilterHandler, todolistId ]);
 
     const onActiveClickHandler = useCallback(() => {
         changeTodolistFilterHandler('active', todolistId);
-    }, []);
+    }, [ changeTodolistFilterHandler, todolistId ]);
 
     const onCompletedClickHandler = useCallback(() => {
         changeTodolistFilterHandler('completed', todolistId);
-    }, []);
+    }, [ changeTodolistFilterHandler, todolistId ]);
 
     const getFilteredTasks = (
         tasks: TaskType[],
