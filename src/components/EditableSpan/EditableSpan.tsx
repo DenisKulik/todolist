@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, memo, useState } from 'react';
 
 type EditableSpanType = {
     title: string
@@ -32,4 +32,4 @@ const EditableSpan = ({ title, callback }: EditableSpanType) => {
     );
 };
 
-export default EditableSpan;
+export default memo(EditableSpan);
