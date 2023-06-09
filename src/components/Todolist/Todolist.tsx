@@ -15,6 +15,7 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleAC, deleteTodolistAC
 } from '../../state/todolistsReducer';
+import { useCallback } from 'react';
 
 type TodolistPropsType = {
     todolistId: string
@@ -36,8 +37,10 @@ const Todolist = (props: TodolistPropsType) => {
 
     const dispatch = useDispatch();
 
-    const addTaskHandler = (title: string) => dispatch(
-        addTaskAC(title, todolistId));
+    const addTask = useCallback((title: string) => {
+        dispatch(addTaskAC(title, todolistId));
+    }, []);
+
     const deleteTaskHandler = (id: string) => dispatch(
         deleteTaskAC(id, todolistId));
     const deleteTodolistHandler = () => dispatch(deleteTodolistAC(todolistId));
@@ -107,7 +110,7 @@ const Todolist = (props: TodolistPropsType) => {
                     <DeleteIcon />
                 </IconButton>
             </Header>
-            <AddItemForm addItem={addTaskHandler} />
+            <AddItemForm addItem={addTask} />
             <TasksWrapper>{tasksItems}</TasksWrapper>
             <div>
                 <Button
@@ -152,7 +155,7 @@ export const Title = styled.h3`
 
 const TasksWrapper = styled.div`
   margin-bottom: 10px;
-`
+`;
 
 const ListItem = styled.div`
   &.isDone {
