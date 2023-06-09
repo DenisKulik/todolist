@@ -26,7 +26,7 @@ const App = () => {
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title));
-    }, []);
+    }, [ dispatch ]);
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {
         return (

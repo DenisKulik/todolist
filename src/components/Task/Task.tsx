@@ -22,15 +22,15 @@ const Task = (props: TaskPropsType) => {
 
     const deleteTask = useCallback(() => {
         dispatch(deleteTaskAC(task.id, todolistId));
-    }, [ dispatch ]);
+    }, [ dispatch, task.id, todolistId ]);
 
     const changeTaskStatus = useCallback((status: boolean) => {
         dispatch(changeTaskStatusAC(task.id, status, todolistId));
-    }, [ dispatch ]);
+    }, [ dispatch, task.id, todolistId ]);
 
     const changeTaskTitle = useCallback((title: string) => {
         dispatch(changeTaskTitleAC(task.id, title, todolistId));
-    }, [ dispatch ]);
+    }, [ dispatch, task.id, todolistId ]);
 
     return (
         <ListItem className={task.isDone ? 'isDone' : ''} key={task.id}>
