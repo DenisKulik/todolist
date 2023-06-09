@@ -8,6 +8,7 @@ import AddItemForm from './components/AddItemForm/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
 import { addTodolistAC } from './state/todolistsReducer';
 import Todolist from './components/Todolist/Todolist';
+import { useCallback } from 'react';
 
 export type FilterType = 'all' | 'active' | 'completed'
 
@@ -23,7 +24,9 @@ const App = () => {
 
     const dispatch = useDispatch();
 
-    const addTodolist = (title: string) => dispatch(addTodolistAC(title));
+    const addTodolist = useCallback((title: string) => {
+        dispatch(addTodolistAC(title));
+    }, []);
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {
         return (
