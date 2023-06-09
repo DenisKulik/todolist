@@ -5,17 +5,15 @@ import styled from 'styled-components';
 import { FilterType } from '../../App';
 import AddItemForm from '../AddItemForm/AddItemForm';
 import EditableSpan from '../EditableSpan/EditableSpan';
-import CustomCheckbox from '../ChexboxItem/CustomCheckbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from '../../state/store';
-import {
-    addTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC
-} from '../../state/tasksReducer';
+import { addTaskAC } from '../../state/tasksReducer';
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC, deleteTodolistAC
 } from '../../state/todolistsReducer';
 import CustomButton from '../CustomButton/CustomButton';
+import Task from '../Task/Task';
 
 type TodolistPropsType = {
     todolistId: string
@@ -41,24 +39,12 @@ const Todolist = (props: TodolistPropsType) => {
         dispatch(addTaskAC(title, todolistId));
     }, [ dispatch, todolistId ]);
 
-    const deleteTaskHandler = useCallback((id: string) => {
-        dispatch(deleteTaskAC(id, todolistId));
-    }, [ dispatch, todolistId ]);
-
     const deleteTodolistHandler = useCallback(() => {
         dispatch(deleteTodolistAC(todolistId));
     }, [ dispatch, todolistId ]);
 
     const changeTodolistTitle = useCallback((title: string) => {
         dispatch(changeTodolistTitleAC(title, todolistId));
-    }, [ dispatch, todolistId ]);
-
-    const changeTaskStatus = useCallback((status: boolean, id: string) => {
-        dispatch(changeTaskStatusAC(id, status, todolistId));
-    }, [ dispatch, todolistId ]);
-
-    const changeTaskTitle = useCallback((title: string, id: string) => {
-        dispatch(changeTaskTitleAC(id, title, todolistId));
     }, [ dispatch, todolistId ]);
 
     const changeTodolistFilterHandler = useCallback((
@@ -98,22 +84,11 @@ const Todolist = (props: TodolistPropsType) => {
 
     const tasksItems: JSX.Element[] = tasksForTodolist.map(task => {
         return (
-            <ListItem className={task.isDone ? 'isDone' : ''} key={task.id}>
-                <CustomCheckbox
-                    checked={task.isDone}
-                    callback={(status) => changeTaskStatus(status, task.id)}
-                />
-                <EditableSpan
-                    title={task.title}
-                    callback={(title) => changeTaskTitle(title, task.id)}
-                />
-                <IconButton
-                    size="small"
-                    onClick={() => deleteTaskHandler(task.id)}
-                >
-                    <DeleteIcon fontSize="inherit" />
-                </IconButton>
-            </ListItem>
+            <Task
+                key={task.id}
+                task={task}
+                todolistId={todolistId}
+            />
         );
     });
 
@@ -171,12 +146,6 @@ export const Title = styled.h3`
 
 const TasksWrapper = styled.div`
   margin-bottom: 10px;
-`;
-
-const ListItem = styled.div`
-  &.isDone {
-    opacity: 0.5;
-  }
 `;
 
 export default memo(Todolist);
