@@ -30,7 +30,7 @@ export type TaskType = {
 }
 
 const Todolist = (props: TodolistPropsType) => {
-    const { todolistId, title, filter, } = props;
+    const { todolistId, title, filter } = props;
 
     const tasks = useSelector<AppRootStateType, TaskType[]>(
         state => state.tasks[todolistId]);
@@ -39,7 +39,7 @@ const Todolist = (props: TodolistPropsType) => {
 
     const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, todolistId));
-    }, []);
+    }, [ todolistId ]);
 
     const deleteTaskHandler = (id: string) => dispatch(
         deleteTaskAC(id, todolistId));
