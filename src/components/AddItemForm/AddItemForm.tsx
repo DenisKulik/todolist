@@ -13,7 +13,7 @@ const AddItemForm = ({ addItem }: AddItemFormType) => {
     const [ error, setError ] = useState<string | null>(null);
 
     const setTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null);
+        error && setError(null);
         setTitle(e.currentTarget.value);
     };
 
