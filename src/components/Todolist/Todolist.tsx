@@ -1,3 +1,4 @@
+import { memo, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -15,7 +16,6 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleAC, deleteTodolistAC
 } from '../../state/todolistsReducer';
-import { useCallback } from 'react';
 
 type TodolistPropsType = {
     todolistId: string
@@ -41,20 +41,28 @@ const Todolist = (props: TodolistPropsType) => {
         dispatch(addTaskAC(title, todolistId));
     }, [ todolistId ]);
 
-    const deleteTaskHandler = (id: string) => dispatch(
-        deleteTaskAC(id, todolistId));
-    const deleteTodolistHandler = () => dispatch(deleteTodolistAC(todolistId));
-    const changeTodolistTitleHandler = (title: string) => {
-        dispatch(changeTodolistTitleAC(title, todolistId));
-    };
-    const changeTaskStatusHandler = (status: boolean, id: string) => {
-        dispatch(changeTaskStatusAC(id, status, todolistId));
-    };
-    const changeTaskTitleHandler = (title: string, id: string) => {
-        dispatch(changeTaskTitleAC(id, title, todolistId));
+    const deleteTaskHandler = (id: string) => {
+        dispatch(deleteTaskAC(id, todolistId));
     };
 
-    const changeTodolistFilter = (value: FilterType, todolistId: string) => {
+    const deleteTodolistHandler = () => {
+        dispatch(deleteTodolistAC(todolistId));
+    };
+
+    const changeTodolistTitle = useCallback((title: string) => {
+        dispatch(changeTodolistTitleAC(title, todolistId));
+    }, [ todolistId ]);
+
+    const changeTaskStatus = useCallback((status: boolean, id: string) => {
+        dispatch(changeTaskStatusAC(id, status, todolistId));
+    }, [ todolistId ]);
+
+    const changeTaskTitle = useCallback((title: string, id: string) => {
+        dispatch(changeTaskTitleAC(id, title, todolistId));
+    }, [ todolistId ]);
+
+    const changeTodolistFilterHandler = (value: FilterType,
+        todolistId: string) => {
         dispatch(changeTodolistFilterAC(value, todolistId));
     };
 
@@ -79,13 +87,11 @@ const Todolist = (props: TodolistPropsType) => {
             <ListItem className={task.isDone ? 'isDone' : ''} key={task.id}>
                 <CustomCheckbox
                     checked={task.isDone}
-                    callback={(status) => {
-                        changeTaskStatusHandler(status, task.id);
-                    }}
+                    callback={(status) => changeTaskStatus(status, task.id)}
                 />
                 <EditableSpan
                     title={task.title}
-                    callback={(title) => changeTaskTitleHandler(title, task.id)}
+                    callback={(title) => changeTaskTitle(title, task.id)}
                 />
                 <IconButton
                     size="small"
@@ -103,7 +109,7 @@ const Todolist = (props: TodolistPropsType) => {
                 <Title>
                     <EditableSpan
                         title={title}
-                        callback={changeTodolistTitleHandler}
+                        callback={changeTodolistTitle}
                     />
                 </Title>
                 <IconButton onClick={deleteTodolistHandler}>
@@ -117,7 +123,9 @@ const Todolist = (props: TodolistPropsType) => {
                     variant={filter === 'all' ? 'outlined' : 'text'}
                     color="primary"
                     size="small"
-                    onClick={() => changeTodolistFilter('all', todolistId)}
+                    onClick={() => {
+                        changeTodolistFilterHandler('all', todolistId);
+                    }}
                 >
                     all
                 </Button>
@@ -125,7 +133,9 @@ const Todolist = (props: TodolistPropsType) => {
                     variant={filter === 'active' ? 'outlined' : 'text'}
                     color="secondary"
                     size="small"
-                    onClick={() => changeTodolistFilter('active', todolistId)}
+                    onClick={() => {
+                        changeTodolistFilterHandler('active', todolistId);
+                    }}
                 >
                     active
                 </Button>
@@ -133,8 +143,9 @@ const Todolist = (props: TodolistPropsType) => {
                     variant={filter === 'completed' ? 'outlined' : 'text'}
                     color="success"
                     size="small"
-                    onClick={() => changeTodolistFilter('completed',
-                        todolistId)}
+                    onClick={() => {
+                        changeTodolistFilterHandler('completed', todolistId);
+                    }}
                 >
                     completed
                 </Button>
@@ -163,4 +174,4 @@ const ListItem = styled.div`
   }
 `;
 
-export default Todolist;
+export default memo(Todolist);
