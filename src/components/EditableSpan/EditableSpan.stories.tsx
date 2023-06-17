@@ -21,6 +21,7 @@ type Story = StoryObj<typeof EditableSpan>;
 
 export const EditableSpanStory: Story = {
     args: {
+        title: 'Title',
         callback: action('Value EditableSpan changed')
     }
 };
