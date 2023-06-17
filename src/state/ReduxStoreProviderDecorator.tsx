@@ -18,11 +18,15 @@ export const initialGlobalState = {
     tasks: {
         ['todolistId1']: [
             { id: 'task1', title: 'HTML&CSS', isDone: true },
-            { id: 'task2', title: 'JS', isDone: false }
+            { id: 'task2', title: 'JS', isDone: false },
+            { id: 'task3', title: 'React', isDone: false },
+            { id: 'task4', title: 'Redux', isDone: false },
+            { id: 'task5', title: 'TypeScript', isDone: false },
+            { id: 'task6', title: 'Node.js', isDone: false }
         ],
         ['todolistId2']: [
-            { id: 'task3', title: 'Milk', isDone: false },
-            { id: 'task4', title: 'React Book', isDone: true }
+            { id: 'task7', title: 'Milk', isDone: false },
+            { id: 'task8', title: 'React Book', isDone: true }
         ]
     }
 };
