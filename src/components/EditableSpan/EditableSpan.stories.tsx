@@ -6,14 +6,6 @@ const meta: Meta<typeof EditableSpan> = {
     title: 'TODOLISTS/EditableSpan',
     component: EditableSpan,
     tags: [ 'autodocs' ],
-    argTypes: {
-        title: {
-            description: 'Start value empty. Add value push button set string.'
-        },
-        callback: {
-            description: 'Value EditableSpan changed'
-        }
-    }
 };
 
 export default meta;
