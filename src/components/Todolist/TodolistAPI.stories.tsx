@@ -6,10 +6,7 @@ export default {
 };
 
 const settings = {
-    withCredentials: true,
-    headers: {
-        'API-KEY': 'c56f6bb7-ea61-4631-9c48-afcc40ea13c9'
-    }
+    withCredentials: true
 };
 
 export const GetTodolists = () => {
