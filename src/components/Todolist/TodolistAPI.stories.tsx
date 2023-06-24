@@ -6,7 +6,10 @@ export default {
 };
 
 const settings = {
-    withCredentials: true
+    withCredentials: true,
+    headers: {
+        'API-KEY': 'c56f6bb7-ea61-4631-9c48-afcc40ea13c9'
+    }
 };
 
 export const GetTodolists = () => {
@@ -24,7 +27,13 @@ export const GetTodolists = () => {
 
 export const CreateTodolist = () => {
     const [ state, setState ] = useState<any>(null);
+
     useEffect(() => {
+        const promise = axios.post(
+            'https://social-network.samuraijs.com/api/1.1/todo-lists',
+            { title: 'What to learn' },
+            settings
+        ).then((response) => setState(response.data));
     }, []);
 
     return <div>{JSON.stringify(state)}</div>;
