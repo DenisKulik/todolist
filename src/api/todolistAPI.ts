@@ -16,6 +16,13 @@ type CreateTodolistResponseType = {
     }
 }
 
+type UpdateTodolistResponseType = {
+    resultCode: number
+    messages: string[]
+    fieldsErrors: string[]
+    data: {}
+}
+
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
@@ -31,10 +38,11 @@ export const todolistAPI = {
         );
     },
     deleteTodolist(todolistId: string) {
-        return instance.delete(`todo-lists/${todolistId}`);
+        return instance.delete<UpdateTodolistResponseType>(
+            `todo-lists/${todolistId}`
+        );
     },
     updateTodolistTitle(todolistId: string, title: string) {
-        return instance
-            .put(`todo-lists/${todolistId}`, { title });
+        return instance.put(`todo-lists/${todolistId}`, { title });
     },
 };
