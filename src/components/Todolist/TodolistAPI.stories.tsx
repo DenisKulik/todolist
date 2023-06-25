@@ -57,3 +57,60 @@ export const UpdateTodolistTitle = () => {
     return <div>{JSON.stringify(state)}</div>;
 };
 
+export const GetTasks = () => {
+    const [ state, setState ] = useState<any>(null);
+    const todolistId = 'some-todolist-id'; // paste correct id
+
+    useEffect(() => {
+        todolistAPI
+            .getTasks(todolistId)
+            .then((response) => setState(response.data));
+    }, []);
+
+    return <div>{JSON.stringify(state)}</div>;
+};
+
+export const CreateTask = () => {
+    const [ state, setState ] = useState<any>(null);
+    const todolistId = 'some-todolist-id'; // paste correct id
+
+    useEffect(() => {
+        todolistAPI
+            .createTask(todolistId, 'React')
+            .then((response) => setState(response.data));
+    }, []);
+
+    return <div>{JSON.stringify(state)}</div>;
+};
+
+export const DeleteTask = () => {
+    const [ state, setState ] = useState<any>(null);
+
+    useEffect(() => {
+        const todolistId = 'some-todolist-id'; // paste correct id
+        const taskId = 'some-task-id'; // paste correct id
+
+        todolistAPI
+            .deleteTask(todolistId, taskId)
+            .then((response) => setState(response.data));
+    }, []);
+
+    return <div>{JSON.stringify(state)}</div>;
+};
+
+export const UpdateTask = () => {
+    const [ state, setState ] = useState<any>(null);
+
+    useEffect(() => {
+        const todolistId = 'some-todolist-id'; // paste correct id
+        const taskId = 'some-task-id'; // paste correct id
+
+        todolistAPI
+            .updateTask(todolistId, taskId, 'Redux')
+            .then((response) => setState(response.data));
+
+    }, []);
+
+    return <div>{JSON.stringify(state)}</div>;
+};
+
