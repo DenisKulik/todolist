@@ -16,6 +16,13 @@ type CreateTodolistResponseType = {
     }
 }
 
+type DeleteTodolistResponseType = {
+    resultCode: number
+    messages: string[]
+    fieldsErrors: string[]
+    data: {}
+}
+
 type UpdateTodolistResponseType = {
     resultCode: number
     messages: string[]
@@ -38,11 +45,13 @@ export const todolistAPI = {
         );
     },
     deleteTodolist(todolistId: string) {
-        return instance.delete<UpdateTodolistResponseType>(
+        return instance.delete<DeleteTodolistResponseType>(
             `todo-lists/${todolistId}`
         );
     },
     updateTodolistTitle(todolistId: string, title: string) {
-        return instance.put(`todo-lists/${todolistId}`, { title });
+        return instance.put<UpdateTodolistResponseType>(
+            `todo-lists/${todolistId}`, { title }
+        );
     },
 };
