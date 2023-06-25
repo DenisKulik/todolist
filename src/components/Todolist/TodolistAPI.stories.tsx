@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { todolistAPI } from '../../api/todolistAPI';
 
 export default {
     title: 'API'
-};
-
-const settings = {
-    withCredentials: true
 };
 
 export const GetTodolists = () => {
     const [ state, setState ] = useState<any>(null);
 
     useEffect(() => {
-        const promise = axios.get(
-            'https://social-network.samuraijs.com/api/1.1/todo-lists',
-            settings
-        ).then((response) => setState(response.data));
+        todolistAPI
+            .getTodolist()
+            .then((response) => setState(response.data));
     }, []);
 
     return <div>{JSON.stringify(state)}</div>;
@@ -26,11 +22,9 @@ export const CreateTodolist = () => {
     const [ state, setState ] = useState<any>(null);
 
     useEffect(() => {
-        const promise = axios.post(
-            'https://social-network.samuraijs.com/api/1.1/todo-lists',
-            { title: 'What to learn' },
-            settings
-        ).then((response) => setState(response.data));
+        todolistAPI
+            .createTodolist('What to learn')
+            .then((response) => setState(response.data));
     }, []);
 
     return <div>{JSON.stringify(state)}</div>;
@@ -42,11 +36,8 @@ export const DeleteTodolist = () => {
     useEffect(() => {
         const todolistId = 'some-todolist-id'; // paste correct id
 
-        const promise = axios
-            .delete(
-                `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`,
-                settings
-            )
+        todolistAPI
+            .deleteTodolist(todolistId)
             .then((response) => setState(response.data));
     }, []);
 
@@ -58,12 +49,8 @@ export const UpdateTodolistTitle = () => {
     useEffect(() => {
         const todolistId = 'some-todolist-id'; // paste correct id
 
-        const promise = axios
-            .put(
-                `https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`,
-                { title: 'What to buy' },
-                settings
-            )
+        todolistAPI
+            .updateTodolistTitle(todolistId, 'What to buy')
             .then((response) => setState(response.data));
 
     }, []);
