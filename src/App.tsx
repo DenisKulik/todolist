@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Container from '@mui/material/Container';
@@ -6,20 +7,11 @@ import Paper from '@mui/material/Paper';
 import { AppRootStateType } from './state/store';
 import AddItemForm from './components/AddItemForm/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
-import { addTodolistAC } from './state/todolistsReducer';
+import { addTodolistAC, TodolistDomainType } from './state/todolistsReducer';
 import Todolist from './components/Todolist/Todolist';
-import { useCallback } from 'react';
-
-export type FilterType = 'all' | 'active' | 'completed'
-
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterType
-}
 
 const App = () => {
-    const todolists = useSelector<AppRootStateType, TodolistType[]>(
+    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(
         state => state.todolists);
 
     const dispatch = useDispatch();

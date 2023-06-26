@@ -3,7 +3,7 @@ import Task from './Task';
 import {
     ReduxStoreProviderDecorator
 } from '../../state/ReduxStoreProviderDecorator';
-import { TaskType } from '../Todolist/Todolist';
+import { TaskType } from '../../api/todolistAPI';
 import { useSelector } from 'react-redux';
 import { AppRootStateType } from '../../state/store';
 

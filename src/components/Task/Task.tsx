@@ -5,10 +5,10 @@ import EditableSpan from '../EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
-import { TaskType } from '../Todolist/Todolist';
 import {
     changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC
 } from '../../state/tasksReducer';
+import { TaskStatuses, TaskType } from '../../api/todolistAPI';
 
 type TaskPropsType = {
     task: TaskType
@@ -24,7 +24,8 @@ const Task = (props: TaskPropsType) => {
         dispatch(deleteTaskAC(task.id, todolistId));
     }, [ dispatch, task.id, todolistId ]);
 
-    const changeTaskStatus = useCallback((status: boolean) => {
+    const changeTaskStatus = useCallback((checked: boolean) => {
+        const status = checked ? TaskStatuses.Completed : TaskStatuses.New;
         dispatch(changeTaskStatusAC(task.id, status, todolistId));
     }, [ dispatch, task.id, todolistId ]);
 
@@ -33,9 +34,11 @@ const Task = (props: TaskPropsType) => {
     }, [ dispatch, task.id, todolistId ]);
 
     return (
-        <ListItem className={task.isDone ? 'isDone' : ''} key={task.id}>
+        <ListItem
+            className={task.status === TaskStatuses.Completed ? 'isDone' : ''}
+            key={task.id}>
             <CustomCheckbox
-                checked={task.isDone}
+                checked={task.status === TaskStatuses.Completed}
                 callback={changeTaskStatus}
             />
             <EditableSpan

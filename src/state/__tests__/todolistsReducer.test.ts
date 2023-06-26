@@ -3,16 +3,28 @@ import todolistsReducer, {
     deleteTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
+    TodolistDomainType,
 } from '../todolistsReducer';
-import { TodolistType } from '../../App';
 
 describe('todolistsReducer', () => {
-    let startState: TodolistType[] = [];
+    let startState: TodolistDomainType[] = [];
 
     beforeEach(() => {
         startState = [
-            { id: '1', title: 'What to learn', filter: 'all' },
-            { id: '2', title: 'What to buy', filter: 'all' },
+            {
+                id: '1',
+                addedDate: new Date(),
+                order: 0,
+                title: 'What to learn',
+                filter: 'all'
+            },
+            {
+                id: '2',
+                addedDate: new Date(),
+                order: 0,
+                title: 'What to buy',
+                filter: 'all'
+            },
         ];
     });
 

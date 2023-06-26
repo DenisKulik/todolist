@@ -1,6 +1,6 @@
-import { TaskType } from '../components/Todolist/Todolist';
-import { addTodolistACType, deleteTodolistACType } from './todolistsReducer';
 import { v1 } from 'uuid';
+import { addTodolistACType, deleteTodolistACType } from './todolistsReducer';
+import { TaskPriorities, TaskStatuses, TaskType } from '../api/todolistAPI';
 
 export type TasksStateType = {
     [todolistId: string]: TaskType[]
@@ -17,9 +17,17 @@ const tasksReducer = (
             return {
                 ...state,
                 [action.payload.todolistId]: [ {
-                    id: v1(),
+                    description: '',
                     title: action.payload.title,
-                    isDone: false
+                    completed: false,
+                    status: TaskStatuses.New,
+                    priority: TaskPriorities.Hi,
+                    startDate: new Date(),
+                    deadline: new Date(),
+                    id: v1(),
+                    todoListId: action.payload.todolistId,
+                    order: 0,
+                    addedDate: new Date()
                 },
                     ...state[action.payload.todolistId] ]
             };
@@ -34,7 +42,7 @@ const tasksReducer = (
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId].map(
                     task => task.id === action.payload.taskId ?
-                        { ...task, isDone: action.payload.value } : task)
+                        { ...task, status: action.payload.status } : task)
             };
         case 'CHANGE-TASK-TITLE':
             return {
@@ -76,11 +84,11 @@ export const deleteTaskAC = (taskId: string, todolistId: string) => {
 };
 
 export const changeTaskStatusAC = (
-    taskId: string, value: boolean, todolistId: string
+    taskId: string, status: TaskStatuses, todolistId: string
 ) => {
     return {
         type: 'CHANGE-TASK-STATUS',
-        payload: { taskId, value, todolistId }
+        payload: { taskId, status, todolistId }
     } as const;
 };
 
