@@ -19,7 +19,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(getTodolistsTC());
-    }, []);
+    }, [ dispatch ]);
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title));
