@@ -91,7 +91,7 @@ export const changeTodolistTitleAC = (title: string, todolistId: string) => {
     } as const;
 };
 
-export const getTodolists = (dispatch: Dispatch) => {
+export const getTodolistsTC = () => (dispatch: Dispatch) => {
     todolistAPI
         .getTodolists()
         .then(res => {

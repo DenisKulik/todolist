@@ -8,7 +8,7 @@ import { AppRootStateType, useAppDispatch } from './state/store';
 import AddItemForm from './components/AddItemForm/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
 import {
-    addTodolistAC, getTodolists, TodolistDomainType
+    addTodolistAC, getTodolistsTC, TodolistDomainType
 } from './state/todolistsReducer';
 import Todolist from './components/Todolist/Todolist';
 
@@ -18,7 +18,7 @@ const App = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getTodolists);
+        dispatch(getTodolistsTC());
     }, []);
 
     const addTodolist = useCallback((title: string) => {
