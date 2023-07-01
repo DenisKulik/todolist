@@ -10,7 +10,7 @@ export const GetTodolists = () => {
 
     useEffect(() => {
         todolistAPI
-            .getTodolist()
+            .getTodolists()
             .then((response) => setState(response.data));
     }, []);
 

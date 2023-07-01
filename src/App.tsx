@@ -4,28 +4,24 @@ import styled from 'styled-components';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { AppRootStateType } from './state/store';
+import {
+    AppDispatchType, AppRootStateType, useAppDispatch
+} from './state/store';
 import AddItemForm from './components/AddItemForm/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
 import {
-    addTodolistAC, setTodolistsAC, TodolistDomainType
+    addTodolistAC, getTodolists, TodolistDomainType
 } from './state/todolistsReducer';
 import Todolist from './components/Todolist/Todolist';
-import { todolistAPI } from './api/todolistAPI';
 
 const App = () => {
-    useEffect(() => {
-        todolistAPI
-            .getTodolist()
-            .then(res => {
-                dispatch(setTodolistsAC(res.data));
-            });
-    }, []);
-
     const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(
         state => state.todolists);
+    const dispatch = useAppDispatch();
 
-    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTodolists);
+    }, []);
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title));
