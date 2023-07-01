@@ -37,7 +37,7 @@ export const todolistAPI = {
     },
     updateTask(todolistId: string, taskId: string, title: string) {
         return instance.put<ResponseType<{ item: TaskType }>,
-            AxiosResponse<ResponseType<{ item: TaskType }>, UpdateTaskModelType>
+            AxiosResponse<ResponseType<{ item: TaskType }>, TaskType[]>
         >(`todo-lists/${todolistId}/tasks/${taskId}`, { title });
     },
 };
@@ -77,15 +77,6 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: Date
-}
-
-export type UpdateTaskModelType = {
-    title: string
-    description: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: Date
-    deadline: Date
 }
 
 type GetTasksResponse = {
