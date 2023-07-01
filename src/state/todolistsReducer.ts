@@ -14,6 +14,10 @@ const todolistsReducer = (
     action: ActionTypes
 ): TodolistDomainType[] => {
     switch (action.type) {
+        case 'SET-TODOLISTS':
+            return action.payload.todolists.map(todolist => ({
+                ...todolist, filter: 'all'
+            }));
         case 'ADD-TODOLIST':
             return [ {
                 id: action.payload.todolistId,
@@ -39,11 +43,21 @@ const todolistsReducer = (
 };
 
 type ActionTypes = addTodolistACType | deleteTodolistACType
-    | changeTodolistFilterACType | changeTodolistTitleACType;
+    | changeTodolistFilterACType | changeTodolistTitleACType
+    | setTodolistsACType;
+
+export type setTodolistsACType = ReturnType<typeof setTodolistsAC>;
 export type addTodolistACType = ReturnType<typeof addTodolistAC>;
 export type deleteTodolistACType = ReturnType<typeof deleteTodolistAC>;
 type changeTodolistFilterACType = ReturnType<typeof changeTodolistFilterAC>;
 type changeTodolistTitleACType = ReturnType<typeof changeTodolistTitleAC>;
+
+export const setTodolistsAC = (todolists: TodolistType[]) => {
+    return {
+        type: 'SET-TODOLISTS',
+        payload: { todolists }
+    } as const;
+};
 
 export const addTodolistAC = (title: string) => {
     return {

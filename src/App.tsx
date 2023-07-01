@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Container from '@mui/material/Container';
@@ -7,10 +7,21 @@ import Paper from '@mui/material/Paper';
 import { AppRootStateType } from './state/store';
 import AddItemForm from './components/AddItemForm/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
-import { addTodolistAC, TodolistDomainType } from './state/todolistsReducer';
+import {
+    addTodolistAC, setTodolistsAC, TodolistDomainType
+} from './state/todolistsReducer';
 import Todolist from './components/Todolist/Todolist';
+import { todolistAPI } from './api/todolistAPI';
 
 const App = () => {
+    useEffect(() => {
+        todolistAPI
+            .getTodolist()
+            .then(res => {
+                dispatch(setTodolistsAC(res.data));
+            });
+    }, []);
+
     const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(
         state => state.todolists);
 

@@ -1,5 +1,7 @@
 import { v1 } from 'uuid';
-import { addTodolistACType, deleteTodolistACType } from './todolistsReducer';
+import {
+    addTodolistACType, deleteTodolistACType, setTodolistsACType
+} from './todolistsReducer';
 import { TaskPriorities, TaskStatuses, TaskType } from '../api/todolistAPI';
 
 export type TasksStateType = {
@@ -13,6 +15,12 @@ const tasksReducer = (
     action: ActionTypes
 ): TasksStateType => {
     switch (action.type) {
+        case 'SET-TODOLISTS':
+            const newState = { ...state };
+            action.payload.todolists.forEach((todolist) => {
+                newState[todolist.id] = [];
+            });
+            return newState;
         case 'ADD-TASK':
             return {
                 ...state,
@@ -63,7 +71,8 @@ const tasksReducer = (
 };
 
 type ActionTypes = addTaskACType | deleteTaskACType | changeTaskStatusACType
-    | changeTaskTitleACType | addTodolistACType | deleteTodolistACType;
+    | changeTaskTitleACType | addTodolistACType | deleteTodolistACType
+    | setTodolistsACType;
 type addTaskACType = ReturnType<typeof addTaskAC>;
 type deleteTaskACType = ReturnType<typeof deleteTaskAC>;
 type changeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>;
