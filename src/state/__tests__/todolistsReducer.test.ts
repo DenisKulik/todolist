@@ -63,7 +63,7 @@ describe('todolistsReducer', () => {
     });
 
     it('should change todolist title correctly', () => {
-        const action = changeTodolistTitleAC('New Title', '2');
+        const action = changeTodolistTitleAC('2', 'New Title');
 
         const endState = todolistsReducer(startState, action);
 

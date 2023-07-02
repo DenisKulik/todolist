@@ -8,8 +8,7 @@ import EditableSpan from '../EditableSpan/EditableSpan';
 import { AppRootStateType, useAppDispatch } from '../../state/store';
 import { createTaskTC, getTasksTC } from '../../state/tasksReducer';
 import {
-    changeTodolistFilterAC,
-    changeTodolistTitleAC, deleteTodolistTC, FilterType
+    changeTodolistFilterAC, changeTodolistTitleTC, deleteTodolistTC, FilterType
 } from '../../state/todolistsReducer';
 import CustomButton from '../CustomButton/CustomButton';
 import Task from '../Task/Task';
@@ -31,7 +30,7 @@ const Todolist = (props: TodolistPropsType) => {
 
     useEffect(() => {
         dispatch(getTasksTC(todolistId));
-    }, [ dispatch ]);
+    }, [ dispatch, todolistId ]);
 
     const addTask = useCallback((title: string) => {
         dispatch(createTaskTC(todolistId, title));
@@ -42,7 +41,7 @@ const Todolist = (props: TodolistPropsType) => {
     }, [ dispatch, todolistId ]);
 
     const changeTodolistTitle = useCallback((title: string) => {
-        dispatch(changeTodolistTitleAC(title, todolistId));
+        dispatch(changeTodolistTitleTC(todolistId, title));
     }, [ dispatch, todolistId ]);
 
     const changeTodolistFilterHandler = useCallback((

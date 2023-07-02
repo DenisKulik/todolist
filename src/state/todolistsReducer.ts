@@ -1,4 +1,3 @@
-import { v1 } from 'uuid';
 import { todolistAPI, TodolistType } from '../api/todolistAPI';
 import { Dispatch } from 'redux';
 
@@ -78,7 +77,7 @@ export const changeTodolistFilterAC = (
     } as const;
 };
 
-export const changeTodolistTitleAC = (title: string, todolistId: string) => {
+export const changeTodolistTitleAC = (todolistId: string, title: string) => {
     return {
         type: 'CHANGE-TODOLIST-TITLE',
         payload: { title, todolistId }
@@ -98,6 +97,19 @@ export const getTodolistsTC = () => (dispatch: Dispatch) => {
         .getTodolists()
         .then(res => {
             dispatch(setTodolistsAC(res.data));
+        });
+};
+
+export const changeTodolistTitleTC = (
+    todolistId: string,
+    title: string
+) => (dispatch: Dispatch) => {
+    todolistAPI
+        .updateTodolistTitle(todolistId, title)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(changeTodolistTitleAC(todolistId, title));
+            }
         });
 };
 
