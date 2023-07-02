@@ -82,7 +82,9 @@ type ActionTypes = ReturnType<typeof setTasksAC>
     | addTaskACType
     | deleteTaskACType
     | changeTaskStatusACType
-    | changeTaskTitleACType | addTodolistACType | deleteTodolistACType
+    | changeTaskTitleACType
+    | addTodolistACType
+    | deleteTodolistACType
     | setTodolistsACType;
 type addTaskACType = ReturnType<typeof addTaskAC>;
 type deleteTaskACType = ReturnType<typeof deleteTaskAC>;
@@ -103,10 +105,10 @@ export const addTaskAC = (title: string, todolistId: string) => {
     } as const;
 };
 
-export const deleteTaskAC = (taskId: string, todolistId: string) => {
+export const deleteTaskAC = (todolistId: string, taskId: string) => {
     return {
         type: 'DELETE-TASK',
-        payload: { taskId, todolistId }
+        payload: { todolistId, taskId }
     } as const;
 };
 
@@ -133,6 +135,19 @@ export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
         .getTasks(todolistId)
         .then(res => {
             dispatch(setTasksAC(todolistId, res.data.items));
+        });
+};
+
+export const deleteTaskTC = (
+    todolistId: string,
+    taskId: string
+) => (dispatch: Dispatch) => {
+    todolistAPI
+        .deleteTask(todolistId, taskId)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(deleteTaskAC(todolistId, taskId));
+            }
         });
 };
 

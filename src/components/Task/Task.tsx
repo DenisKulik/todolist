@@ -1,14 +1,14 @@
 import { memo, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import CustomCheckbox from '../ChexboxItem/CustomCheckbox';
 import EditableSpan from '../EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 import {
-    changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC
+    changeTaskStatusAC, changeTaskTitleAC, deleteTaskTC
 } from '../../state/tasksReducer';
 import { TaskStatuses, TaskType } from '../../api/todolistAPI';
+import { useAppDispatch } from '../../state/store';
 
 type TaskPropsType = {
     task: TaskType
@@ -18,10 +18,10 @@ type TaskPropsType = {
 const Task = (props: TaskPropsType) => {
     const { task, todolistId } = props;
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const deleteTask = useCallback(() => {
-        dispatch(deleteTaskAC(task.id, todolistId));
+        dispatch(deleteTaskTC(todolistId, task.id));
     }, [ dispatch, task.id, todolistId ]);
 
     const changeTaskStatus = useCallback((checked: boolean) => {
