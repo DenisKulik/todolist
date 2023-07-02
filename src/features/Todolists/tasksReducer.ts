@@ -5,13 +5,13 @@ import {
     TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType
 } from '../../api/todolistAPI';
 import { Dispatch } from 'redux';
-import { AppRootStateType } from '../../app/store';
+import { AppActionsType, AppRootStateType } from '../../app/store';
 
 const initialState: TasksStateType = {};
 
 const tasksReducer = (
     state: TasksStateType = initialState,
-    action: ActionsTypes
+    action: AppActionsType
 ): TasksStateType => {
     switch (action.type) {
         case 'SET-TODOLISTS':
@@ -79,7 +79,7 @@ export const updateTaskAC = (
 
 // thunks
 export const getTasksTC = (todolistId: string) => (
-    dispatch: Dispatch<ActionsTypes>
+    dispatch: Dispatch<AppActionsType>
 ) => {
     todolistAPI
         .getTasks(todolistId)
@@ -91,7 +91,7 @@ export const getTasksTC = (todolistId: string) => (
 export const createTaskTC = (
     todolistId: string,
     title: string
-) => (dispatch: Dispatch<ActionsTypes>) => {
+) => (dispatch: Dispatch<AppActionsType>) => {
     todolistAPI
         .createTask(todolistId, title)
         .then(res => {
@@ -103,7 +103,8 @@ export const updateTaskTC = (
     todolistId: string,
     taskId: string,
     data: UpdateTaskType
-) => (dispatch: Dispatch<ActionsTypes>, getState: () => AppRootStateType) => {
+) => (dispatch: Dispatch<AppActionsType>,
+    getState: () => AppRootStateType) => {
     const task = getState().tasks[todolistId].find(task => task.id === taskId);
 
     if (task) {
@@ -128,7 +129,7 @@ export const updateTaskTC = (
 export const deleteTaskTC = (
     todolistId: string,
     taskId: string
-) => (dispatch: Dispatch<ActionsTypes>) => {
+) => (dispatch: Dispatch<AppActionsType>) => {
     todolistAPI
         .deleteTask(todolistId, taskId)
         .then(res => {
@@ -143,7 +144,7 @@ export type TasksStateType = {
     [todolistId: string]: TaskType[]
 }
 
-type ActionsTypes =
+export type TasksActionsType =
     | ReturnType<typeof setTasksAC>
     | ReturnType<typeof addTaskAC>
     | ReturnType<typeof deleteTaskAC>

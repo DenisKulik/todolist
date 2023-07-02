@@ -1,11 +1,12 @@
 import { todolistAPI, TodolistType } from '../../api/todolistAPI';
 import { Dispatch } from 'redux';
+import { AppActionsType } from '../../app/store';
 
 const initialState: TodolistDomainType[] = [];
 
 const todolistsReducer = (
     state: TodolistDomainType[] = initialState,
-    action: ActionsTypes
+    action: AppActionsType
 ): TodolistDomainType[] => {
     switch (action.type) {
         case 'SET-TODOLISTS':
@@ -61,7 +62,7 @@ export const changeTodolistTitleAC = (todolistId: string, title: string) => ({
 
 // thunks
 export const createTodolistsTC = (title: string) => (
-    dispatch: Dispatch<ActionsTypes>
+    dispatch: Dispatch<AppActionsType>
 ) => {
     todolistAPI
         .createTodolist(title)
@@ -70,7 +71,7 @@ export const createTodolistsTC = (title: string) => (
         });
 };
 
-export const getTodolistsTC = () => (dispatch: Dispatch<ActionsTypes>) => {
+export const getTodolistsTC = () => (dispatch: Dispatch<AppActionsType>) => {
     todolistAPI
         .getTodolists()
         .then(res => {
@@ -81,7 +82,7 @@ export const getTodolistsTC = () => (dispatch: Dispatch<ActionsTypes>) => {
 export const changeTodolistTitleTC = (
     todolistId: string,
     title: string
-) => (dispatch: Dispatch<ActionsTypes>) => {
+) => (dispatch: Dispatch<AppActionsType>) => {
     todolistAPI
         .updateTodolistTitle(todolistId, title)
         .then(res => {
@@ -92,7 +93,7 @@ export const changeTodolistTitleTC = (
 };
 
 export const deleteTodolistTC = (todolistId: string) => (
-    dispatch: Dispatch<ActionsTypes>
+    dispatch: Dispatch<AppActionsType>
 ) => {
     todolistAPI
         .deleteTodolist(todolistId)
@@ -110,7 +111,7 @@ export type TodolistDomainType = TodolistType & {
     filter: FilterType
 }
 
-type ActionsTypes =
+export type TodolistsActionsType =
     | SetTodolistsAC
     | AddTodolistAC
     | DeleteTodolistAC
