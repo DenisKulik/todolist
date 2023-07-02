@@ -99,5 +99,15 @@ export const getTodolistsTC = () => (dispatch: Dispatch) => {
         });
 };
 
+export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch) => {
+    todolistAPI
+        .deleteTodolist(todolistId)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(deleteTodolistAC(todolistId));
+            }
+        });
+};
+
 
 export default todolistsReducer;

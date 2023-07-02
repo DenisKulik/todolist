@@ -9,7 +9,7 @@ import { AppRootStateType, useAppDispatch } from '../../state/store';
 import { createTaskTC, getTasksTC } from '../../state/tasksReducer';
 import {
     changeTodolistFilterAC,
-    changeTodolistTitleAC, deleteTodolistAC, FilterType
+    changeTodolistTitleAC, deleteTodolistTC, FilterType
 } from '../../state/todolistsReducer';
 import CustomButton from '../CustomButton/CustomButton';
 import Task from '../Task/Task';
@@ -38,7 +38,7 @@ const Todolist = (props: TodolistPropsType) => {
     }, [ dispatch, todolistId ]);
 
     const deleteTodolistHandler = useCallback(() => {
-        dispatch(deleteTodolistAC(todolistId));
+        dispatch(deleteTodolistTC(todolistId));
     }, [ dispatch, todolistId ]);
 
     const changeTodolistTitle = useCallback((title: string) => {
