@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import AddItemForm from '../AddItemForm/AddItemForm';
 import EditableSpan from '../EditableSpan/EditableSpan';
 import { AppRootStateType, useAppDispatch } from '../../state/store';
-import { addTaskAC, createTaskTC, getTasksTC } from '../../state/tasksReducer';
+import { createTaskTC, getTasksTC } from '../../state/tasksReducer';
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC, deleteTodolistAC, FilterType

@@ -1,10 +1,7 @@
-import { v1 } from 'uuid';
 import {
     addTodolistACType, deleteTodolistACType, setTodolistsACType
 } from './todolistsReducer';
-import {
-    TaskPriorities, TaskStatuses, TaskType, todolistAPI
-} from '../api/todolistAPI';
+import { TaskStatuses, TaskType, todolistAPI } from '../api/todolistAPI';
 import { Dispatch } from 'redux';
 
 export type TasksStateType = {
