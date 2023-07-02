@@ -1,8 +1,8 @@
 import tasksReducer, {
     addTaskAC,
     deleteTaskAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC, TasksStateType,
+    TasksStateType,
+    updateTaskAC,
 } from '../tasksReducer';
 import { deleteTodolistAC } from '../todolistsReducer';
 import { TaskPriorities, TaskStatuses } from '../../api/todolistAPI';
@@ -130,21 +130,22 @@ describe('tasksReducer', () => {
         expect(endState['todolistId2'].every(t => t.id !== '2')).toBeTruthy();
     });
 
-    it('should change task status correctly', () => {
-        const action = changeTaskStatusAC('2', TaskStatuses.Completed,
-            'todolistId2');
+    it('should update task correctly', () => {
+        const updatedTask = {
+            title: 'eggs',
+            description: '',
+            status: TaskStatuses.Completed,
+            priority: TaskPriorities.Middle,
+            startDate: new Date(),
+            deadline: new Date()
+        };
+
+        const action = updateTaskAC('todolistId2', '2', updatedTask);
 
         const endState = tasksReducer(startState, action);
 
         expect(endState['todolistId2'][1].status).toBe(TaskStatuses.Completed);
-    });
-
-    it('should change task title correctly', () => {
-        const action = changeTaskTitleAC('2', 'water', 'todolistId2');
-
-        const endState = tasksReducer(startState, action);
-
-        expect(endState['todolistId2'][1].title).toBe('water');
+        expect(endState['todolistId2'][1].title).toBe('eggs');
     });
 
     it('should delete tasks for todolist correctly', () => {

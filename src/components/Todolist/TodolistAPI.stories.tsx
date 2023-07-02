@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { todolistAPI } from '../../api/todolistAPI';
+import {
+    TaskPriorities, TaskStatuses, todolistAPI, UpdateTaskModelType
+} from '../../api/todolistAPI';
 
 export default {
     title: 'API'
@@ -243,8 +245,17 @@ export const UpdateTask = () => {
     };
 
     const updateTask = () => {
+        const model: UpdateTaskModelType = {
+            title: taskTitle,
+            description: '',
+            status: TaskStatuses.New,
+            priority: TaskPriorities.Hi,
+            startDate: new Date(),
+            deadline: new Date()
+        };
+
         todolistAPI
-            .updateTask(todolistId, taskId, taskTitle)
+            .updateTask(todolistId, taskId, model)
             .then((response) => setState(response.data));
 
         setTodolistId('');

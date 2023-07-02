@@ -4,9 +4,7 @@ import EditableSpan from '../EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
-import {
-    changeTaskStatusAC, changeTaskTitleAC, deleteTaskTC
-} from '../../state/tasksReducer';
+import { deleteTaskTC, updateTaskTC } from '../../state/tasksReducer';
 import { TaskStatuses, TaskType } from '../../api/todolistAPI';
 import { useAppDispatch } from '../../state/store';
 
@@ -26,11 +24,11 @@ const Task = (props: TaskPropsType) => {
 
     const changeTaskStatus = useCallback((checked: boolean) => {
         const status = checked ? TaskStatuses.Completed : TaskStatuses.New;
-        dispatch(changeTaskStatusAC(task.id, status, todolistId));
+        dispatch(updateTaskTC(todolistId, task.id, { status }));
     }, [ dispatch, task.id, todolistId ]);
 
     const changeTaskTitle = useCallback((title: string) => {
-        dispatch(changeTaskTitleAC(task.id, title, todolistId));
+        dispatch(updateTaskTC(todolistId, task.id, { title }));
     }, [ dispatch, task.id, todolistId ]);
 
     return (
