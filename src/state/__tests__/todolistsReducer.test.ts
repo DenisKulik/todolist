@@ -29,12 +29,19 @@ describe('todolistsReducer', () => {
     });
 
     it('should add todolist correctly', () => {
-        const action = addTodolistAC('New Todolist');
+        const newTodos = {
+            id: '3',
+            addedDate: new Date(),
+            order: 0,
+            title: 'What to do'
+        };
+
+        const action = addTodolistAC(newTodos);
 
         const endState = todolistsReducer(startState, action);
 
         expect(endState.length).toBe(3);
-        expect(endState[0].title).toBe('New Todolist');
+        expect(endState[0].title).toBe('What to do');
         expect(endState[0].filter).toBe('all');
     });
 

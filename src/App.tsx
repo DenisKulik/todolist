@@ -8,7 +8,7 @@ import { AppRootStateType, useAppDispatch } from './state/store';
 import AddItemForm from './components/AddItemForm/AddItemForm';
 import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
 import {
-    addTodolistAC, getTodolistsTC, TodolistDomainType
+    createTodolistsTC, getTodolistsTC, TodolistDomainType
 } from './state/todolistsReducer';
 import Todolist from './components/Todolist/Todolist';
 
@@ -22,7 +22,7 @@ const App = () => {
     }, [ dispatch ]);
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistAC(title));
+        dispatch(createTodolistsTC(title));
     }, [ dispatch ]);
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {

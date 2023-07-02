@@ -50,7 +50,7 @@ const tasksReducer = (
                         { ...task, ...action.payload.model } : task)
             };
         case 'ADD-TODOLIST':
-            return { ...state, [action.payload.todolistId]: [] };
+            return { ...state, [action.payload.todolist.id]: [] };
         case 'DELETE-TODOLIST':
             const stateCopy = { ...state };
             delete stateCopy[action.payload.todolistId];
