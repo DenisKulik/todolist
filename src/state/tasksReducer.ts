@@ -32,20 +32,8 @@ const tasksReducer = (
         case 'ADD-TASK':
             return {
                 ...state,
-                [action.payload.todolistId]: [ {
-                    description: '',
-                    title: action.payload.title,
-                    completed: false,
-                    status: TaskStatuses.New,
-                    priority: TaskPriorities.Hi,
-                    startDate: new Date(),
-                    deadline: new Date(),
-                    id: v1(),
-                    todoListId: action.payload.todolistId,
-                    order: 0,
-                    addedDate: new Date()
-                },
-                    ...state[action.payload.todolistId] ]
+                [action.payload.task.todoListId]: [ action.payload.task,
+                    ...state[action.payload.task.todoListId], ]
             };
         case 'DELETE-TASK':
             return {
@@ -98,10 +86,10 @@ const setTasksAC = (todolistId: string, tasks: TaskType[]) => {
     } as const;
 };
 
-export const addTaskAC = (title: string, todolistId: string) => {
+export const addTaskAC = (task: TaskType) => {
     return {
         type: 'ADD-TASK',
-        payload: { title, todolistId }
+        payload: { task }
     } as const;
 };
 
@@ -135,6 +123,17 @@ export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
         .getTasks(todolistId)
         .then(res => {
             dispatch(setTasksAC(todolistId, res.data.items));
+        });
+};
+
+export const createTaskTC = (
+    todolistId: string,
+    title: string
+) => (dispatch: Dispatch) => {
+    todolistAPI
+        .createTask(todolistId, title)
+        .then(res => {
+            dispatch(addTaskAC(res.data.data.item));
         });
 };
 

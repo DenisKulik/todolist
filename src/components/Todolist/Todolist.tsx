@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import AddItemForm from '../AddItemForm/AddItemForm';
 import EditableSpan from '../EditableSpan/EditableSpan';
 import { AppRootStateType, useAppDispatch } from '../../state/store';
-import { addTaskAC, getTasksTC } from '../../state/tasksReducer';
+import { addTaskAC, createTaskTC, getTasksTC } from '../../state/tasksReducer';
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC, deleteTodolistAC, FilterType
@@ -34,7 +34,7 @@ const Todolist = (props: TodolistPropsType) => {
     }, [ dispatch ]);
 
     const addTask = useCallback((title: string) => {
-        dispatch(addTaskAC(title, todolistId));
+        dispatch(createTaskTC(todolistId, title));
     }, [ dispatch, todolistId ]);
 
     const deleteTodolistHandler = useCallback(() => {

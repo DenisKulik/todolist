@@ -98,17 +98,31 @@ describe('tasksReducer', () => {
     });
 
     it('should add task correctly', () => {
-        const action = addTaskAC('Redux', 'todolistId2');
+        const newTask = {
+            description: '',
+            title: 'React book',
+            completed: false,
+            status: TaskStatuses.New,
+            priority: TaskPriorities.Hi,
+            startDate: new Date(),
+            deadline: new Date(),
+            id: '4',
+            todoListId: 'todolistId2',
+            order: 0,
+            addedDate: new Date()
+        };
+
+        const action = addTaskAC(newTask);
 
         const endState = tasksReducer(startState, action);
 
         expect(endState['todolistId2'].length).toBe(4);
-        expect(endState['todolistId2'][0].title).toBe('Redux');
+        expect(endState['todolistId2'][0].title).toBe('React book');
         expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New);
     });
 
     it('should delete task correctly', () => {
-        const action = deleteTaskAC('2', 'todolistId2');
+        const action = deleteTaskAC('todolistId2', '2');
 
         const endState = tasksReducer(startState, action);
 
