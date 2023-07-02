@@ -2,7 +2,10 @@ import { v1 } from 'uuid';
 import {
     addTodolistACType, deleteTodolistACType, setTodolistsACType
 } from './todolistsReducer';
-import { TaskPriorities, TaskStatuses, TaskType } from '../api/todolistAPI';
+import {
+    TaskPriorities, TaskStatuses, TaskType, todolistAPI
+} from '../api/todolistAPI';
+import { Dispatch } from 'redux';
 
 export type TasksStateType = {
     [todolistId: string]: TaskType[]
@@ -21,6 +24,11 @@ const tasksReducer = (
                 newState[todolist.id] = [];
             });
             return newState;
+        case 'SET-TASKS':
+            return {
+                ...state,
+                [action.payload.todolistId]: action.payload.tasks
+            };
         case 'ADD-TASK':
             return {
                 ...state,
@@ -70,13 +78,23 @@ const tasksReducer = (
     }
 };
 
-type ActionTypes = addTaskACType | deleteTaskACType | changeTaskStatusACType
+type ActionTypes = ReturnType<typeof setTasksAC>
+    | addTaskACType
+    | deleteTaskACType
+    | changeTaskStatusACType
     | changeTaskTitleACType | addTodolistACType | deleteTodolistACType
     | setTodolistsACType;
 type addTaskACType = ReturnType<typeof addTaskAC>;
 type deleteTaskACType = ReturnType<typeof deleteTaskAC>;
 type changeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>;
 type changeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>;
+
+const setTasksAC = (todolistId: string, tasks: TaskType[]) => {
+    return {
+        type: 'SET-TASKS',
+        payload: { todolistId, tasks }
+    } as const;
+};
 
 export const addTaskAC = (title: string, todolistId: string) => {
     return {
@@ -108,6 +126,14 @@ export const changeTaskTitleAC = (
         type: 'CHANGE-TASK-TITLE',
         payload: { taskId, title, todolistId }
     } as const;
+};
+
+export const getTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+    todolistAPI
+        .getTasks(todolistId)
+        .then(res => {
+            dispatch(setTasksAC(todolistId, res.data.items));
+        });
 };
 
 export default tasksReducer;
