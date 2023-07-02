@@ -3,8 +3,8 @@ import {
     legacy_createStore as createStore
 } from 'redux';
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import tasksReducer from './tasksReducer';
-import todolistsReducer from './todolistsReducer';
+import tasksReducer from '../features/Todolists/tasksReducer';
+import todolistsReducer from '../features/Todolists/todolistsReducer';
 import { useDispatch } from 'react-redux';
 
 export const rootReducer = combineReducers({

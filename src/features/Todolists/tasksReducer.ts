@@ -3,9 +3,9 @@ import {
 } from './todolistsReducer';
 import {
     TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType
-} from '../api/todolistAPI';
+} from '../../api/todolistAPI';
 import { Dispatch } from 'redux';
-import { AppRootStateType } from './store';
+import { AppRootStateType } from '../../app/store';
 
 const initialState: TasksStateType = {};
 

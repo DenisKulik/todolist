@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
-import AddItemForm from '../AddItemForm/AddItemForm';
-import EditableSpan from '../EditableSpan/EditableSpan';
-import { AppRootStateType, useAppDispatch } from '../../state/store';
-import { createTaskTC, getTasksTC } from '../../state/tasksReducer';
+import AddItemForm from '../../../components/AddItemForm/AddItemForm';
+import EditableSpan from '../../../components/EditableSpan/EditableSpan';
+import { AppRootStateType, useAppDispatch } from '../../../app/store';
+import { createTaskTC, getTasksTC } from '../tasksReducer';
 import {
     changeTodolistFilterAC, changeTodolistTitleTC, deleteTodolistTC, FilterType
-} from '../../state/todolistsReducer';
-import CustomButton from '../CustomButton/CustomButton';
-import Task from '../Task/Task';
-import { TaskStatuses, TaskType } from '../../api/todolistAPI';
+} from '../todolistsReducer';
+import CustomButton from '../../../components/CustomButton/CustomButton';
+import Task from './Task/Task';
+import { TaskStatuses, TaskType } from '../../../api/todolistAPI';
 
 type TodolistPropsType = {
     todolistId: string

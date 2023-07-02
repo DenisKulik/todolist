@@ -1,18 +1,17 @@
-import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import { AppRootStateType, useAppDispatch } from './state/store';
-import AddItemForm from './components/AddItemForm/AddItemForm';
-import ButtonAppBar from './components/ButtonAppBar/ButtonAppBar';
+import { AppRootStateType, useAppDispatch } from '../../app/store';
 import {
-    createTodolistsTC, getTodolistsTC, TodolistDomainType
-} from './state/todolistsReducer';
-import Todolist from './components/Todolist/Todolist';
+    createTodolistsTC,
+    getTodolistsTC, TodolistDomainType
+} from './todolistsReducer';
+import { useCallback, useEffect } from 'react';
+import Grid from '@mui/material/Grid';
+import Todolist from './Todolist/Todolist';
+import AddItemForm from '../../components/AddItemForm/AddItemForm';
+import styled from 'styled-components';
+import Paper from '@mui/material/Paper';
 
-const App = () => {
+export const Todolists = () => {
     const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(
         state => state.todolists);
     const dispatch = useAppDispatch();
@@ -40,17 +39,14 @@ const App = () => {
     });
 
     return (
-        <div>
-            <ButtonAppBar />
-            <Container fixed>
-                <StyledGrid container>
-                    <AddItemForm addItem={addTodolist} />
-                </StyledGrid>
-                <Grid container spacing={3}>
-                    {todolistsItems}
-                </Grid>
-            </Container>
-        </div>
+        <>
+            <StyledGrid container>
+                <AddItemForm addItem={addTodolist} />
+            </StyledGrid>
+            <Grid container spacing={3}>
+                {todolistsItems}
+            </Grid>
+        </>
     );
 };
 
@@ -61,5 +57,3 @@ const StyledPaper = styled(Paper)`
 const StyledGrid = styled(Grid)`
   padding: 20px;
 `;
-
-export default App;

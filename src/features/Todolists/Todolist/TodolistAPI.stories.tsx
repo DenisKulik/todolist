@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
     TaskPriorities, TaskStatuses, todolistAPI, UpdateTaskModelType
-} from '../../api/todolistAPI';
+} from '../../../api/todolistAPI';
 
 export default {
     title: 'API'

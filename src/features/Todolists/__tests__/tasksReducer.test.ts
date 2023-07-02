@@ -5,7 +5,7 @@ import tasksReducer, {
     updateTaskAC,
 } from '../tasksReducer';
 import { deleteTodolistAC } from '../todolistsReducer';
-import { TaskPriorities, TaskStatuses } from '../../api/todolistAPI';
+import { TaskPriorities, TaskStatuses } from '../../../api/todolistAPI';
 
 describe('tasksReducer', () => {
     let startState: TasksStateType = {};
