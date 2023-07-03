@@ -1,6 +1,5 @@
 import {
-    AnyAction, applyMiddleware, combineReducers,
-    legacy_createStore as createStore
+    applyMiddleware, combineReducers, legacy_createStore as createStore
 } from 'redux';
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import tasksReducer, {

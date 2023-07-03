@@ -6,7 +6,7 @@ const initialState: TodolistDomainType[] = [];
 
 const todolistsReducer = (
     state: TodolistDomainType[] = initialState,
-    action: AppActionsType
+    action: TodolistsActionsType
 ): TodolistDomainType[] => {
     switch (action.type) {
         case 'SET-TODOLISTS':

@@ -13,7 +13,7 @@ const initialState: TasksStateType = {};
 
 const tasksReducer = (
     state: TasksStateType = initialState,
-    action: AppActionsType
+    action: TasksActionsType
 ): TasksStateType => {
     switch (action.type) {
         case 'SET-TODOLISTS':
