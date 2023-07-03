@@ -61,47 +61,51 @@ export const changeTodolistTitleAC = (todolistId: string, title: string) => ({
 } as const);
 
 // thunks
-export const createTodolistsTC = (title: string): AppThunkType => (
+export const createTodolistsTC = (title: string): AppThunkType => async (
     dispatch: Dispatch<AppActionsType>
 ) => {
-    todolistAPI
-        .createTodolist(title)
-        .then(res => {
-            dispatch(addTodolistAC(res.data.data.item));
-        });
+    try {
+        const res = await todolistAPI.createTodolist(title);
+        dispatch(addTodolistAC(res.data.data.item));
+    } catch (e) {
+        console.error(e);
+    }
 };
 
-export const getTodolistsTC = (): AppThunkType => (dispatch: Dispatch<AppActionsType>) => {
-    todolistAPI
-        .getTodolists()
-        .then(res => {
-            dispatch(setTodolistsAC(res.data));
-        });
+export const getTodolistsTC = (): AppThunkType => async (dispatch: Dispatch<AppActionsType>) => {
+    try {
+        const res = await todolistAPI.getTodolists();
+        dispatch(setTodolistsAC(res.data));
+    } catch (e) {
+        console.error(e);
+    }
 };
 
 export const changeTodolistTitleTC = (
     todolistId: string,
     title: string
-): AppThunkType => (dispatch: Dispatch<AppActionsType>) => {
-    todolistAPI
-        .updateTodolistTitle(todolistId, title)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(changeTodolistTitleAC(todolistId, title));
-            }
-        });
+): AppThunkType => async (dispatch: Dispatch<AppActionsType>) => {
+    try {
+        const res = await todolistAPI.updateTodolistTitle(todolistId, title);
+        if (res.data.resultCode === 0) {
+            dispatch(changeTodolistTitleAC(todolistId, title));
+        }
+    } catch (e) {
+        console.error(e);
+    }
 };
 
-export const deleteTodolistTC = (todolistId: string): AppThunkType => (
+export const deleteTodolistTC = (todolistId: string): AppThunkType => async (
     dispatch: Dispatch<AppActionsType>
 ) => {
-    todolistAPI
-        .deleteTodolist(todolistId)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(deleteTodolistAC(todolistId));
-            }
-        });
+    try {
+        const res = await todolistAPI.deleteTodolist(todolistId);
+        if (res.data.resultCode === 0) {
+            dispatch(deleteTodolistAC(todolistId));
+        }
+    } catch (e) {
+        console.error(e);
+    }
 };
 
 // types

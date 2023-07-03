@@ -73,72 +73,81 @@ export const deleteTaskAC = (todolistId: string, taskId: string) => ({
 } as const);
 
 export const updateTaskAC = (
-    todolistId: string, taskId: string, model: UpdateTaskModelType
+    todolistId: string,
+    taskId: string,
+    model: UpdateTaskModelType
 ) => ({
     type: 'UPDATE-TASK',
     payload: { todolistId, taskId, model }
 } as const);
 
 // thunks
-export const getTasksTC = (todolistId: string): AppThunkType => (
+export const getTasksTC = (todolistId: string): AppThunkType => async (
     dispatch: Dispatch<AppActionsType>
 ) => {
-    todolistAPI
-        .getTasks(todolistId)
-        .then(res => {
-            dispatch(setTasksAC(todolistId, res.data.items));
-        });
+    try {
+        const res = await todolistAPI.getTasks(todolistId);
+        dispatch(setTasksAC(todolistId, res.data.items));
+    } catch (e) {
+        console.error(e);
+    }
 };
 
 export const createTaskTC = (
     todolistId: string,
     title: string
-): AppThunkType => (dispatch: Dispatch<AppActionsType>) => {
-    todolistAPI
-        .createTask(todolistId, title)
-        .then(res => {
-            dispatch(addTaskAC(res.data.data.item));
-        });
+): AppThunkType => async (dispatch: Dispatch<AppActionsType>) => {
+    try {
+        const res = await todolistAPI.createTask(todolistId, title);
+        dispatch(addTaskAC(res.data.data.item));
+    } catch (e) {
+        console.error(e);
+    }
 };
 
 export const updateTaskTC = (
     todolistId: string,
     taskId: string,
     data: UpdateTaskType
-): AppThunkType => (dispatch: Dispatch<AppActionsType>,
-    getState: () => AppRootStateType) => {
-    const task = getState().tasks[todolistId].find(task => task.id === taskId);
+): AppThunkType => async (
+    dispatch: Dispatch<AppActionsType>,
+    getState: () => AppRootStateType
+) => {
+    try {
+        const task = getState().tasks[todolistId].find(
+            task => task.id === taskId);
 
-    if (task) {
-        const model: UpdateTaskModelType = {
-            title: task.title,
-            description: task.description,
-            status: task.status,
-            priority: task.priority,
-            startDate: task.startDate,
-            deadline: task.deadline,
-            ...data
-        };
+        if (task) {
+            const model: UpdateTaskModelType = {
+                title: task.title,
+                description: task.description,
+                status: task.status,
+                priority: task.priority,
+                startDate: task.startDate,
+                deadline: task.deadline,
+                ...data
+            };
 
-        todolistAPI
-            .updateTask(todolistId, taskId, model)
-            .then(() => {
-                dispatch(updateTaskAC(todolistId, taskId, model));
-            });
+            await todolistAPI.updateTask(todolistId, taskId, model);
+            dispatch(updateTaskAC(todolistId, taskId, model));
+        }
+    } catch (e) {
+        console.error(e);
     }
 };
 
 export const deleteTaskTC = (
     todolistId: string,
     taskId: string
-): AppThunkType => (dispatch: Dispatch<AppActionsType>) => {
-    todolistAPI
-        .deleteTask(todolistId, taskId)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(deleteTaskAC(todolistId, taskId));
-            }
-        });
+): AppThunkType => async (dispatch: Dispatch<AppActionsType>) => {
+    try {
+        const res = await todolistAPI.deleteTask(todolistId, taskId);
+        if (res.data.resultCode === 0) {
+            dispatch(deleteTaskAC(todolistId, taskId));
+        }
+    } catch (e) {
+        console.error(e);
+    }
 };
 
 // types
