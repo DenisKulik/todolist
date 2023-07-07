@@ -65,6 +65,12 @@ export enum TaskPriorities {
     Later = 4
 }
 
+export enum ResultCode {
+    SUCCESS = 0,
+    ERROR = 1,
+    ERROR_CAPTCHA = 10
+}
+
 export type TaskType = {
     description: string
     title: string
