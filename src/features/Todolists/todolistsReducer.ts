@@ -7,7 +7,7 @@ const initialState: TodolistDomainType[] = [];
 
 const todolistsReducer = (
     state: TodolistDomainType[] = initialState,
-    action: TodolistsActionsType | SetLoadingStatusType
+    action: TodolistsActionsType
 ): TodolistDomainType[] => {
     switch (action.type) {
         case 'SET-TODOLISTS':
@@ -62,17 +62,6 @@ export const changeTodolistTitleAC = (todolistId: string, title: string) => ({
 } as const);
 
 // thunks
-export const createTodolistsTC = (title: string): AppThunkType => async (
-    dispatch: Dispatch<ActionsType>
-) => {
-    try {
-        const res = await todolistAPI.createTodolist(title);
-        dispatch(addTodolistAC(res.data.data.item));
-    } catch (e) {
-        console.error(e);
-    }
-};
-
 export const getTodolistsTC = (): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
         const res = await todolistAPI.getTodolists();
@@ -83,14 +72,29 @@ export const getTodolistsTC = (): AppThunkType => async (dispatch: Dispatch<Acti
     }
 };
 
+export const createTodolistTC = (title: string): AppThunkType => async (
+    dispatch: Dispatch<ActionsType>
+) => {
+    try {
+        dispatch(setLoadingStatus('loading'));
+        const res = await todolistAPI.createTodolist(title);
+        dispatch(addTodolistAC(res.data.data.item));
+        dispatch(setLoadingStatus('succeeded'));
+    } catch (e) {
+        console.error(e);
+    }
+};
+
 export const changeTodolistTitleTC = (
     todolistId: string,
     title: string
 ): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
+        dispatch(setLoadingStatus('loading'));
         const res = await todolistAPI.updateTodolistTitle(todolistId, title);
         if (res.data.resultCode === 0) {
             dispatch(changeTodolistTitleAC(todolistId, title));
+            dispatch(setLoadingStatus('succeeded'));
         }
     } catch (e) {
         console.error(e);
@@ -101,9 +105,11 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => async (
     dispatch: Dispatch<ActionsType>
 ) => {
     try {
+        dispatch(setLoadingStatus('loading'));
         const res = await todolistAPI.deleteTodolist(todolistId);
         if (res.data.resultCode === 0) {
             dispatch(deleteTodolistAC(todolistId));
+            dispatch(setLoadingStatus('succeeded'));
         }
     } catch (e) {
         console.error(e);
@@ -122,7 +128,8 @@ export type TodolistsActionsType =
     | AddTodolistAC
     | DeleteTodolistAC
     | ReturnType<typeof changeTodolistFilterAC>
-    | ReturnType<typeof changeTodolistTitleAC>;
+    | ReturnType<typeof changeTodolistTitleAC>
+    | SetLoadingStatusType;
 
 export type SetTodolistsAC = ReturnType<typeof setTodolistsAC>;
 export type AddTodolistAC = ReturnType<typeof addTodolistAC>;

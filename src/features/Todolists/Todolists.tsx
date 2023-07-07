@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import {
-    createTodolistsTC, getTodolistsTC, TodolistDomainType
+    createTodolistTC, getTodolistsTC, TodolistDomainType
 } from './todolistsReducer';
 import { useCallback, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
@@ -19,7 +19,7 @@ export const Todolists = () => {
     }, [ dispatch ]);
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(createTodolistsTC(title));
+        dispatch(createTodolistTC(title));
     }, [ dispatch ]);
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {

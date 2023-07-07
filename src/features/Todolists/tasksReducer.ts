@@ -8,6 +8,7 @@ import { Dispatch } from 'redux';
 import {
     ActionsType, AppRootStateType, AppThunkType
 } from '../../app/store';
+import { setLoadingStatus, SetLoadingStatusType } from '../../app/appReducer';
 
 const initialState: TasksStateType = {};
 
@@ -86,8 +87,10 @@ export const getTasksTC = (todolistId: string): AppThunkType => async (
     dispatch: Dispatch<ActionsType>
 ) => {
     try {
+        dispatch(setLoadingStatus('loading'));
         const res = await todolistAPI.getTasks(todolistId);
         dispatch(setTasksAC(todolistId, res.data.items));
+        dispatch(setLoadingStatus('succeeded'));
     } catch (e) {
         console.error(e);
     }
@@ -98,8 +101,10 @@ export const createTaskTC = (
     title: string
 ): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
+        dispatch(setLoadingStatus('loading'));
         const res = await todolistAPI.createTask(todolistId, title);
         dispatch(addTaskAC(res.data.data.item));
+        dispatch(setLoadingStatus('succeeded'));
     } catch (e) {
         console.error(e);
     }
@@ -114,6 +119,7 @@ export const updateTaskTC = (
     getState: () => AppRootStateType
 ) => {
     try {
+        dispatch(setLoadingStatus('loading'));
         const task = getState().tasks[todolistId].find(
             task => task.id === taskId);
 
@@ -130,6 +136,7 @@ export const updateTaskTC = (
 
             await todolistAPI.updateTask(todolistId, taskId, model);
             dispatch(updateTaskAC(todolistId, taskId, model));
+            dispatch(setLoadingStatus('succeeded'));
         }
     } catch (e) {
         console.error(e);
@@ -141,9 +148,11 @@ export const deleteTaskTC = (
     taskId: string
 ): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
+        dispatch(setLoadingStatus('loading'));
         const res = await todolistAPI.deleteTask(todolistId, taskId);
         if (res.data.resultCode === 0) {
             dispatch(deleteTaskAC(todolistId, taskId));
+            dispatch(setLoadingStatus('succeeded'));
         }
     } catch (e) {
         console.error(e);
@@ -162,7 +171,8 @@ export type TasksActionsType =
     | ReturnType<typeof updateTaskAC>
     | SetTodolistsAC
     | AddTodolistAC
-    | DeleteTodolistAC;
+    | DeleteTodolistAC
+    | SetLoadingStatusType;
 
 type UpdateTaskType = {
     title?: string;
