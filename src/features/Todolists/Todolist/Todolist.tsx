@@ -1,11 +1,10 @@
 import { memo, useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 import AddItemForm from '../../../components/AddItemForm/AddItemForm';
 import EditableSpan from '../../../components/EditableSpan/EditableSpan';
-import { AppRootStateType, useAppDispatch } from '../../../app/store';
+import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { createTaskTC, getTasksTC } from '../tasksReducer';
 import {
     changeTodolistFilterAC, changeTodolistTitleTC, deleteTodolistTC, FilterType
@@ -22,10 +21,7 @@ type TodolistPropsType = {
 
 const Todolist = (props: TodolistPropsType) => {
     const { todolistId, title, filter } = props;
-
-    const tasks = useSelector<AppRootStateType, TaskType[]>(
-        state => state.tasks[todolistId]);
-
+    const tasks = useAppSelector<TaskType[]>(state => state.tasks[todolistId]);
     const dispatch = useAppDispatch();
 
     useEffect(() => {

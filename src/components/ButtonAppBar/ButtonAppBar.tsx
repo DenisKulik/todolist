@@ -5,8 +5,13 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import LinearProgress from '@mui/material/LinearProgress';
+import { useAppSelector } from '../../app/store';
+import { RequestStatusType } from '../../app/appReducer';
 
 const ButtonAppBar = () => {
+    const status = useAppSelector<RequestStatusType>(state => state.app.status);
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -20,12 +25,16 @@ const ButtonAppBar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div"
-                                sx={{ flexGrow: 1 }}>
+                    <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{ flexGrow: 1 }}
+                    >
                         Todolist
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress />}
             </AppBar>
         </Box>
     );

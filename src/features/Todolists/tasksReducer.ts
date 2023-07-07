@@ -6,7 +6,7 @@ import {
 } from '../../api/todolistAPI';
 import { Dispatch } from 'redux';
 import {
-    AppActionsType, AppRootStateType, AppThunkType
+    ActionsType, AppRootStateType, AppThunkType
 } from '../../app/store';
 
 const initialState: TasksStateType = {};
@@ -83,7 +83,7 @@ export const updateTaskAC = (
 
 // thunks
 export const getTasksTC = (todolistId: string): AppThunkType => async (
-    dispatch: Dispatch<AppActionsType>
+    dispatch: Dispatch<ActionsType>
 ) => {
     try {
         const res = await todolistAPI.getTasks(todolistId);
@@ -96,7 +96,7 @@ export const getTasksTC = (todolistId: string): AppThunkType => async (
 export const createTaskTC = (
     todolistId: string,
     title: string
-): AppThunkType => async (dispatch: Dispatch<AppActionsType>) => {
+): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
         const res = await todolistAPI.createTask(todolistId, title);
         dispatch(addTaskAC(res.data.data.item));
@@ -110,7 +110,7 @@ export const updateTaskTC = (
     taskId: string,
     data: UpdateTaskType
 ): AppThunkType => async (
-    dispatch: Dispatch<AppActionsType>,
+    dispatch: Dispatch<ActionsType>,
     getState: () => AppRootStateType
 ) => {
     try {
@@ -139,7 +139,7 @@ export const updateTaskTC = (
 export const deleteTaskTC = (
     todolistId: string,
     taskId: string
-): AppThunkType => async (dispatch: Dispatch<AppActionsType>) => {
+): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
         const res = await todolistAPI.deleteTask(todolistId, taskId);
         if (res.data.resultCode === 0) {

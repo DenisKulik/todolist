@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
-import { AppRootStateType, useAppDispatch } from '../../app/store';
 import {
-    createTodolistsTC,
-    getTodolistsTC, TodolistDomainType
+    AppRootStateType, useAppDispatch, useAppSelector
+} from '../../app/store';
+import {
+    createTodolistsTC, getTodolistsTC, TodolistDomainType
 } from './todolistsReducer';
 import { useCallback, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
@@ -12,7 +13,7 @@ import styled from 'styled-components';
 import Paper from '@mui/material/Paper';
 
 export const Todolists = () => {
-    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(
+    const todolists = useAppSelector<TodolistDomainType[]>(
         state => state.todolists);
     const dispatch = useAppDispatch();
 

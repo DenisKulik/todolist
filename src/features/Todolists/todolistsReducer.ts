@@ -1,12 +1,13 @@
 import { todolistAPI, TodolistType } from '../../api/todolistAPI';
 import { Dispatch } from 'redux';
-import { AppActionsType, AppThunkType } from '../../app/store';
+import { ActionsType, AppThunkType } from '../../app/store';
+import { setLoadingStatus, SetLoadingStatusType } from '../../app/appReducer';
 
 const initialState: TodolistDomainType[] = [];
 
 const todolistsReducer = (
     state: TodolistDomainType[] = initialState,
-    action: TodolistsActionsType
+    action: TodolistsActionsType | SetLoadingStatusType
 ): TodolistDomainType[] => {
     switch (action.type) {
         case 'SET-TODOLISTS':
@@ -62,7 +63,7 @@ export const changeTodolistTitleAC = (todolistId: string, title: string) => ({
 
 // thunks
 export const createTodolistsTC = (title: string): AppThunkType => async (
-    dispatch: Dispatch<AppActionsType>
+    dispatch: Dispatch<ActionsType>
 ) => {
     try {
         const res = await todolistAPI.createTodolist(title);
@@ -72,9 +73,10 @@ export const createTodolistsTC = (title: string): AppThunkType => async (
     }
 };
 
-export const getTodolistsTC = (): AppThunkType => async (dispatch: Dispatch<AppActionsType>) => {
+export const getTodolistsTC = (): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
         const res = await todolistAPI.getTodolists();
+        dispatch(setLoadingStatus('succeeded'));
         dispatch(setTodolistsAC(res.data));
     } catch (e) {
         console.error(e);
@@ -84,7 +86,7 @@ export const getTodolistsTC = (): AppThunkType => async (dispatch: Dispatch<AppA
 export const changeTodolistTitleTC = (
     todolistId: string,
     title: string
-): AppThunkType => async (dispatch: Dispatch<AppActionsType>) => {
+): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
         const res = await todolistAPI.updateTodolistTitle(todolistId, title);
         if (res.data.resultCode === 0) {
@@ -96,7 +98,7 @@ export const changeTodolistTitleTC = (
 };
 
 export const deleteTodolistTC = (todolistId: string): AppThunkType => async (
-    dispatch: Dispatch<AppActionsType>
+    dispatch: Dispatch<ActionsType>
 ) => {
     try {
         const res = await todolistAPI.deleteTodolist(todolistId);

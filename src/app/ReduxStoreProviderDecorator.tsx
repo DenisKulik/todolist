@@ -99,6 +99,9 @@ export const initialGlobalState: AppRootStateType = {
                 addedDate: new Date()
             },
         ]
+    },
+    app: {
+        status: 'loading'
     }
 };
 
