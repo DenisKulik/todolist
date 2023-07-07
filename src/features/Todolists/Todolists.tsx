@@ -1,7 +1,4 @@
-import { useSelector } from 'react-redux';
-import {
-    AppRootStateType, useAppDispatch, useAppSelector
-} from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/store';
 import {
     createTodolistsTC, getTodolistsTC, TodolistDomainType
 } from './todolistsReducer';
