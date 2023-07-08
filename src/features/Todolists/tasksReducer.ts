@@ -10,8 +10,11 @@ import {
     ActionsType, AppRootStateType, AppThunkType
 } from '../../app/store';
 import {
-    setError, SetErrorType, setLoadingStatus, SetLoadingStatusType
+    SetErrorType, setLoadingStatus, SetLoadingStatusType
 } from '../../app/appReducer';
+import {
+    handleServerAppError, handleServerNetworkError
+} from '../../utils/errorUtils';
 
 const initialState: TasksStateType = {};
 
@@ -95,7 +98,7 @@ export const getTasksTC = (todolistId: string): AppThunkType => async (
         dispatch(setTasksAC(todolistId, res.data.items));
         dispatch(setLoadingStatus('succeeded'));
     } catch (e) {
-        console.error(e);
+        handleServerNetworkError(dispatch, (e as Error));
     }
 };
 
@@ -110,14 +113,10 @@ export const createTaskTC = (
             dispatch(addTaskAC(res.data.data.item));
             dispatch(setLoadingStatus('succeeded'));
         } else {
-            res.data.messages.length ?
-                dispatch(setError(res.data.messages[0])) :
-                dispatch(setError('Something went wrong!'));
-            dispatch(setLoadingStatus('failed'));
+            handleServerAppError(dispatch, res.data);
         }
     } catch (e) {
-        dispatch(setLoadingStatus('failed'));
-        dispatch(setError((e as Error).message));
+        handleServerNetworkError(dispatch, (e as Error));
     }
 };
 
@@ -145,12 +144,16 @@ export const updateTaskTC = (
                 ...data
             };
 
-            await todolistAPI.updateTask(todolistId, taskId, model);
-            dispatch(updateTaskAC(todolistId, taskId, model));
-            dispatch(setLoadingStatus('succeeded'));
+            const res = await todolistAPI.updateTask(todolistId, taskId, model);
+            if (res.data.resultCode === ResultCode.SUCCESS) {
+                dispatch(updateTaskAC(todolistId, taskId, model));
+                dispatch(setLoadingStatus('succeeded'));
+            } else {
+                handleServerAppError(dispatch, res.data);
+            }
         }
     } catch (e) {
-        console.error(e);
+        handleServerNetworkError(dispatch, (e as Error));
     }
 };
 
@@ -161,12 +164,14 @@ export const deleteTaskTC = (
     try {
         dispatch(setLoadingStatus('loading'));
         const res = await todolistAPI.deleteTask(todolistId, taskId);
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(deleteTaskAC(todolistId, taskId));
             dispatch(setLoadingStatus('succeeded'));
+        } else {
+            handleServerAppError(dispatch, res.data);
         }
     } catch (e) {
-        console.error(e);
+        handleServerNetworkError(dispatch, (e as Error));
     }
 };
 
