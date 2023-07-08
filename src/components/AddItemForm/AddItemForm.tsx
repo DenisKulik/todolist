@@ -6,9 +6,10 @@ import AddIcon from '@mui/icons-material/Add';
 
 type AddItemFormType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
-const AddItemForm = ({ addItem }: AddItemFormType) => {
+const AddItemForm = ({ addItem, disabled }: AddItemFormType) => {
     const [ title, setTitle ] = useState<string>('');
     const [ error, setError ] = useState<string | null>(null);
 
@@ -42,10 +43,13 @@ const AddItemForm = ({ addItem }: AddItemFormType) => {
                 label={error ? 'Title is required' : 'Enter title'}
                 variant="standard"
                 size="small"
+                disabled={disabled}
             />
             <IconButton
                 color="primary"
-                onClick={AddItemHandler}>
+                onClick={AddItemHandler}
+                disabled={disabled}
+            >
                 <AddIcon />
             </IconButton>
         </StyledAddItemForm>

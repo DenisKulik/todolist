@@ -104,7 +104,10 @@ const Todolist = (props: TodolistPropsType) => {
                     <DeleteIcon />
                 </IconButton>
             </Header>
-            <AddItemForm addItem={addTask} />
+            <AddItemForm
+                addItem={addTask}
+                disabled={entityStatus === 'loading'}
+            />
             <TasksWrapper>{tasksItems}</TasksWrapper>
             <div>
                 <CustomButton
