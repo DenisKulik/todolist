@@ -19,14 +19,16 @@ export const initialGlobalState: AppRootStateType = {
             addedDate: new Date(),
             order: 0,
             title: 'What to learn',
-            filter: 'all'
+            filter: 'all',
+            entityStatus: 'idle'
         },
         {
             id: 'todolistId2',
             addedDate: new Date(),
             order: 1,
             title: 'What to buy',
-            filter: 'all'
+            filter: 'all',
+            entityStatus: 'idle'
         },
     ],
     tasks: {

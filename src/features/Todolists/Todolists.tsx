@@ -30,6 +30,7 @@ export const Todolists = () => {
                         todolistId={todolist.id}
                         title={todolist.title}
                         filter={todolist.filter}
+                        entityStatus={todolist.entityStatus}
                     />
                 </StyledPaper>
             </Grid>

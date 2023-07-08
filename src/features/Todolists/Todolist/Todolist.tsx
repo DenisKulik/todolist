@@ -12,15 +12,17 @@ import {
 import CustomButton from '../../../components/CustomButton/CustomButton';
 import Task from './Task/Task';
 import { TaskStatuses, TaskType } from '../../../api/todolistAPI';
+import { RequestStatusType } from '../../../app/appReducer';
 
 type TodolistPropsType = {
     todolistId: string
     title: string
     filter: FilterType
+    entityStatus: RequestStatusType
 }
 
 const Todolist = (props: TodolistPropsType) => {
-    const { todolistId, title, filter } = props;
+    const { todolistId, title, filter, entityStatus } = props;
     const tasks = useAppSelector<TaskType[]>(state => state.tasks[todolistId]);
     const dispatch = useAppDispatch();
 
@@ -95,7 +97,10 @@ const Todolist = (props: TodolistPropsType) => {
                         callback={changeTodolistTitle}
                     />
                 </Title>
-                <IconButton onClick={deleteTodolistHandler}>
+                <IconButton
+                    onClick={deleteTodolistHandler}
+                    disabled={entityStatus === 'loading'}
+                >
                     <DeleteIcon />
                 </IconButton>
             </Header>
