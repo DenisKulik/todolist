@@ -1,7 +1,9 @@
-import { todolistAPI, TodolistType } from '../../api/todolistAPI';
+import { ResultCode, todolistAPI, TodolistType } from '../../api/todolistAPI';
 import { Dispatch } from 'redux';
 import { ActionsType, AppThunkType } from '../../app/store';
-import { setLoadingStatus, SetLoadingStatusType } from '../../app/appReducer';
+import {
+    setError, SetErrorType, setLoadingStatus, SetLoadingStatusType
+} from '../../app/appReducer';
 
 const initialState: TodolistDomainType[] = [];
 
@@ -78,8 +80,15 @@ export const createTodolistTC = (title: string): AppThunkType => async (
     try {
         dispatch(setLoadingStatus('loading'));
         const res = await todolistAPI.createTodolist(title);
-        dispatch(addTodolistAC(res.data.data.item));
-        dispatch(setLoadingStatus('succeeded'));
+        if (res.data.resultCode === ResultCode.SUCCESS) {
+            dispatch(addTodolistAC(res.data.data.item));
+            dispatch(setLoadingStatus('succeeded'));
+        } else {
+            res.data.messages.length ?
+                dispatch(setError(res.data.messages[0])) :
+                dispatch(setError('Something went wrong!'));
+            dispatch(setLoadingStatus('failed'));
+        }
     } catch (e) {
         console.error(e);
     }
@@ -129,7 +138,8 @@ export type TodolistsActionsType =
     | DeleteTodolistAC
     | ReturnType<typeof changeTodolistFilterAC>
     | ReturnType<typeof changeTodolistTitleAC>
-    | SetLoadingStatusType;
+    | SetLoadingStatusType
+    | SetErrorType;
 
 export type SetTodolistsAC = ReturnType<typeof setTodolistsAC>;
 export type AddTodolistAC = ReturnType<typeof addTodolistAC>;
