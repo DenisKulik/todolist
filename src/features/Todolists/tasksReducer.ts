@@ -116,7 +116,8 @@ export const createTaskTC = (
             dispatch(setLoadingStatus('failed'));
         }
     } catch (e) {
-        console.error(e);
+        dispatch(setLoadingStatus('failed'));
+        dispatch(setError((e as Error).message));
     }
 };
 
