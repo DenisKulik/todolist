@@ -1,4 +1,7 @@
-import { ResultCode, todolistAPI, TodolistType } from '../../api/todolistAPI';
+import axios from 'axios';
+import {
+    ErrorType, ResultCode, todolistAPI, TodolistType
+} from '../../api/todolistAPI';
 import { Dispatch } from 'redux';
 import { ActionsType, AppThunkType } from '../../app/store';
 import {
@@ -88,7 +91,16 @@ export const getTodolistsTC = (): AppThunkType => async (dispatch: Dispatch<Acti
         dispatch(setLoadingStatus('succeeded'));
         dispatch(setTodolistsAC(res.data));
     } catch (e) {
-        handleServerNetworkError(dispatch, (e as Error));
+        if (axios.isAxiosError<ErrorType>(e)) {
+            const error = e.response ?
+                e.response?.data.messages[0].message :
+                e.message;
+            handleServerNetworkError(dispatch, error);
+            return;
+        }
+
+        const error = (e as Error).message;
+        handleServerNetworkError(dispatch, error);
     }
 };
 
@@ -105,7 +117,16 @@ export const createTodolistTC = (title: string): AppThunkType => async (
             handleServerAppError(dispatch, res.data);
         }
     } catch (e) {
-        handleServerNetworkError(dispatch, (e as Error));
+        if (axios.isAxiosError<ErrorType>(e)) {
+            const error = e.response ?
+                e.response?.data.messages[0].message :
+                e.message;
+            handleServerNetworkError(dispatch, error);
+            return;
+        }
+
+        const error = (e as Error).message;
+        handleServerNetworkError(dispatch, error);
     }
 };
 
@@ -123,7 +144,16 @@ export const changeTodolistTitleTC = (
             handleServerAppError(dispatch, res.data);
         }
     } catch (e) {
-        handleServerNetworkError(dispatch, (e as Error));
+        if (axios.isAxiosError<ErrorType>(e)) {
+            const error = e.response ?
+                e.response?.data.messages[0].message :
+                e.message;
+            handleServerNetworkError(dispatch, error);
+            return;
+        }
+
+        const error = (e as Error).message;
+        handleServerNetworkError(dispatch, error);
     }
 };
 
@@ -142,7 +172,17 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => async (
         }
     } catch (e) {
         dispatch(changeEntityStatusAC(todolistId, 'failed'));
-        handleServerNetworkError(dispatch, (e as Error));
+
+        if (axios.isAxiosError<ErrorType>(e)) {
+            const error = e.response ?
+                e.response?.data.messages[0].message :
+                e.message;
+            handleServerNetworkError(dispatch, error);
+            return;
+        }
+
+        const error = (e as Error).message;
+        handleServerNetworkError(dispatch, error);
     }
 };
 

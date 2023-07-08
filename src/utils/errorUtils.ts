@@ -18,10 +18,10 @@ export const handleServerAppError = <T>(
 
 export const handleServerNetworkError = (
     dispatch: ErrorUtilsDispatchType,
-    error: { message: string }
+    errorMessage: string
 ) => {
     dispatch(setLoadingStatus('failed'));
-    dispatch(setError(error.message));
+    dispatch(setError(errorMessage));
 };
 
 type ErrorUtilsDispatchType = Dispatch<SetErrorType | SetLoadingStatusType>

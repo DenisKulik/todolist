@@ -16,14 +16,16 @@ describe('todolistsReducer', () => {
                 addedDate: new Date(),
                 order: 0,
                 title: 'What to learn',
-                filter: 'all'
+                filter: 'all',
+                entityStatus: 'idle'
             },
             {
                 id: '2',
                 addedDate: new Date(),
                 order: 0,
                 title: 'What to buy',
-                filter: 'all'
+                filter: 'all',
+                entityStatus: 'idle'
             },
         ];
     });

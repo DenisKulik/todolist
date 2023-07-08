@@ -106,3 +106,14 @@ export type ResponseType<T = {}> = {
     fieldsErrors: string[]
     data: T
 }
+
+export type ErrorType = {
+    statusCode: number,
+    messages: [
+        {
+            message: string,
+            field: string
+        }
+    ],
+    error: string
+}

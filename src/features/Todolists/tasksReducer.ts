@@ -1,7 +1,9 @@
+import axios from 'axios';
 import {
     AddTodolistAC, DeleteTodolistAC, SetTodolistsAC
 } from './todolistsReducer';
 import {
+    ErrorType,
     ResultCode,
     TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType
 } from '../../api/todolistAPI';
@@ -98,7 +100,16 @@ export const getTasksTC = (todolistId: string): AppThunkType => async (
         dispatch(setTasksAC(todolistId, res.data.items));
         dispatch(setLoadingStatus('succeeded'));
     } catch (e) {
-        handleServerNetworkError(dispatch, (e as Error));
+        if (axios.isAxiosError<ErrorType>(e)) {
+            const error = e.response ?
+                e.response?.data.messages[0].message :
+                e.message;
+            handleServerNetworkError(dispatch, error);
+            return;
+        }
+
+        const error = (e as Error).message;
+        handleServerNetworkError(dispatch, error);
     }
 };
 
@@ -116,7 +127,16 @@ export const createTaskTC = (
             handleServerAppError(dispatch, res.data);
         }
     } catch (e) {
-        handleServerNetworkError(dispatch, (e as Error));
+        if (axios.isAxiosError<ErrorType>(e)) {
+            const error = e.response ?
+                e.response?.data.messages[0].message :
+                e.message;
+            handleServerNetworkError(dispatch, error);
+            return;
+        }
+
+        const error = (e as Error).message;
+        handleServerNetworkError(dispatch, error);
     }
 };
 
@@ -153,7 +173,16 @@ export const updateTaskTC = (
             }
         }
     } catch (e) {
-        handleServerNetworkError(dispatch, (e as Error));
+        if (axios.isAxiosError<ErrorType>(e)) {
+            const error = e.response ?
+                e.response?.data.messages[0].message :
+                e.message;
+            handleServerNetworkError(dispatch, error);
+            return;
+        }
+
+        const error = (e as Error).message;
+        handleServerNetworkError(dispatch, error);
     }
 };
 
@@ -171,7 +200,16 @@ export const deleteTaskTC = (
             handleServerAppError(dispatch, res.data);
         }
     } catch (e) {
-        handleServerNetworkError(dispatch, (e as Error));
+        if (axios.isAxiosError<ErrorType>(e)) {
+            const error = e.response ?
+                e.response?.data.messages[0].message :
+                e.message;
+            handleServerNetworkError(dispatch, error);
+            return;
+        }
+
+        const error = (e as Error).message;
+        handleServerNetworkError(dispatch, error);
     }
 };
 
