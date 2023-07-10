@@ -95,6 +95,7 @@ const Todolist = (props: TodolistPropsType) => {
                     <EditableSpan
                         title={title}
                         callback={changeTodolistTitle}
+                        disabled={entityStatus === 'loading'}
                     />
                 </Title>
                 <IconButton
