@@ -37,7 +37,7 @@ const todolistsReducer = (
             return state.map(
                 todolist => todolist.id === action.payload.todolistId ?
                     { ...todolist, title: action.payload.title } : todolist);
-        case 'CHANGE-ENTITY-STATUS':
+        case 'CHANGE-TODOLIST-ENTITY-STATUS':
             return state.map(
                 todolist => todolist.id === action.payload.todolistId ?
                     { ...todolist, entityStatus: action.payload.entityStatus }
@@ -76,11 +76,11 @@ export const changeTodolistTitleAC = (todolistId: string, title: string) => ({
     payload: { title, todolistId }
 } as const);
 
-export const changeEntityStatusAC = (
+export const changeTodolistEntityStatusAC = (
     todolistId: string,
     entityStatus: RequestStatusType
 ) => ({
-    type: 'CHANGE-ENTITY-STATUS',
+    type: 'CHANGE-TODOLIST-ENTITY-STATUS',
     payload: { todolistId, entityStatus }
 } as const);
 
@@ -136,10 +136,12 @@ export const changeTodolistTitleTC = (
 ): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
         dispatch(setLoadingStatus('loading'));
+        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'));
         const res = await todolistAPI.updateTodolistTitle(todolistId, title);
         if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(changeTodolistTitleAC(todolistId, title));
             dispatch(setLoadingStatus('succeeded'));
+            dispatch(changeTodolistEntityStatusAC(todolistId, 'idle'));
         } else {
             handleServerAppError(dispatch, res.data);
         }
@@ -162,7 +164,7 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => async (
 ) => {
     try {
         dispatch(setLoadingStatus('loading'));
-        dispatch(changeEntityStatusAC(todolistId, 'loading'));
+        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'));
         const res = await todolistAPI.deleteTodolist(todolistId);
         if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(deleteTodolistAC(todolistId));
@@ -171,7 +173,7 @@ export const deleteTodolistTC = (todolistId: string): AppThunkType => async (
             handleServerAppError(dispatch, res.data);
         }
     } catch (e) {
-        dispatch(changeEntityStatusAC(todolistId, 'failed'));
+        dispatch(changeTodolistEntityStatusAC(todolistId, 'failed'));
 
         if (axios.isAxiosError<ErrorType>(e)) {
             const error = e.response ?
@@ -200,7 +202,7 @@ export type TodolistsActionsType =
     | DeleteTodolistAC
     | ReturnType<typeof changeTodolistFilterAC>
     | ReturnType<typeof changeTodolistTitleAC>
-    | ReturnType<typeof changeEntityStatusAC>
+    | ReturnType<typeof changeTodolistEntityStatusAC>
     | SetLoadingStatusType
     | SetErrorType;
 
