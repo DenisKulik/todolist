@@ -3,15 +3,15 @@ import {
     AddTodolistAC, DeleteTodolistAC, SetTodolistsAC
 } from './todolistsReducer';
 import {
-    ErrorType,
-    ResultCode,
-    TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType
+    ErrorType, ResultCode, TaskPriorities, TaskStatuses, TaskType, todolistAPI,
+    UpdateTaskModelType
 } from '../../api/todolistAPI';
 import { Dispatch } from 'redux';
 import {
     ActionsType, AppRootStateType, AppThunkType
 } from '../../app/store';
 import {
+    RequestStatusType,
     SetErrorType, setLoadingStatus, SetLoadingStatusType
 } from '../../app/appReducer';
 import {
@@ -33,13 +33,16 @@ const tasksReducer = (
             return newState;
         case 'SET-TASKS':
             return {
-                ...state, [action.payload.todolistId]: action.payload.tasks
+                ...state,
+                [action.payload.todolistId]: action.payload.tasks.map(
+                    task => ({ ...task, entityStatus: 'idle' }))
             };
         case 'ADD-TASK':
             return {
                 ...state,
-                [action.payload.task.todoListId]: [ action.payload.task,
-                    ...state[action.payload.task.todoListId], ]
+                [action.payload.task.todoListId]: [ {
+                    ...action.payload.task, entityStatus: 'idle'
+                }, ...state[action.payload.task.todoListId], ]
             };
         case 'DELETE-TASK':
             return {
@@ -60,6 +63,14 @@ const tasksReducer = (
             const stateCopy = { ...state };
             delete stateCopy[action.payload.todolistId];
             return stateCopy;
+        case 'CHANGE-TASK-ENTITY-STATUS':
+            return {
+                ...state,
+                [action.payload.todolistId]: state[action.payload.todolistId].map(
+                    task => task.id === action.payload.taskId ?
+                        { ...task, entityStatus: action.payload.entityStatus }
+                        : task)
+            };
         default:
             return state;
     }
@@ -88,6 +99,15 @@ export const updateTaskAC = (
 ) => ({
     type: 'UPDATE-TASK',
     payload: { todolistId, taskId, model }
+} as const);
+
+export const changeTaskEntityStatusAC = (
+    todolistId: string,
+    taskId: string,
+    entityStatus: RequestStatusType
+) => ({
+    type: 'CHANGE-TASK-ENTITY-STATUS',
+    payload: { todolistId, taskId, entityStatus }
 } as const);
 
 // thunks
@@ -150,6 +170,7 @@ export const updateTaskTC = (
 ) => {
     try {
         dispatch(setLoadingStatus('loading'));
+        dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'loading'));
         const task = getState().tasks[todolistId].find(
             task => task.id === taskId);
 
@@ -168,11 +189,14 @@ export const updateTaskTC = (
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(updateTaskAC(todolistId, taskId, model));
                 dispatch(setLoadingStatus('succeeded'));
+                dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'idle'));
             } else {
                 handleServerAppError(dispatch, res.data);
             }
         }
     } catch (e) {
+        dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'failed'));
+
         if (axios.isAxiosError<ErrorType>(e)) {
             const error = e.response ?
                 e.response?.data.messages[0].message :
@@ -192,6 +216,7 @@ export const deleteTaskTC = (
 ): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
         dispatch(setLoadingStatus('loading'));
+        dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'loading'));
         const res = await todolistAPI.deleteTask(todolistId, taskId);
         if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(deleteTaskAC(todolistId, taskId));
@@ -200,6 +225,8 @@ export const deleteTaskTC = (
             handleServerAppError(dispatch, res.data);
         }
     } catch (e) {
+        dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'failed'));
+
         if (axios.isAxiosError<ErrorType>(e)) {
             const error = e.response ?
                 e.response?.data.messages[0].message :
@@ -214,8 +241,12 @@ export const deleteTaskTC = (
 };
 
 // types
+export type TaskDomainType = TaskType & {
+    entityStatus: RequestStatusType
+}
+
 export type TasksStateType = {
-    [todolistId: string]: TaskType[]
+    [todolistId: string]: TaskDomainType[]
 }
 
 export type TasksActionsType =
@@ -223,6 +254,7 @@ export type TasksActionsType =
     | ReturnType<typeof addTaskAC>
     | ReturnType<typeof deleteTaskAC>
     | ReturnType<typeof updateTaskAC>
+    | ReturnType<typeof changeTaskEntityStatusAC>
     | SetTodolistsAC
     | AddTodolistAC
     | DeleteTodolistAC
