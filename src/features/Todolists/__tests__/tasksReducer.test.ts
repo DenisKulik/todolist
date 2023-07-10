@@ -24,7 +24,8 @@ describe('tasksReducer', () => {
                     id: '1',
                     todoListId: 'todolistId1',
                     order: 0,
-                    addedDate: new Date()
+                    addedDate: new Date(),
+                    entityStatus: 'idle'
                 },
                 {
                     description: '',
@@ -37,7 +38,8 @@ describe('tasksReducer', () => {
                     id: '2',
                     todoListId: 'todolistId1',
                     order: 0,
-                    addedDate: new Date()
+                    addedDate: new Date(),
+                    entityStatus: 'idle'
                 },
                 {
                     description: '',
@@ -50,7 +52,8 @@ describe('tasksReducer', () => {
                     id: '3',
                     todoListId: 'todolistId1',
                     order: 0,
-                    addedDate: new Date()
+                    addedDate: new Date(),
+                    entityStatus: 'idle'
                 },
             ],
             ['todolistId2']: [
@@ -65,7 +68,8 @@ describe('tasksReducer', () => {
                     id: '1',
                     todoListId: 'todolistId1',
                     order: 0,
-                    addedDate: new Date()
+                    addedDate: new Date(),
+                    entityStatus: 'idle'
                 },
                 {
                     description: '',
@@ -78,7 +82,8 @@ describe('tasksReducer', () => {
                     id: '2',
                     todoListId: 'todolistId1',
                     order: 0,
-                    addedDate: new Date()
+                    addedDate: new Date(),
+                    entityStatus: 'idle'
                 },
                 {
                     description: '',
@@ -91,7 +96,8 @@ describe('tasksReducer', () => {
                     id: '3',
                     todoListId: 'todolistId1',
                     order: 0,
-                    addedDate: new Date()
+                    addedDate: new Date(),
+                    entityStatus: 'idle'
                 },
             ],
         };
