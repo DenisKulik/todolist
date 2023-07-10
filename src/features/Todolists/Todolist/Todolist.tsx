@@ -7,41 +7,40 @@ import EditableSpan from '../../../components/EditableSpan/EditableSpan';
 import { useAppDispatch, useAppSelector } from '../../../app/store';
 import { createTaskTC, getTasksTC, TaskDomainType } from '../tasksReducer';
 import {
-    changeTodolistFilterAC, changeTodolistTitleTC, deleteTodolistTC, FilterType
+    changeTodolistFilterAC, changeTodolistTitleTC, deleteTodolistTC, FilterType,
+    TodolistDomainType
 } from '../todolistsReducer';
 import CustomButton from '../../../components/CustomButton/CustomButton';
 import Task from './Task/Task';
 import { TaskStatuses } from '../../../api/todolistAPI';
-import { RequestStatusType } from '../../../app/appReducer';
 
 type TodolistPropsType = {
-    todolistId: string
-    title: string
-    filter: FilterType
-    entityStatus: RequestStatusType
+    todolist: TodolistDomainType
+    demo?: boolean
 }
 
-const Todolist = (props: TodolistPropsType) => {
-    const { todolistId, title, filter, entityStatus } = props;
+const Todolist = ({ demo = false, ...props }: TodolistPropsType) => {
+    const { id, title, filter, entityStatus } = props.todolist;
     const tasks = useAppSelector<TaskDomainType[]>(
-        state => state.tasks[todolistId]);
+        state => state.tasks[id]);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getTasksTC(todolistId));
-    }, [ dispatch, todolistId ]);
+        if (demo) return;
+        dispatch(getTasksTC(id));
+    }, [ dispatch, id, demo ]);
 
     const addTask = useCallback((title: string) => {
-        dispatch(createTaskTC(todolistId, title));
-    }, [ dispatch, todolistId ]);
+        dispatch(createTaskTC(id, title));
+    }, [ dispatch, id ]);
 
     const deleteTodolistHandler = useCallback(() => {
-        dispatch(deleteTodolistTC(todolistId));
-    }, [ dispatch, todolistId ]);
+        dispatch(deleteTodolistTC(id));
+    }, [ dispatch, id ]);
 
     const changeTodolistTitle = useCallback((title: string) => {
-        dispatch(changeTodolistTitleTC(todolistId, title));
-    }, [ dispatch, todolistId ]);
+        dispatch(changeTodolistTitleTC(id, title));
+    }, [ dispatch, id ]);
 
     const changeTodolistFilterHandler = useCallback((
         value: FilterType,
@@ -51,16 +50,16 @@ const Todolist = (props: TodolistPropsType) => {
     }, [ dispatch ]);
 
     const onAllClickHandler = useCallback(() => {
-        changeTodolistFilterHandler('all', todolistId);
-    }, [ changeTodolistFilterHandler, todolistId ]);
+        changeTodolistFilterHandler('all', id);
+    }, [ changeTodolistFilterHandler, id ]);
 
     const onActiveClickHandler = useCallback(() => {
-        changeTodolistFilterHandler('active', todolistId);
-    }, [ changeTodolistFilterHandler, todolistId ]);
+        changeTodolistFilterHandler('active', id);
+    }, [ changeTodolistFilterHandler, id ]);
 
     const onCompletedClickHandler = useCallback(() => {
-        changeTodolistFilterHandler('completed', todolistId);
-    }, [ changeTodolistFilterHandler, todolistId ]);
+        changeTodolistFilterHandler('completed', id);
+    }, [ changeTodolistFilterHandler, id ]);
 
     const getFilteredTasks = (
         tasks: TaskDomainType[],
@@ -84,7 +83,7 @@ const Todolist = (props: TodolistPropsType) => {
             <Task
                 key={task.id}
                 task={task}
-                todolistId={todolistId}
+                todolistId={id}
                 entityStatus={task.entityStatus}
             />
         );

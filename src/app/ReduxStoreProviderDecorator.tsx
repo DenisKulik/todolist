@@ -1,15 +1,17 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { applyMiddleware, combineReducers, legacy_createStore } from 'redux';
+import thunk from 'redux-thunk';
 import tasksReducer from '../features/Todolists/tasksReducer';
 import todolistsReducer from '../features/Todolists/todolistsReducer';
 import { AppRootStateType } from './store';
 import { TaskPriorities, TaskStatuses } from '../api/todolistAPI';
-import thunk from 'redux-thunk';
+import { appReducer } from './appReducer';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todolistsReducer
+    todolists: todolistsReducer,
+    app: appReducer
 });
 
 export const initialGlobalState: AppRootStateType = {
@@ -28,7 +30,7 @@ export const initialGlobalState: AppRootStateType = {
             order: 1,
             title: 'What to buy',
             filter: 'all',
-            entityStatus: 'idle'
+            entityStatus: 'loading'
         },
     ],
     tasks: {
@@ -37,7 +39,7 @@ export const initialGlobalState: AppRootStateType = {
                 description: '',
                 title: 'HTML&CSS',
                 completed: false,
-                status: TaskStatuses.New,
+                status: TaskStatuses.Completed,
                 priority: TaskPriorities.Hi,
                 startDate: new Date(),
                 deadline: new Date(),
@@ -51,7 +53,7 @@ export const initialGlobalState: AppRootStateType = {
                 description: '',
                 title: 'JavaScript',
                 completed: false,
-                status: TaskStatuses.New,
+                status: TaskStatuses.Completed,
                 priority: TaskPriorities.Hi,
                 startDate: new Date(),
                 deadline: new Date(),

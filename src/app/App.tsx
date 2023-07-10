@@ -3,13 +3,17 @@ import ButtonAppBar from '../components/ButtonAppBar/ButtonAppBar';
 import { Todolists } from '../features/Todolists/Todolists';
 import { ErrorSnackbar } from '../components/ErrorSnackbar/ErrorSnackbar';
 
-const App = () => {
+type AppPropsType = {
+    demo?: boolean
+}
+
+const App = ({ demo = false }: AppPropsType) => {
     return (
         <>
             <ErrorSnackbar />
             <ButtonAppBar />
             <Container fixed>
-                <Todolists />
+                <Todolists demo={demo} />
             </Container>
         </>
     );
