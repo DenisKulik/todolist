@@ -5,13 +5,13 @@ import styled from 'styled-components';
 import AddItemForm from '../../../components/AddItemForm/AddItemForm';
 import EditableSpan from '../../../components/EditableSpan/EditableSpan';
 import { useAppDispatch, useAppSelector } from '../../../app/store';
-import { createTaskTC, getTasksTC } from '../tasksReducer';
+import { createTaskTC, getTasksTC, TaskDomainType } from '../tasksReducer';
 import {
     changeTodolistFilterAC, changeTodolistTitleTC, deleteTodolistTC, FilterType
 } from '../todolistsReducer';
 import CustomButton from '../../../components/CustomButton/CustomButton';
 import Task from './Task/Task';
-import { TaskStatuses, TaskType } from '../../../api/todolistAPI';
+import { TaskStatuses } from '../../../api/todolistAPI';
 import { RequestStatusType } from '../../../app/appReducer';
 
 type TodolistPropsType = {
@@ -23,7 +23,8 @@ type TodolistPropsType = {
 
 const Todolist = (props: TodolistPropsType) => {
     const { todolistId, title, filter, entityStatus } = props;
-    const tasks = useAppSelector<TaskType[]>(state => state.tasks[todolistId]);
+    const tasks = useAppSelector<TaskDomainType[]>(
+        state => state.tasks[todolistId]);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -62,9 +63,9 @@ const Todolist = (props: TodolistPropsType) => {
     }, [ changeTodolistFilterHandler, todolistId ]);
 
     const getFilteredTasks = (
-        tasks: TaskType[],
+        tasks: TaskDomainType[],
         filter: FilterType
-    ): TaskType[] => {
+    ): TaskDomainType[] => {
         switch (filter) {
             case 'active':
                 return tasks.filter(task => task.status === TaskStatuses.New);
@@ -84,6 +85,7 @@ const Todolist = (props: TodolistPropsType) => {
                 key={task.id}
                 task={task}
                 todolistId={todolistId}
+                entityStatus={task.entityStatus}
             />
         );
     });

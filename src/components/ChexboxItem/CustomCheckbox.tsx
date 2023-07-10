@@ -4,10 +4,11 @@ import Checkbox from '@mui/material/Checkbox';
 type CustomCheckboxPropsType = {
     checked: boolean
     callback: (checked: boolean) => void
+    disabled?: boolean
 }
 
 const CustomCheckbox = (props: CustomCheckboxPropsType) => {
-    const { checked, callback } = props;
+    const { checked, callback, disabled } = props;
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
         callback(e.currentTarget.checked);
@@ -18,6 +19,7 @@ const CustomCheckbox = (props: CustomCheckboxPropsType) => {
             color="success"
             size="small"
             onChange={onChangeHandler}
+            disabled={disabled}
         />
     );
 };

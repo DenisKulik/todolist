@@ -7,14 +7,16 @@ import styled from 'styled-components';
 import { deleteTaskTC, updateTaskTC } from '../../tasksReducer';
 import { TaskStatuses, TaskType } from '../../../../api/todolistAPI';
 import { useAppDispatch } from '../../../../app/store';
+import { RequestStatusType } from '../../../../app/appReducer';
 
 type TaskPropsType = {
     task: TaskType
     todolistId: string
+    entityStatus: RequestStatusType
 }
 
 const Task = (props: TaskPropsType) => {
-    const { task, todolistId } = props;
+    const { task, todolistId, entityStatus } = props;
 
     const dispatch = useAppDispatch();
 
@@ -38,14 +40,17 @@ const Task = (props: TaskPropsType) => {
             <CustomCheckbox
                 checked={task.status === TaskStatuses.Completed}
                 callback={changeTaskStatus}
+                disabled={entityStatus === 'loading'}
             />
             <EditableSpan
                 title={task.title}
                 callback={changeTaskTitle}
+                disabled={entityStatus === 'loading'}
             />
             <IconButton
                 size="small"
                 onClick={deleteTask}
+                disabled={entityStatus === 'loading'}
             >
                 <DeleteIcon fontSize="inherit" />
             </IconButton>
