@@ -34,7 +34,7 @@ export const Login = () => {
 
             return errors;
         },
-        onSubmit: values => {
+        onSubmit: () => {
             formik.resetForm();
         },
     });
