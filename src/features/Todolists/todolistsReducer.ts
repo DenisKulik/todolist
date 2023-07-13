@@ -87,6 +87,7 @@ export const changeTodolistEntityStatusAC = (
 // thunks
 export const getTodolistsTC = (): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
     try {
+        dispatch(setLoadingStatus('loading'));
         const res = await todolistAPI.getTodolists();
         dispatch(setLoadingStatus('succeeded'));
         dispatch(setTodolistsAC(res.data));
