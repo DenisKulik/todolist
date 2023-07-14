@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { ResponseType } from '../api/todolistAPI';
 import {
-    setError, SetErrorType, setLoadingStatus, SetLoadingStatusType
+    setAppError, SetAppErrorActionType, setAppStatus, SetAppStatusActionType,
 } from '../app/appReducer';
 
 export const handleServerAppError = <T>(
@@ -9,19 +9,19 @@ export const handleServerAppError = <T>(
     data: ResponseType<T>
 ) => {
     if (data.messages.length) {
-        dispatch(setError(data.messages[0]));
+        dispatch(setAppError(data.messages[0]));
     } else {
-        dispatch(setError('Some error occurred'));
+        dispatch(setAppError('Some error occurred'));
     }
-    dispatch(setLoadingStatus('failed'));
+    dispatch(setAppStatus('failed'));
 };
 
 export const handleServerNetworkError = (
     dispatch: ErrorUtilsDispatchType,
     errorMessage: string
 ) => {
-    dispatch(setLoadingStatus('failed'));
-    dispatch(setError(errorMessage));
+    dispatch(setAppStatus('failed'));
+    dispatch(setAppError(errorMessage));
 };
 
-type ErrorUtilsDispatchType = Dispatch<SetErrorType | SetLoadingStatusType>
+type ErrorUtilsDispatchType = Dispatch<SetAppStatusActionType | SetAppErrorActionType>
