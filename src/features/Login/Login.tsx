@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import styled from 'styled-components';
+import { Navigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -8,10 +9,11 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useAppDispatch } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/store';
 import { loginTC } from './authReducer';
 
 export const Login = () => {
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const dispatch = useAppDispatch();
 
     const formik = useFormik({
@@ -43,6 +45,10 @@ export const Login = () => {
             formik.resetForm();
         },
     });
+
+    if (isLoggedIn) {
+        return <Navigate to={'/'} />;
+    }
 
     return (
         <Grid container justifyContent={'center'}>

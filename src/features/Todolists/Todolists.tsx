@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import {
     createTodolistTC, getTodolistsTC, TodolistDomainType
@@ -16,12 +17,13 @@ type TodolistsPropsType = {
 export const Todolists = ({ demo = false }: TodolistsPropsType) => {
     const todolists = useAppSelector<TodolistDomainType[]>(
         state => state.todolists);
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (demo) return;
+        if (!isLoggedIn || demo) return;
         dispatch(getTodolistsTC());
-    }, [ dispatch, demo ]);
+    }, [ dispatch, demo, isLoggedIn ]);
 
     const addTodolist = useCallback((title: string) => {
         dispatch(createTodolistTC(title));
@@ -36,6 +38,10 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
             </Grid>
         );
     });
+
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'} />;
+    }
 
     return (
         <>
