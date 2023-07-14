@@ -8,7 +8,7 @@ import {
 import {
     handleServerAppError, handleServerNetworkError
 } from '../../utils/errorUtils';
-import axios from 'axios/index';
+import axios from 'axios';
 
 const initialState = {
     isLoggedIn: false

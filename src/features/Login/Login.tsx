@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import styled from 'styled-components';
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
@@ -7,9 +8,12 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import styled from 'styled-components';
+import { useAppDispatch } from '../../app/store';
+import { loginTC } from './authReducer';
 
 export const Login = () => {
+    const dispatch = useAppDispatch();
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -34,7 +38,8 @@ export const Login = () => {
 
             return errors;
         },
-        onSubmit: () => {
+        onSubmit: (values) => {
+            dispatch(loginTC(values));
             formik.resetForm();
         },
     });

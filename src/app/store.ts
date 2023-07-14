@@ -10,11 +10,13 @@ import todolistsReducer, {
     TodolistsActionsType
 } from '../features/Todolists/todolistsReducer';
 import { AppActionsType, appReducer } from './appReducer';
+import { authReducer } from '../features/Login/authReducer';
 
 export const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
