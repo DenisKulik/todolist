@@ -4,12 +4,21 @@ import ButtonAppBar from '../components/ButtonAppBar/ButtonAppBar';
 import { Todolists } from '../features/Todolists/Todolists';
 import { ErrorSnackbar } from '../components/ErrorSnackbar/ErrorSnackbar';
 import { Login } from '../features/Login/Login';
+import { useEffect } from 'react';
+import { useAppDispatch } from './store';
+import { meTC } from '../features/Login/authReducer';
 
 type AppPropsType = {
     demo?: boolean
 }
 
 const App = ({ demo = false }: AppPropsType) => {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(meTC());
+    }, [ dispatch ]);
+
     return (
         <>
             <ErrorSnackbar />
