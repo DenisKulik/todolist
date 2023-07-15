@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import {
-    SetAppErrorActionType, setAppStatus, SetAppStatusActionType
+    SetAppErrorActionType, setAppStatus, SetAppStatusActionType, setInitialized,
+    SetInitializedActionType
 } from '../../app/appReducer';
 import {
     authAPI, ErrorType, LoginType, ResultCode
@@ -77,6 +78,8 @@ export const meTC = () => async (dispatch: Dispatch<ActionsType>) => {
 
         const error = (e as Error).message;
         handleServerNetworkError(dispatch, error);
+    } finally {
+        dispatch(setInitialized(true));
     }
 };
 
@@ -84,4 +87,4 @@ export const meTC = () => async (dispatch: Dispatch<ActionsType>) => {
 type InitialStateType = typeof initialState
 
 type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusActionType
-    | SetAppErrorActionType
+    | SetAppErrorActionType | SetInitializedActionType
