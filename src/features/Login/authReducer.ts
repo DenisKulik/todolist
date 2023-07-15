@@ -83,6 +83,32 @@ export const meTC = () => async (dispatch: Dispatch<ActionsType>) => {
     }
 };
 
+export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatus('loading'));
+
+    try {
+        const res = await authAPI.logout();
+        if (res.data.resultCode === ResultCode.SUCCESS) {
+            dispatch(setIsLoggedInAC(false));
+            dispatch(setAppStatus('succeeded'));
+        } else {
+            handleServerAppError(dispatch, res.data);
+        }
+    } catch (e) {
+        if (axios.isAxiosError<ErrorType>(e)) {
+            const error = e.response ?
+                e.response?.data.messages[0].message :
+                e.message;
+            handleServerNetworkError(dispatch, error);
+            return;
+        }
+
+        const error = (e as Error).message;
+        handleServerNetworkError(dispatch, error);
+    }
+};
+
+
 // types
 type InitialStateType = typeof initialState
 

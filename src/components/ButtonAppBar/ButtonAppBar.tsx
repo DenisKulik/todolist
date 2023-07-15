@@ -6,11 +6,17 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LinearProgress from '@mui/material/LinearProgress';
-import { useAppSelector } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/store';
 import { RequestStatusType } from '../../app/appReducer';
+import { logoutTC } from '../../features/Login/authReducer';
 
 const ButtonAppBar = () => {
     const status = useAppSelector<RequestStatusType>(state => state.app.status);
+    const dispatch = useAppDispatch();
+
+    const logout = () => {
+        dispatch(logoutTC());
+    };
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -32,7 +38,7 @@ const ButtonAppBar = () => {
                     >
                         Todolist
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button onClick={logout} color="inherit">Log out</Button>
                 </Toolbar>
                 {status === 'loading' && <LinearProgress />}
             </AppBar>
