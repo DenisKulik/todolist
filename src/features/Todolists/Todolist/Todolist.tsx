@@ -1,11 +1,11 @@
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback } from 'react';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import styled from 'styled-components';
 import AddItemForm from '../../../components/AddItemForm/AddItemForm';
 import EditableSpan from '../../../components/EditableSpan/EditableSpan';
 import { useAppDispatch, useAppSelector } from '../../../app/store';
-import { createTaskTC, getTasksTC, TaskDomainType } from '../tasksReducer';
+import { createTaskTC, TaskDomainType } from '../tasksReducer';
 import {
     changeTodolistFilterAC, changeTodolistTitleTC, deleteTodolistTC, FilterType,
     TodolistDomainType
@@ -16,19 +16,13 @@ import { TaskStatuses } from '../../../api/todolistAPI';
 
 type TodolistPropsType = {
     todolist: TodolistDomainType
-    demo?: boolean
 }
 
-const Todolist = ({ demo = false, ...props }: TodolistPropsType) => {
+const Todolist = (props: TodolistPropsType) => {
     const { id, title, filter, entityStatus } = props.todolist;
     const tasks = useAppSelector<TaskDomainType[]>(
         state => state.tasks[id]);
     const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        if (demo) return;
-        dispatch(getTasksTC(id));
-    }, [ dispatch, id, demo ]);
 
     const addTask = useCallback((title: string) => {
         dispatch(createTaskTC(id, title));

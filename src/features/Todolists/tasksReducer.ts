@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-    AddTodolistAC, DeleteTodolistAC, SetTodolistsAC
+    AddTodolistAC, ClearTodolistsAC, DeleteTodolistAC, SetTodolistsAC
 } from './todolistsReducer';
 import {
     ErrorType, ResultCode, TaskPriorities, TaskStatuses, TaskType, todolistAPI,
@@ -71,6 +71,8 @@ const tasksReducer = (
                         { ...task, entityStatus: action.payload.entityStatus }
                         : task)
             };
+        case 'CLEAR-TODOLISTS':
+            return {};
         default:
             return state;
     }
@@ -259,15 +261,16 @@ export type TasksActionsType =
     | AddTodolistAC
     | DeleteTodolistAC
     | SetAppStatusActionType
-    | SetAppErrorActionType;
+    | SetAppErrorActionType
+    | ClearTodolistsAC
 
 type UpdateTaskType = {
-    title?: string;
-    description?: string;
-    status?: TaskStatuses;
-    priority?: TaskPriorities;
-    startDate?: Date;
-    deadline?: Date;
+    title?: string
+    description?: string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: Date
+    deadline?: Date
 }
 
 export default tasksReducer;

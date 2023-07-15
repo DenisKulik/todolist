@@ -10,6 +10,9 @@ import {
     handleServerAppError, handleServerNetworkError
 } from '../../utils/errorUtils';
 import axios from 'axios';
+import {
+    ClearTodolistsAC, clearTodolistsAC
+} from '../Todolists/todolistsReducer';
 
 const initialState = {
     isLoggedIn: false
@@ -91,6 +94,7 @@ export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
         if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(setIsLoggedInAC(false));
             dispatch(setAppStatus('succeeded'));
+            dispatch(clearTodolistsAC());
         } else {
             handleServerAppError(dispatch, res.data);
         }
@@ -112,5 +116,9 @@ export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
 // types
 type InitialStateType = typeof initialState
 
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusActionType
-    | SetAppErrorActionType | SetInitializedActionType
+type ActionsType =
+    | ReturnType<typeof setIsLoggedInAC>
+    | SetAppStatusActionType
+    | SetAppErrorActionType
+    | SetInitializedActionType
+    | ClearTodolistsAC

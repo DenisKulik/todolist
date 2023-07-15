@@ -33,7 +33,7 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
         return (
             <Grid item key={todolist.id}>
                 <StyledPaper elevation={3}>
-                    <Todolist todolist={todolist} demo={demo} />
+                    <Todolist todolist={todolist} />
                 </StyledPaper>
             </Grid>
         );

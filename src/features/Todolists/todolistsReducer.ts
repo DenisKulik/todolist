@@ -3,7 +3,7 @@ import {
     ErrorType, ResultCode, todolistAPI, TodolistType
 } from '../../api/todolistAPI';
 import { Dispatch } from 'redux';
-import { ActionsType, AppThunkType } from '../../app/store';
+import { ActionsType, AppDispatchType, AppThunkType } from '../../app/store';
 import {
     RequestStatusType, SetAppErrorActionType, setAppStatus,
     SetAppStatusActionType,
@@ -11,6 +11,7 @@ import {
 import {
     handleServerAppError, handleServerNetworkError
 } from '../../utils/errorUtils';
+import { getTasksTC } from './tasksReducer';
 
 const initialState: TodolistDomainType[] = [];
 
@@ -43,6 +44,8 @@ const todolistsReducer = (
                 todolist => todolist.id === action.payload.todolistId ?
                     { ...todolist, entityStatus: action.payload.entityStatus }
                     : todolist);
+        case 'CLEAR-TODOLISTS':
+            return [];
         default:
             return state;
     }
@@ -85,13 +88,19 @@ export const changeTodolistEntityStatusAC = (
     payload: { todolistId, entityStatus }
 } as const);
 
+export const clearTodolistsAC = () => ({ type: 'CLEAR-TODOLISTS', } as const);
+
 // thunks
-export const getTodolistsTC = (): AppThunkType => async (dispatch: Dispatch<ActionsType>) => {
+export const getTodolistsTC = (): AppThunkType => async (dispatch: AppDispatchType) => {
     try {
         dispatch(setAppStatus('loading'));
         const res = await todolistAPI.getTodolists();
         dispatch(setAppStatus('succeeded'));
         dispatch(setTodolistsAC(res.data));
+
+        res.data.forEach(todolist => {
+            dispatch(getTasksTC(todolist.id));
+        });
     } catch (e) {
         if (axios.isAxiosError<ErrorType>(e)) {
             const error = e.response ?
@@ -206,10 +215,12 @@ export type TodolistsActionsType =
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistEntityStatusAC>
     | SetAppStatusActionType
-    | SetAppErrorActionType;
+    | SetAppErrorActionType
+    | ClearTodolistsAC
 
-export type SetTodolistsAC = ReturnType<typeof setTodolistsAC>;
-export type AddTodolistAC = ReturnType<typeof addTodolistAC>;
-export type DeleteTodolistAC = ReturnType<typeof deleteTodolistAC>;
+export type SetTodolistsAC = ReturnType<typeof setTodolistsAC>
+export type AddTodolistAC = ReturnType<typeof addTodolistAC>
+export type DeleteTodolistAC = ReturnType<typeof deleteTodolistAC>
+export type ClearTodolistsAC = ReturnType<typeof clearTodolistsAC>
 
 export default todolistsReducer;
