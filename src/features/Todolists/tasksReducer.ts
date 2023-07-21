@@ -13,16 +13,10 @@ import {
     TaskType,
     todolistAPI,
     UpdateTaskModelType,
-} from '../../api/todolistAPI'
-import { Dispatch } from 'redux'
-import { ActionsType, AppRootStateType, AppThunkType } from '../../app/store'
-import {
-    RequestStatusType,
-    SetAppErrorActionType,
-    setAppStatus,
-    SetAppStatusActionType,
-} from '../../app/appReducer'
-import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
+} from 'api/todolistAPI'
+import { AppRootStateType, AppThunkType } from 'app/store'
+import { appActions, RequestStatusType } from 'app/appReducer'
+import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
 
 const initialState: TasksStateType = {}
 
@@ -130,12 +124,12 @@ export const changeTaskEntityStatusAC = (
 // thunks
 export const getTasksTC =
     (todolistId: string): AppThunkType =>
-    async (dispatch: Dispatch<ActionsType>) => {
+    async dispatch => {
         try {
-            dispatch(setAppStatus('loading'))
+            dispatch(appActions.setAppStatus({ status: 'loading' }))
             const res = await todolistAPI.getTasks(todolistId)
             dispatch(setTasksAC(todolistId, res.data.items))
-            dispatch(setAppStatus('succeeded'))
+            dispatch(appActions.setAppStatus({ status: 'succeeded' }))
         } catch (e) {
             if (axios.isAxiosError<ErrorType>(e)) {
                 const error = e.response ? e.response?.data.messages[0].message : e.message
@@ -150,13 +144,13 @@ export const getTasksTC =
 
 export const createTaskTC =
     (todolistId: string, title: string): AppThunkType =>
-    async (dispatch: Dispatch<ActionsType>) => {
+    async dispatch => {
         try {
-            dispatch(setAppStatus('loading'))
+            dispatch(appActions.setAppStatus({ status: 'loading' }))
             const res = await todolistAPI.createTask(todolistId, title)
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(addTaskAC(res.data.data.item))
-                dispatch(setAppStatus('succeeded'))
+                dispatch(appActions.setAppStatus({ status: 'succeeded' }))
             } else {
                 handleServerAppError(dispatch, res.data)
             }
@@ -174,9 +168,9 @@ export const createTaskTC =
 
 export const updateTaskTC =
     (todolistId: string, taskId: string, data: UpdateTaskType): AppThunkType =>
-    async (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
+    async (dispatch, getState: () => AppRootStateType) => {
         try {
-            dispatch(setAppStatus('loading'))
+            dispatch(appActions.setAppStatus({ status: 'loading' }))
             dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'loading'))
             const task = getState().tasks[todolistId].find(task => task.id === taskId)
 
@@ -194,7 +188,7 @@ export const updateTaskTC =
                 const res = await todolistAPI.updateTask(todolistId, taskId, model)
                 if (res.data.resultCode === ResultCode.SUCCESS) {
                     dispatch(updateTaskAC(todolistId, taskId, model))
-                    dispatch(setAppStatus('succeeded'))
+                    dispatch(appActions.setAppStatus({ status: 'succeeded' }))
                     dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'idle'))
                 } else {
                     handleServerAppError(dispatch, res.data)
@@ -216,14 +210,14 @@ export const updateTaskTC =
 
 export const deleteTaskTC =
     (todolistId: string, taskId: string): AppThunkType =>
-    async (dispatch: Dispatch<ActionsType>) => {
+    async dispatch => {
         try {
-            dispatch(setAppStatus('loading'))
+            dispatch(appActions.setAppStatus({ status: 'loading' }))
             dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'loading'))
             const res = await todolistAPI.deleteTask(todolistId, taskId)
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(deleteTaskAC(todolistId, taskId))
-                dispatch(setAppStatus('succeeded'))
+                dispatch(appActions.setAppStatus({ status: 'succeeded' }))
             } else {
                 handleServerAppError(dispatch, res.data)
             }
@@ -259,8 +253,6 @@ export type TasksActionsType =
     | SetTodolistsAC
     | AddTodolistAC
     | DeleteTodolistAC
-    | SetAppStatusActionType
-    | SetAppErrorActionType
     | ClearTodolistsAC
 
 type UpdateTaskType = {

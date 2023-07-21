@@ -1,14 +1,8 @@
 import axios from 'axios'
-import { ErrorType, ResultCode, todolistAPI, TodolistType } from '../../api/todolistAPI'
-import { Dispatch } from 'redux'
-import { ActionsType, AppDispatchType, AppThunkType } from '../../app/store'
-import {
-    RequestStatusType,
-    SetAppErrorActionType,
-    setAppStatus,
-    SetAppStatusActionType,
-} from '../../app/appReducer'
-import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
+import { ErrorType, ResultCode, todolistAPI, TodolistType } from 'api/todolistAPI'
+import { AppThunkType } from 'app/store'
+import { appActions, RequestStatusType } from 'app/appReducer'
+import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
 import { getTasksTC } from './tasksReducer'
 
 const initialState: TodolistDomainType[] = []
@@ -100,11 +94,11 @@ export const changeTodolistEntityStatusAC = (todolistId: string, entityStatus: R
 export const clearTodolistsAC = () => ({ type: 'CLEAR-TODOLISTS' }) as const
 
 // thunks
-export const getTodolistsTC = (): AppThunkType => async (dispatch: AppDispatchType) => {
+export const getTodolistsTC = (): AppThunkType => async dispatch => {
     try {
-        dispatch(setAppStatus('loading'))
+        dispatch(appActions.setAppStatus({ status: 'loading' }))
         const res = await todolistAPI.getTodolists()
-        dispatch(setAppStatus('succeeded'))
+        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
         dispatch(setTodolistsAC(res.data))
 
         res.data.forEach(todolist => {
@@ -124,13 +118,13 @@ export const getTodolistsTC = (): AppThunkType => async (dispatch: AppDispatchTy
 
 export const createTodolistTC =
     (title: string): AppThunkType =>
-    async (dispatch: Dispatch<ActionsType>) => {
+    async dispatch => {
         try {
-            dispatch(setAppStatus('loading'))
+            dispatch(appActions.setAppStatus({ status: 'loading' }))
             const res = await todolistAPI.createTodolist(title)
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(addTodolistAC(res.data.data.item))
-                dispatch(setAppStatus('succeeded'))
+                dispatch(appActions.setAppStatus({ status: 'succeeded' }))
             } else {
                 handleServerAppError(dispatch, res.data)
             }
@@ -148,14 +142,14 @@ export const createTodolistTC =
 
 export const changeTodolistTitleTC =
     (todolistId: string, title: string): AppThunkType =>
-    async (dispatch: Dispatch<ActionsType>) => {
+    async dispatch => {
         try {
-            dispatch(setAppStatus('loading'))
+            dispatch(appActions.setAppStatus({ status: 'loading' }))
             dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
             const res = await todolistAPI.updateTodolistTitle(todolistId, title)
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(changeTodolistTitleAC(todolistId, title))
-                dispatch(setAppStatus('succeeded'))
+                dispatch(appActions.setAppStatus({ status: 'succeeded' }))
                 dispatch(changeTodolistEntityStatusAC(todolistId, 'idle'))
             } else {
                 handleServerAppError(dispatch, res.data)
@@ -174,14 +168,14 @@ export const changeTodolistTitleTC =
 
 export const deleteTodolistTC =
     (todolistId: string): AppThunkType =>
-    async (dispatch: Dispatch<ActionsType>) => {
+    async dispatch => {
         try {
-            dispatch(setAppStatus('loading'))
+            dispatch(appActions.setAppStatus({ status: 'loading' }))
             dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
             const res = await todolistAPI.deleteTodolist(todolistId)
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(deleteTodolistAC(todolistId))
-                dispatch(setAppStatus('succeeded'))
+                dispatch(appActions.setAppStatus({ status: 'succeeded' }))
             } else {
                 handleServerAppError(dispatch, res.data)
             }
@@ -214,8 +208,6 @@ export type TodolistsActionsType =
     | ReturnType<typeof changeTodolistFilterAC>
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistEntityStatusAC>
-    | SetAppStatusActionType
-    | SetAppErrorActionType
     | ClearTodolistsAC
 
 export type SetTodolistsAC = ReturnType<typeof setTodolistsAC>

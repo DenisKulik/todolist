@@ -1,10 +1,10 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { AppThunkType } from 'app/store'
-import { setAppStatus, setInitialized } from 'app/appReducer'
+import { appActions } from 'app/appReducer'
 import { authAPI, ErrorType, LoginType, ResultCode } from 'api/todolistAPI'
 import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
 import { clearTodolistsAC } from '../Todolists/todolistsReducer'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const slice = createSlice({
     name: 'auth',
@@ -25,13 +25,13 @@ export const authActions = slice.actions
 export const loginTC =
     (data: LoginType): AppThunkType =>
     async dispatch => {
-        dispatch(setAppStatus('loading'))
+        dispatch(appActions.setAppStatus({ status: 'loading' }))
 
         try {
             const res = await authAPI.login(data)
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }))
-                dispatch(setAppStatus('succeeded'))
+                dispatch(appActions.setAppStatus({ status: 'succeeded' }))
             } else {
                 handleServerAppError(dispatch, res.data)
             }
@@ -48,13 +48,13 @@ export const loginTC =
     }
 
 export const meTC = (): AppThunkType => async dispatch => {
-    dispatch(setAppStatus('loading'))
+    dispatch(appActions.setAppStatus({ status: 'loading' }))
 
     try {
         const res = await authAPI.me()
         if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }))
-            dispatch(setAppStatus('succeeded'))
+            dispatch(appActions.setAppStatus({ status: 'succeeded' }))
         } else {
             handleServerAppError(dispatch, res.data)
         }
@@ -68,18 +68,18 @@ export const meTC = (): AppThunkType => async dispatch => {
         const error = (e as Error).message
         handleServerNetworkError(dispatch, error)
     } finally {
-        dispatch(setInitialized(true))
+        dispatch(appActions.setInitialized({ isInitialized: true }))
     }
 }
 
 export const logoutTC = (): AppThunkType => async dispatch => {
-    dispatch(setAppStatus('loading'))
+    dispatch(appActions.setAppStatus({ status: 'loading' }))
 
     try {
         const res = await authAPI.logout()
         if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }))
-            dispatch(setAppStatus('succeeded'))
+            dispatch(appActions.setAppStatus({ status: 'succeeded' }))
             dispatch(clearTodolistsAC())
         } else {
             handleServerAppError(dispatch, res.data)
