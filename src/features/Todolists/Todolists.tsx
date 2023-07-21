@@ -1,33 +1,33 @@
-import { Navigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/store';
-import {
-    createTodolistTC, getTodolistsTC, TodolistDomainType
-} from './todolistsReducer';
-import { useCallback, useEffect } from 'react';
-import Grid from '@mui/material/Grid';
-import Todolist from './Todolist/Todolist';
-import AddItemForm from '../../components/AddItemForm/AddItemForm';
-import styled from 'styled-components';
-import Paper from '@mui/material/Paper';
+import { Navigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../app/store'
+import { createTodolistTC, getTodolistsTC, TodolistDomainType } from './todolistsReducer'
+import { useCallback, useEffect } from 'react'
+import Grid from '@mui/material/Grid'
+import Todolist from './Todolist/Todolist'
+import AddItemForm from '../../components/AddItemForm/AddItemForm'
+import styled from 'styled-components'
+import Paper from '@mui/material/Paper'
 
 type TodolistsPropsType = {
     demo?: boolean
 }
 
 export const Todolists = ({ demo = false }: TodolistsPropsType) => {
-    const todolists = useAppSelector<TodolistDomainType[]>(
-        state => state.todolists);
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
-    const dispatch = useAppDispatch();
+    const todolists = useAppSelector<TodolistDomainType[]>(state => state.todolists)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (!isLoggedIn || demo) return;
-        dispatch(getTodolistsTC());
-    }, [ dispatch, demo, isLoggedIn ]);
+        if (!isLoggedIn || demo) return
+        dispatch(getTodolistsTC())
+    }, [dispatch, demo, isLoggedIn])
 
-    const addTodolist = useCallback((title: string) => {
-        dispatch(createTodolistTC(title));
-    }, [ dispatch ]);
+    const addTodolist = useCallback(
+        (title: string) => {
+            dispatch(createTodolistTC(title))
+        },
+        [dispatch],
+    )
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {
         return (
@@ -36,11 +36,11 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
                     <Todolist todolist={todolist} />
                 </StyledPaper>
             </Grid>
-        );
-    });
+        )
+    })
 
     if (!isLoggedIn) {
-        return <Navigate to={'/login'} />;
+        return <Navigate to={'/login'} />
     }
 
     return (
@@ -52,13 +52,13 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
                 {todolistsItems}
             </Grid>
         </>
-    );
-};
+    )
+}
 
 const StyledPaper = styled(Paper)`
-  padding: 10px;
-`;
+    padding: 10px;
+`
 
 const StyledGrid = styled(Grid)`
-  padding: 20px;
-`;
+    padding: 20px;
+`

@@ -3,12 +3,12 @@ import tasksReducer, {
     deleteTaskAC,
     TasksStateType,
     updateTaskAC,
-} from '../tasksReducer';
-import { deleteTodolistAC } from '../todolistsReducer';
-import { TaskPriorities, TaskStatuses } from '../../../api/todolistAPI';
+} from '../tasksReducer'
+import { deleteTodolistAC } from '../todolistsReducer'
+import { TaskPriorities, TaskStatuses } from '../../../api/todolistAPI'
 
 describe('tasksReducer', () => {
-    let startState: TasksStateType = {};
+    let startState: TasksStateType = {}
 
     beforeEach(() => {
         startState = {
@@ -25,7 +25,7 @@ describe('tasksReducer', () => {
                     todoListId: 'todolistId1',
                     order: 0,
                     addedDate: new Date(),
-                    entityStatus: 'idle'
+                    entityStatus: 'idle',
                 },
                 {
                     description: '',
@@ -39,7 +39,7 @@ describe('tasksReducer', () => {
                     todoListId: 'todolistId1',
                     order: 0,
                     addedDate: new Date(),
-                    entityStatus: 'idle'
+                    entityStatus: 'idle',
                 },
                 {
                     description: '',
@@ -53,7 +53,7 @@ describe('tasksReducer', () => {
                     todoListId: 'todolistId1',
                     order: 0,
                     addedDate: new Date(),
-                    entityStatus: 'idle'
+                    entityStatus: 'idle',
                 },
             ],
             ['todolistId2']: [
@@ -69,7 +69,7 @@ describe('tasksReducer', () => {
                     todoListId: 'todolistId1',
                     order: 0,
                     addedDate: new Date(),
-                    entityStatus: 'idle'
+                    entityStatus: 'idle',
                 },
                 {
                     description: '',
@@ -83,7 +83,7 @@ describe('tasksReducer', () => {
                     todoListId: 'todolistId1',
                     order: 0,
                     addedDate: new Date(),
-                    entityStatus: 'idle'
+                    entityStatus: 'idle',
                 },
                 {
                     description: '',
@@ -97,11 +97,11 @@ describe('tasksReducer', () => {
                     todoListId: 'todolistId1',
                     order: 0,
                     addedDate: new Date(),
-                    entityStatus: 'idle'
+                    entityStatus: 'idle',
                 },
             ],
-        };
-    });
+        }
+    })
 
     it('should add task correctly', () => {
         const newTask = {
@@ -115,26 +115,26 @@ describe('tasksReducer', () => {
             id: '4',
             todoListId: 'todolistId2',
             order: 0,
-            addedDate: new Date()
-        };
+            addedDate: new Date(),
+        }
 
-        const action = addTaskAC(newTask);
+        const action = addTaskAC(newTask)
 
-        const endState = tasksReducer(startState, action);
+        const endState = tasksReducer(startState, action)
 
-        expect(endState['todolistId2'].length).toBe(4);
-        expect(endState['todolistId2'][0].title).toBe('React book');
-        expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New);
-    });
+        expect(endState['todolistId2'].length).toBe(4)
+        expect(endState['todolistId2'][0].title).toBe('React book')
+        expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New)
+    })
 
     it('should delete task correctly', () => {
-        const action = deleteTaskAC('todolistId2', '2');
+        const action = deleteTaskAC('todolistId2', '2')
 
-        const endState = tasksReducer(startState, action);
+        const endState = tasksReducer(startState, action)
 
-        expect(endState['todolistId2'].length).toBe(2);
-        expect(endState['todolistId2'].every(t => t.id !== '2')).toBeTruthy();
-    });
+        expect(endState['todolistId2'].length).toBe(2)
+        expect(endState['todolistId2'].every(t => t.id !== '2')).toBeTruthy()
+    })
 
     it('should update task correctly', () => {
         const updatedTask = {
@@ -143,34 +143,34 @@ describe('tasksReducer', () => {
             status: TaskStatuses.Completed,
             priority: TaskPriorities.Middle,
             startDate: new Date(),
-            deadline: new Date()
-        };
+            deadline: new Date(),
+        }
 
-        const action = updateTaskAC('todolistId2', '2', updatedTask);
+        const action = updateTaskAC('todolistId2', '2', updatedTask)
 
-        const endState = tasksReducer(startState, action);
+        const endState = tasksReducer(startState, action)
 
-        expect(endState['todolistId2'][1].status).toBe(TaskStatuses.Completed);
-        expect(endState['todolistId2'][1].title).toBe('eggs');
-    });
+        expect(endState['todolistId2'][1].status).toBe(TaskStatuses.Completed)
+        expect(endState['todolistId2'][1].title).toBe('eggs')
+    })
 
     it('should delete tasks for todolist correctly', () => {
-        const action = deleteTodolistAC('todolistId2');
+        const action = deleteTodolistAC('todolistId2')
 
-        const endState = tasksReducer(startState, action);
+        const endState = tasksReducer(startState, action)
 
-        const keys = Object.keys(endState);
+        const keys = Object.keys(endState)
 
-        expect(keys.length).toBe(1);
-        expect(endState['todolistId2']).not.toBeDefined();
-    });
+        expect(keys.length).toBe(1)
+        expect(endState['todolistId2']).not.toBeDefined()
+    })
 
     it('should return the same state if action type is incorrect', () => {
-        const action = { type: 'UNKNOWN_ACTION_TYPE' };
+        const action = { type: 'UNKNOWN_ACTION_TYPE' }
 
         // @ts-ignore
-        const endState = tasksReducer(startState, action);
+        const endState = tasksReducer(startState, action)
 
-        expect(endState).toBe(startState);
-    });
-});
+        expect(endState).toBe(startState)
+    })
+})

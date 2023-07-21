@@ -1,60 +1,66 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios'
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
-});
+})
 
 export const authAPI = {
     me() {
-        return instance.get<ResponseType<AuthUserType>>('auth/me');
+        return instance.get<ResponseType<AuthUserType>>('auth/me')
     },
     login(data: LoginType) {
-        return instance.post<ResponseType<{ userId: number }>,
+        return instance.post<
+            ResponseType<{ userId: number }>,
             AxiosResponse<ResponseType<{ userId: number }>>,
-            LoginType>('auth/login', data);
+            LoginType
+        >('auth/login', data)
     },
     logout() {
-        return instance.delete<ResponseType>('auth/login');
-    }
-};
+        return instance.delete<ResponseType>('auth/login')
+    },
+}
 
 export const todolistAPI = {
     getTodolists() {
-        return instance.get<TodolistType[]>('todo-lists');
+        return instance.get<TodolistType[]>('todo-lists')
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<{ item: TodolistType }>,
+        return instance.post<
+            ResponseType<{ item: TodolistType }>,
             AxiosResponse<ResponseType<{ item: TodolistType }>>,
-            { title: string }>('todo-lists', { title });
+            { title: string }
+        >('todo-lists', { title })
     },
     deleteTodolist(todolistId: string) {
-        return instance.delete<ResponseType>(`todo-lists/${todolistId}`);
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodolistTitle(todolistId: string, title: string) {
-        return instance.put<ResponseType, AxiosResponse<ResponseType>,
-            { title: string }>(`todo-lists/${todolistId}`, { title }
-        );
+        return instance.put<ResponseType, AxiosResponse<ResponseType>, { title: string }>(
+            `todo-lists/${todolistId}`,
+            { title },
+        )
     },
     getTasks(todolistId: string) {
-        return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`);
+        return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId: string, title: string) {
-        return instance.post<ResponseType<{ item: TaskType }>,
-            AxiosResponse<ResponseType<{ item: TaskType }>>, { title: string }
-        >(`todo-lists/${todolistId}/tasks`, { title });
+        return instance.post<
+            ResponseType<{ item: TaskType }>,
+            AxiosResponse<ResponseType<{ item: TaskType }>>,
+            { title: string }
+        >(`todo-lists/${todolistId}/tasks`, { title })
     },
     deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<ResponseType>(
-            `todo-lists/${todolistId}/tasks/${taskId}`
-        );
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-        return instance.put<ResponseType<{ item: TaskType }>,
+        return instance.put<
+            ResponseType<{ item: TaskType }>,
             AxiosResponse<ResponseType<{ item: TaskType }>, UpdateTaskModelType>
-        >(`todo-lists/${todolistId}/tasks/${taskId}`, model);
+        >(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
-};
+}
 
 // types
 export type AuthUserType = {
@@ -80,7 +86,7 @@ export enum TaskStatuses {
     New = 0,
     InProgress = 1,
     Completed = 2,
-    Draft = 3
+    Draft = 3,
 }
 
 export enum TaskPriorities {
@@ -88,13 +94,13 @@ export enum TaskPriorities {
     Middle = 1,
     Hi = 2,
     Urgently = 3,
-    Later = 4
+    Later = 4,
 }
 
 export enum ResultCode {
     SUCCESS = 0,
     ERROR = 1,
-    ERROR_CAPTCHA = 10
+    ERROR_CAPTCHA = 10,
 }
 
 export type TaskType = {
@@ -134,12 +140,12 @@ export type ResponseType<T = {}> = {
 }
 
 export type ErrorType = {
-    statusCode: number,
+    statusCode: number
     messages: [
         {
-            message: string,
+            message: string
             field: string
-        }
-    ],
+        },
+    ]
     error: string
 }

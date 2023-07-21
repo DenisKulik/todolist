@@ -1,20 +1,20 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { applyMiddleware, combineReducers, legacy_createStore } from 'redux';
-import thunk from 'redux-thunk';
-import tasksReducer from '../features/Todolists/tasksReducer';
-import todolistsReducer from '../features/Todolists/todolistsReducer';
-import { AppRootStateType } from './store';
-import { TaskPriorities, TaskStatuses } from '../api/todolistAPI';
-import { appReducer } from './appReducer';
-import { authReducer } from '../features/Login/authReducer';
+import React from 'react'
+import { Provider } from 'react-redux'
+import { applyMiddleware, combineReducers, legacy_createStore } from 'redux'
+import thunk from 'redux-thunk'
+import tasksReducer from '../features/Todolists/tasksReducer'
+import todolistsReducer from '../features/Todolists/todolistsReducer'
+import { AppRootStateType } from './store'
+import { TaskPriorities, TaskStatuses } from '../api/todolistAPI'
+import { appReducer } from './appReducer'
+import { authReducer } from '../features/Login/authReducer'
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
     app: appReducer,
-    auth: authReducer
-});
+    auth: authReducer,
+})
 
 export const initialGlobalState: AppRootStateType = {
     todolists: [
@@ -24,7 +24,7 @@ export const initialGlobalState: AppRootStateType = {
             order: 0,
             title: 'What to learn',
             filter: 'all',
-            entityStatus: 'idle'
+            entityStatus: 'idle',
         },
         {
             id: 'todolistId2',
@@ -32,7 +32,7 @@ export const initialGlobalState: AppRootStateType = {
             order: 1,
             title: 'What to buy',
             filter: 'all',
-            entityStatus: 'loading'
+            entityStatus: 'loading',
         },
     ],
     tasks: {
@@ -49,7 +49,7 @@ export const initialGlobalState: AppRootStateType = {
                 todoListId: 'todolistId1',
                 order: 0,
                 addedDate: new Date(),
-                entityStatus: 'idle'
+                entityStatus: 'idle',
             },
             {
                 description: '',
@@ -63,7 +63,7 @@ export const initialGlobalState: AppRootStateType = {
                 todoListId: 'todolistId1',
                 order: 0,
                 addedDate: new Date(),
-                entityStatus: 'idle'
+                entityStatus: 'idle',
             },
             {
                 description: '',
@@ -77,7 +77,7 @@ export const initialGlobalState: AppRootStateType = {
                 todoListId: 'todolistId1',
                 order: 0,
                 addedDate: new Date(),
-                entityStatus: 'idle'
+                entityStatus: 'idle',
             },
         ],
         ['todolistId2']: [
@@ -93,7 +93,7 @@ export const initialGlobalState: AppRootStateType = {
                 todoListId: 'todolistId2',
                 order: 0,
                 addedDate: new Date(),
-                entityStatus: 'idle'
+                entityStatus: 'idle',
             },
             {
                 description: '',
@@ -107,23 +107,26 @@ export const initialGlobalState: AppRootStateType = {
                 todoListId: 'todolistId2',
                 order: 0,
                 addedDate: new Date(),
-                entityStatus: 'idle'
+                entityStatus: 'idle',
             },
-        ]
+        ],
     },
     app: {
         status: 'loading',
         error: null,
-        isInitialized: true
+        isInitialized: true,
     },
     auth: {
-        isLoggedIn: true
-    }
-};
+        isLoggedIn: true,
+    },
+}
 
-export const storyBookStore = legacy_createStore(rootReducer,
-    initialGlobalState, applyMiddleware(thunk));
+export const storyBookStore = legacy_createStore(
+    rootReducer,
+    initialGlobalState,
+    applyMiddleware(thunk),
+)
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
-    return <Provider store={storyBookStore}>{storyFn()}</Provider>;
-};
+    return <Provider store={storyBookStore}>{storyFn()}</Provider>
+}

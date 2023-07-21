@@ -4,10 +4,10 @@ import todolistsReducer, {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     TodolistDomainType,
-} from '../todolistsReducer';
+} from '../todolistsReducer'
 
 describe('todolistsReducer', () => {
-    let startState: TodolistDomainType[] = [];
+    let startState: TodolistDomainType[] = []
 
     beforeEach(() => {
         startState = [
@@ -17,7 +17,7 @@ describe('todolistsReducer', () => {
                 order: 0,
                 title: 'What to learn',
                 filter: 'all',
-                entityStatus: 'idle'
+                entityStatus: 'idle',
             },
             {
                 id: '2',
@@ -25,58 +25,58 @@ describe('todolistsReducer', () => {
                 order: 0,
                 title: 'What to buy',
                 filter: 'all',
-                entityStatus: 'idle'
+                entityStatus: 'idle',
             },
-        ];
-    });
+        ]
+    })
 
     it('should add todolist correctly', () => {
         const newTodos = {
             id: '3',
             addedDate: new Date(),
             order: 0,
-            title: 'What to do'
-        };
+            title: 'What to do',
+        }
 
-        const action = addTodolistAC(newTodos);
+        const action = addTodolistAC(newTodos)
 
-        const endState = todolistsReducer(startState, action);
+        const endState = todolistsReducer(startState, action)
 
-        expect(endState.length).toBe(3);
-        expect(endState[0].title).toBe('What to do');
-        expect(endState[0].filter).toBe('all');
-    });
+        expect(endState.length).toBe(3)
+        expect(endState[0].title).toBe('What to do')
+        expect(endState[0].filter).toBe('all')
+    })
 
     it('should delete todolist correctly', () => {
-        const action = deleteTodolistAC('2');
+        const action = deleteTodolistAC('2')
 
-        const endState = todolistsReducer(startState, action);
+        const endState = todolistsReducer(startState, action)
 
-        expect(endState.length).toBe(1);
-        expect(endState.every(t => t.id !== '2')).toBeTruthy();
-    });
+        expect(endState.length).toBe(1)
+        expect(endState.every(t => t.id !== '2')).toBeTruthy()
+    })
 
     it('should change todolist filter correctly', () => {
-        const action = changeTodolistFilterAC('completed', '1');
+        const action = changeTodolistFilterAC('completed', '1')
 
-        const endState = todolistsReducer(startState, action);
+        const endState = todolistsReducer(startState, action)
 
-        expect(endState[0].filter).toBe('completed');
-    });
+        expect(endState[0].filter).toBe('completed')
+    })
 
     it('should change todolist title correctly', () => {
-        const action = changeTodolistTitleAC('2', 'New Title');
+        const action = changeTodolistTitleAC('2', 'New Title')
 
-        const endState = todolistsReducer(startState, action);
+        const endState = todolistsReducer(startState, action)
 
-        expect(endState[1].title).toBe('New Title');
-    });
+        expect(endState[1].title).toBe('New Title')
+    })
     it('should return the same state if action type is incorrect', () => {
-        const action = { type: 'UNKNOWN_ACTION_TYPE' };
+        const action = { type: 'UNKNOWN_ACTION_TYPE' }
 
         // @ts-ignore
-        const endState = todolistsReducer(startState, action);
+        const endState = todolistsReducer(startState, action)
 
-        expect(endState).toBe(startState);
-    });
-});
+        expect(endState).toBe(startState)
+    })
+})

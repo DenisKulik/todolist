@@ -1,117 +1,107 @@
-import { Dispatch } from 'redux';
+import { Dispatch } from 'redux'
 import {
-    SetAppErrorActionType, setAppStatus, SetAppStatusActionType, setInitialized,
-    SetInitializedActionType
-} from '../../app/appReducer';
-import {
-    authAPI, ErrorType, LoginType, ResultCode
-} from '../../api/todolistAPI';
-import {
-    handleServerAppError, handleServerNetworkError
-} from '../../utils/errorUtils';
-import axios from 'axios';
-import {
-    ClearTodolistsAC, clearTodolistsAC
-} from '../Todolists/todolistsReducer';
+    SetAppErrorActionType,
+    setAppStatus,
+    SetAppStatusActionType,
+    setInitialized,
+    SetInitializedActionType,
+} from '../../app/appReducer'
+import { authAPI, ErrorType, LoginType, ResultCode } from '../../api/todolistAPI'
+import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
+import axios from 'axios'
+import { ClearTodolistsAC, clearTodolistsAC } from '../Todolists/todolistsReducer'
 
 const initialState = {
-    isLoggedIn: false
-};
+    isLoggedIn: false,
+}
 
 export const authReducer = (
     state: InitialStateType = initialState,
-    action: ActionsType
+    action: ActionsType,
 ): InitialStateType => {
     switch (action.type) {
         case 'login/SET-IS-LOGGED-IN':
-            return { ...state, isLoggedIn: action.payload.value };
+            return { ...state, isLoggedIn: action.payload.value }
         default:
-            return state;
+            return state
     }
-};
+}
 // actions
 export const setIsLoggedInAC = (value: boolean) =>
-    ({ type: 'login/SET-IS-LOGGED-IN', payload: { value } } as const);
+    ({ type: 'login/SET-IS-LOGGED-IN', payload: { value } }) as const
 
 // thunks
 export const loginTC = (data: LoginType) => async (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatus('loading'));
+    dispatch(setAppStatus('loading'))
 
     try {
-        const res = await authAPI.login(data);
+        const res = await authAPI.login(data)
         if (res.data.resultCode === ResultCode.SUCCESS) {
-            dispatch(setIsLoggedInAC(true));
-            dispatch(setAppStatus('succeeded'));
+            dispatch(setIsLoggedInAC(true))
+            dispatch(setAppStatus('succeeded'))
         } else {
-            handleServerAppError(dispatch, res.data);
+            handleServerAppError(dispatch, res.data)
         }
     } catch (e) {
         if (axios.isAxiosError<ErrorType>(e)) {
-            const error = e.response ?
-                e.response?.data.messages[0].message :
-                e.message;
-            handleServerNetworkError(dispatch, error);
-            return;
+            const error = e.response ? e.response?.data.messages[0].message : e.message
+            handleServerNetworkError(dispatch, error)
+            return
         }
 
-        const error = (e as Error).message;
-        handleServerNetworkError(dispatch, error);
+        const error = (e as Error).message
+        handleServerNetworkError(dispatch, error)
     }
-};
+}
 
 export const meTC = () => async (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatus('loading'));
+    dispatch(setAppStatus('loading'))
 
     try {
-        const res = await authAPI.me();
+        const res = await authAPI.me()
         if (res.data.resultCode === ResultCode.SUCCESS) {
-            dispatch(setIsLoggedInAC(true));
-            dispatch(setAppStatus('succeeded'));
+            dispatch(setIsLoggedInAC(true))
+            dispatch(setAppStatus('succeeded'))
         } else {
-            handleServerAppError(dispatch, res.data);
+            handleServerAppError(dispatch, res.data)
         }
     } catch (e) {
         if (axios.isAxiosError<ErrorType>(e)) {
-            const error = e.response ?
-                e.response?.data.messages[0].message :
-                e.message;
-            handleServerNetworkError(dispatch, error);
-            return;
+            const error = e.response ? e.response?.data.messages[0].message : e.message
+            handleServerNetworkError(dispatch, error)
+            return
         }
 
-        const error = (e as Error).message;
-        handleServerNetworkError(dispatch, error);
+        const error = (e as Error).message
+        handleServerNetworkError(dispatch, error)
     } finally {
-        dispatch(setInitialized(true));
+        dispatch(setInitialized(true))
     }
-};
+}
 
 export const logoutTC = () => async (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatus('loading'));
+    dispatch(setAppStatus('loading'))
 
     try {
-        const res = await authAPI.logout();
+        const res = await authAPI.logout()
         if (res.data.resultCode === ResultCode.SUCCESS) {
-            dispatch(setIsLoggedInAC(false));
-            dispatch(setAppStatus('succeeded'));
-            dispatch(clearTodolistsAC());
+            dispatch(setIsLoggedInAC(false))
+            dispatch(setAppStatus('succeeded'))
+            dispatch(clearTodolistsAC())
         } else {
-            handleServerAppError(dispatch, res.data);
+            handleServerAppError(dispatch, res.data)
         }
     } catch (e) {
         if (axios.isAxiosError<ErrorType>(e)) {
-            const error = e.response ?
-                e.response?.data.messages[0].message :
-                e.message;
-            handleServerNetworkError(dispatch, error);
-            return;
+            const error = e.response ? e.response?.data.messages[0].message : e.message
+            handleServerNetworkError(dispatch, error)
+            return
         }
 
-        const error = (e as Error).message;
-        handleServerNetworkError(dispatch, error);
+        const error = (e as Error).message
+        handleServerNetworkError(dispatch, error)
     }
-};
-
+}
 
 // types
 type InitialStateType = typeof initialState
