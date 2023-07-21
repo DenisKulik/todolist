@@ -4,7 +4,7 @@ import { AppThunkType } from 'app/store'
 import { appActions } from 'app/appReducer'
 import { authAPI, ErrorType, LoginType, ResultCode } from 'api/todolistAPI'
 import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
-import { clearTodolistsAC } from '../Todolists/todolistsReducer'
+import { todolistsActions } from 'features/Todolists/todolistsReducer'
 
 const slice = createSlice({
     name: 'auth',
@@ -80,7 +80,7 @@ export const logoutTC = (): AppThunkType => async dispatch => {
         if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }))
             dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-            dispatch(clearTodolistsAC())
+            dispatch(todolistsActions.clearTodolists())
         } else {
             handleServerAppError(dispatch, res.data)
         }

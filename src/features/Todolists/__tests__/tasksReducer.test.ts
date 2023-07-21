@@ -4,8 +4,8 @@ import tasksReducer, {
     TasksStateType,
     updateTaskAC,
 } from '../tasksReducer'
-import { deleteTodolistAC } from '../todolistsReducer'
 import { TaskPriorities, TaskStatuses } from '../../../api/todolistAPI'
+import { todolistsActions } from 'features/Todolists/todolistsReducer'
 
 describe('tasksReducer', () => {
     let startState: TasksStateType = {}
@@ -155,7 +155,7 @@ describe('tasksReducer', () => {
     })
 
     it('should delete tasks for todolist correctly', () => {
-        const action = deleteTodolistAC('todolistId2')
+        const action = todolistsActions.deleteTodolist({ todolistId: 'todolistId2' })
 
         const endState = tasksReducer(startState, action)
 

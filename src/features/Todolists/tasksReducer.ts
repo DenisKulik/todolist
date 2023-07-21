@@ -1,11 +1,5 @@
 import axios from 'axios'
 import {
-    AddTodolistAC,
-    ClearTodolistsAC,
-    DeleteTodolistAC,
-    SetTodolistsAC,
-} from './todolistsReducer'
-import {
     ErrorType,
     ResultCode,
     TaskPriorities,
@@ -17,24 +11,23 @@ import {
 import { AppRootStateType, AppThunkType } from 'app/store'
 import { appActions, RequestStatusType } from 'app/appReducer'
 import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
+import { AnyAction } from 'redux'
+import { TodolistDomainType } from 'features/Todolists/todolistsReducer'
 
 const initialState: TasksStateType = {}
 
-const tasksReducer = (
-    state: TasksStateType = initialState,
-    action: TasksActionsType,
-): TasksStateType => {
+const tasksReducer = (state: TasksStateType = initialState, action: AnyAction): TasksStateType => {
     switch (action.type) {
         case 'SET-TODOLISTS':
             const newState = { ...state }
-            action.payload.todolists.forEach(todolist => {
+            action.payload.todolists.forEach((todolist: TodolistDomainType) => {
                 newState[todolist.id] = []
             })
             return newState
         case 'SET-TASKS':
             return {
                 ...state,
-                [action.payload.todolistId]: action.payload.tasks.map(task => ({
+                [action.payload.todolistId]: action.payload.tasks.map((task: TaskDomainType) => ({
                     ...task,
                     entityStatus: 'idle',
                 })),
@@ -243,17 +236,6 @@ export type TaskDomainType = TaskType & {
 export type TasksStateType = {
     [todolistId: string]: TaskDomainType[]
 }
-
-export type TasksActionsType =
-    | ReturnType<typeof setTasksAC>
-    | ReturnType<typeof addTaskAC>
-    | ReturnType<typeof deleteTaskAC>
-    | ReturnType<typeof updateTaskAC>
-    | ReturnType<typeof changeTaskEntityStatusAC>
-    | SetTodolistsAC
-    | AddTodolistAC
-    | DeleteTodolistAC
-    | ClearTodolistsAC
 
 type UpdateTaskType = {
     title?: string

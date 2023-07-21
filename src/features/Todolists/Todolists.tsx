@@ -1,12 +1,12 @@
 import { Navigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../app/store'
+import Paper from '@mui/material/Paper'
+import { useAppDispatch, useAppSelector } from 'app/store'
 import { createTodolistTC, getTodolistsTC, TodolistDomainType } from './todolistsReducer'
 import { useCallback, useEffect } from 'react'
 import Grid from '@mui/material/Grid'
 import Todolist from './Todolist/Todolist'
 import AddItemForm from '../../components/AddItemForm/AddItemForm'
 import styled from 'styled-components'
-import Paper from '@mui/material/Paper'
 
 type TodolistsPropsType = {
     demo?: boolean

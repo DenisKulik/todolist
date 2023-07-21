@@ -1,21 +1,21 @@
 import { memo, useCallback } from 'react'
+import styled from 'styled-components'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
-import styled from 'styled-components'
-import AddItemForm from '../../../components/AddItemForm/AddItemForm'
-import EditableSpan from '../../../components/EditableSpan/EditableSpan'
-import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { createTaskTC, TaskDomainType } from '../tasksReducer'
+import AddItemForm from 'components/AddItemForm/AddItemForm'
+import EditableSpan from 'components/EditableSpan/EditableSpan'
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { createTaskTC, TaskDomainType } from 'features/Todolists/tasksReducer'
 import {
-    changeTodolistFilterAC,
     changeTodolistTitleTC,
     deleteTodolistTC,
     FilterType,
     TodolistDomainType,
+    todolistsActions,
 } from '../todolistsReducer'
-import CustomButton from '../../../components/CustomButton/CustomButton'
-import Task from './Task/Task'
-import { TaskStatuses } from '../../../api/todolistAPI'
+import CustomButton from 'components/CustomButton/CustomButton'
+import Task from 'features/Todolists/Todolist/Task/Task'
+import { TaskStatuses } from 'api/todolistAPI'
 
 type TodolistPropsType = {
     todolist: TodolistDomainType
@@ -45,8 +45,8 @@ const Todolist = (props: TodolistPropsType) => {
     )
 
     const changeTodolistFilterHandler = useCallback(
-        (value: FilterType, todolistId: string) => {
-            dispatch(changeTodolistFilterAC(value, todolistId))
+        (filter: FilterType, todolistId: string) => {
+            dispatch(todolistsActions.changeTodolistFilter({ filter, todolistId }))
         },
         [dispatch],
     )

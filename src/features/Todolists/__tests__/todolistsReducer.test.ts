@@ -1,10 +1,4 @@
-import todolistsReducer, {
-    addTodolistAC,
-    deleteTodolistAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    TodolistDomainType,
-} from '../todolistsReducer'
+import { TodolistDomainType, todolistsActions, todolistsReducer } from '../todolistsReducer'
 
 describe('todolistsReducer', () => {
     let startState: TodolistDomainType[] = []
@@ -38,7 +32,7 @@ describe('todolistsReducer', () => {
             title: 'What to do',
         }
 
-        const action = addTodolistAC(newTodos)
+        const action = todolistsActions.addTodolist({ todolist: newTodos })
 
         const endState = todolistsReducer(startState, action)
 
@@ -48,7 +42,7 @@ describe('todolistsReducer', () => {
     })
 
     it('should delete todolist correctly', () => {
-        const action = deleteTodolistAC('2')
+        const action = todolistsActions.deleteTodolist({ todolistId: '2' })
 
         const endState = todolistsReducer(startState, action)
 
@@ -57,7 +51,10 @@ describe('todolistsReducer', () => {
     })
 
     it('should change todolist filter correctly', () => {
-        const action = changeTodolistFilterAC('completed', '1')
+        const action = todolistsActions.changeTodolistFilter({
+            filter: 'completed',
+            todolistId: '1',
+        })
 
         const endState = todolistsReducer(startState, action)
 
@@ -65,7 +62,7 @@ describe('todolistsReducer', () => {
     })
 
     it('should change todolist title correctly', () => {
-        const action = changeTodolistTitleAC('2', 'New Title')
+        const action = todolistsActions.changeTodolistTitle({ todolistId: '2', title: 'New Title' })
 
         const endState = todolistsReducer(startState, action)
 
