@@ -1,13 +1,13 @@
 import { memo, useCallback } from 'react'
-import CustomCheckbox from '../../../../components/ChexboxItem/CustomCheckbox'
-import EditableSpan from '../../../../components/EditableSpan/EditableSpan'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
+import CustomCheckbox from 'components/ChexboxItem/CustomCheckbox'
+import EditableSpan from 'components/EditableSpan/EditableSpan'
 import styled from 'styled-components'
 import { deleteTaskTC, updateTaskTC } from '../../tasksReducer'
-import { TaskStatuses, TaskType } from '../../../../api/todolistAPI'
-import { useAppDispatch } from '../../../../app/store'
-import { RequestStatusType } from '../../../../app/appReducer'
+import { TaskStatuses, TaskType } from 'api/todolistAPI'
+import { useAppDispatch } from 'app/store'
+import { RequestStatusType } from 'app/appReducer'
 
 type TaskPropsType = {
     task: TaskType

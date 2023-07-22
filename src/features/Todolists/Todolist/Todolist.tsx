@@ -12,10 +12,11 @@ import {
     FilterType,
     TodolistDomainType,
     todolistsActions,
-} from '../todolistsReducer'
-import CustomButton from 'components/CustomButton/CustomButton'
+} from 'features/Todolists/todolistsReducer'
 import Task from 'features/Todolists/Todolist/Task/Task'
 import { TaskStatuses } from 'api/todolistAPI'
+import { selectTasks } from 'features/Todolists/tasks.selectors'
+import CustomButton from 'components/CustomButton/CustomButton'
 
 type TodolistPropsType = {
     todolist: TodolistDomainType
@@ -23,7 +24,7 @@ type TodolistPropsType = {
 
 const Todolist = (props: TodolistPropsType) => {
     const { id, title, filter, entityStatus } = props.todolist
-    const tasks = useAppSelector<TaskDomainType[]>(state => state.tasks[id])
+    const tasks = useAppSelector<TaskDomainType[]>(state => selectTasks(state, id))
     const dispatch = useAppDispatch()
 
     const addTask = useCallback(

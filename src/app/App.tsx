@@ -1,20 +1,21 @@
+import { useEffect } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import CircularProgress from '@mui/material/CircularProgress'
-import ButtonAppBar from '../components/ButtonAppBar/ButtonAppBar'
-import { Todolists } from '../features/Todolists/Todolists'
-import { ErrorSnackbar } from '../components/ErrorSnackbar/ErrorSnackbar'
-import { Login } from '../features/Login/Login'
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from './store'
-import { meTC } from '../features/Login/authReducer'
+import ButtonAppBar from 'components/ButtonAppBar/ButtonAppBar'
+import { Todolists } from 'features/Todolists/Todolists'
+import { ErrorSnackbar } from 'components/ErrorSnackbar/ErrorSnackbar'
+import { Login } from 'features/Login/Login'
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { meTC } from 'features/Login/authReducer'
+import { selectIsInitialized } from 'app/app.selectors'
 
 type AppPropsType = {
     demo?: boolean
 }
 
 const App = ({ demo = false }: AppPropsType) => {
-    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
+    const isInitialized = useAppSelector<boolean>(selectIsInitialized)
     const dispatch = useAppDispatch()
 
     useEffect(() => {

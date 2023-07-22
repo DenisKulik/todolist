@@ -7,14 +7,16 @@ import Grid from '@mui/material/Grid'
 import Todolist from './Todolist/Todolist'
 import AddItemForm from '../../components/AddItemForm/AddItemForm'
 import styled from 'styled-components'
+import { selectIsLoggedIn } from 'features/Login/auth.selectors'
+import { selectTodolists } from 'features/Todolists/todolists.selectors'
 
 type TodolistsPropsType = {
     demo?: boolean
 }
 
 export const Todolists = ({ demo = false }: TodolistsPropsType) => {
-    const todolists = useAppSelector<TodolistDomainType[]>(state => state.todolists)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const todolists = useAppSelector<TodolistDomainType[]>(selectTodolists)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
