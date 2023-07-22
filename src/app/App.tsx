@@ -19,6 +19,7 @@ const App = ({ demo = false }: AppPropsType) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        if (demo) return
         dispatch(meTC())
     }, [dispatch])
 

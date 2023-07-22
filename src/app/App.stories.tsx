@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { withRouter } from 'storybook-addon-react-router-v6'
 import App from './App'
 import { ReduxStoreProviderDecorator } from './ReduxStoreProviderDecorator'
 
@@ -6,7 +7,12 @@ const meta: Meta<typeof App> = {
     title: 'TODOLISTS/App',
     component: App,
     tags: ['autodocs'],
-    decorators: [ReduxStoreProviderDecorator],
+    decorators: [ReduxStoreProviderDecorator, withRouter],
+    parameters: {
+        reactRouter: {
+            routePath: '/',
+        },
+    },
 }
 export default meta
 
