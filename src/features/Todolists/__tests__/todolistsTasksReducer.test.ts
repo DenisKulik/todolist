@@ -1,5 +1,5 @@
 import { TodolistDomainType, todolistsActions, todolistsReducer } from '../todolistsReducer'
-import tasksReducer, { TasksStateType } from '../tasksReducer'
+import { tasksReducer, TasksStateType } from '../tasksReducer'
 
 it('should be equals', () => {
     const startTasksState: TasksStateType = {}

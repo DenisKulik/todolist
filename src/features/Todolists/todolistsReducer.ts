@@ -6,9 +6,11 @@ import { appActions, RequestStatusType } from 'app/appReducer'
 import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
 import { getTasksTC } from './tasksReducer'
 
+const initialState: TodolistDomainType[] = []
+
 const slice = createSlice({
     name: 'todolists',
-    initialState: [] as TodolistDomainType[],
+    initialState,
     reducers: {
         setTodolists: (state, action: PayloadAction<{ todolists: TodolistType[] }>) => {
             return action.payload.todolists.map(todolist => ({
@@ -19,7 +21,7 @@ const slice = createSlice({
         },
         deleteTodolist: (state, action: PayloadAction<{ todolistId: string }>) => {
             const index = state.findIndex(todo => todo.id === action.payload.todolistId)
-            if (index === -1) state.splice(index, 1)
+            if (index !== -1) state.splice(index, 1)
         },
         addTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
             state.unshift({ ...action.payload.todolist, filter: 'all', entityStatus: 'idle' })
@@ -29,25 +31,23 @@ const slice = createSlice({
             action: PayloadAction<{ todolistId: string; title: string }>,
         ) => {
             const index = state.findIndex(todo => todo.id === action.payload.todolistId)
-            if (index === -1) state[index].title = action.payload.title
+            if (index !== -1) state[index].title = action.payload.title
         },
         changeTodolistFilter: (
             state,
             action: PayloadAction<{ filter: FilterType; todolistId: string }>,
         ) => {
             const index = state.findIndex(todo => todo.id === action.payload.todolistId)
-            if (index === -1) state[index].filter = action.payload.filter
+            if (index !== -1) state[index].filter = action.payload.filter
         },
         changeTodolistEntityStatus: (
             state,
             action: PayloadAction<{ todolistId: string; entityStatus: RequestStatusType }>,
         ) => {
             const index = state.findIndex(todo => todo.id === action.payload.todolistId)
-            if (index === -1) state[index].entityStatus = action.payload.entityStatus
+            if (index !== -1) state[index].entityStatus = action.payload.entityStatus
         },
-        clearTodolists: state => {
-            state = []
-        },
+        clearTodolists: () => initialState,
     },
 })
 

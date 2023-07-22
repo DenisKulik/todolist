@@ -1,10 +1,5 @@
-import tasksReducer, {
-    addTaskAC,
-    deleteTaskAC,
-    TasksStateType,
-    updateTaskAC,
-} from '../tasksReducer'
-import { TaskPriorities, TaskStatuses } from '../../../api/todolistAPI'
+import { tasksActions, tasksReducer, TasksStateType } from '../tasksReducer'
+import { TaskPriorities, TaskStatuses } from 'api/todolistAPI'
 import { todolistsActions } from 'features/Todolists/todolistsReducer'
 
 describe('tasksReducer', () => {
@@ -118,7 +113,7 @@ describe('tasksReducer', () => {
             addedDate: new Date(),
         }
 
-        const action = addTaskAC(newTask)
+        const action = tasksActions.addTask({ task: newTask })
 
         const endState = tasksReducer(startState, action)
 
@@ -128,7 +123,7 @@ describe('tasksReducer', () => {
     })
 
     it('should delete task correctly', () => {
-        const action = deleteTaskAC('todolistId2', '2')
+        const action = tasksActions.deleteTask({ todolistId: 'todolistId2', taskId: '2' })
 
         const endState = tasksReducer(startState, action)
 
@@ -146,7 +141,11 @@ describe('tasksReducer', () => {
             deadline: new Date(),
         }
 
-        const action = updateTaskAC('todolistId2', '2', updatedTask)
+        const action = tasksActions.updateTask({
+            todolistId: 'todolistId2',
+            taskId: '2',
+            model: updatedTask,
+        })
 
         const endState = tasksReducer(startState, action)
 
