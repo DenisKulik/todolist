@@ -21,7 +21,7 @@ const App = ({ demo = false }: AppPropsType) => {
     useEffect(() => {
         if (demo) return
         dispatch(meTC())
-    }, [dispatch])
+    }, [dispatch, demo])
 
     if (!isInitialized) {
         return (
