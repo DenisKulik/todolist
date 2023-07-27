@@ -1,4 +1,4 @@
-import { tasksActions, tasksReducer, TasksStateType } from '../tasksReducer'
+import { tasksActions, tasksReducer, TasksStateType, tasksThunks } from '../tasksReducer'
 import { TaskPriorities, TaskStatuses } from 'api/todolistAPI'
 import { todolistsActions } from 'features/Todolists/todolistsReducer'
 
@@ -113,7 +113,10 @@ describe('tasksReducer', () => {
             addedDate: new Date(),
         }
 
-        const action = tasksActions.addTask({ task: newTask })
+        const action = tasksThunks.addTask.fulfilled({ task: newTask }, 'requestId', {
+            todolistId: 'todolistId2',
+            title: 'React book',
+        })
 
         const endState = tasksReducer(startState, action)
 

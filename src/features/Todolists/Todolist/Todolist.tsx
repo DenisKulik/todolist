@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import AddItemForm from 'components/AddItemForm/AddItemForm'
 import EditableSpan from 'components/EditableSpan/EditableSpan'
 import { useAppDispatch, useAppSelector } from 'app/store'
-import { createTaskTC, TaskDomainType } from 'features/Todolists/tasksReducer'
+import { TaskDomainType, tasksThunks } from 'features/Todolists/tasksReducer'
 import {
     changeTodolistTitleTC,
     deleteTodolistTC,
@@ -29,7 +29,7 @@ const Todolist = (props: TodolistPropsType) => {
 
     const addTask = useCallback(
         (title: string) => {
-            dispatch(createTaskTC(id, title))
+            dispatch(tasksThunks.addTask({ todolistId: id, title }))
         },
         [dispatch, id],
     )
