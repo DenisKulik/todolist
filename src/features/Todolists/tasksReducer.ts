@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
     ErrorType,
     ResultCode,
