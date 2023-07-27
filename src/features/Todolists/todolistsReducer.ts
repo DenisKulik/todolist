@@ -4,7 +4,7 @@ import { ErrorType, ResultCode, todolistAPI, TodolistType } from 'api/todolistAP
 import { AppThunkType } from 'app/store'
 import { appActions, RequestStatusType } from 'app/appReducer'
 import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
-import { getTasksTC } from './tasksReducer'
+import { tasksThunks } from './tasksReducer'
 
 const initialState: TodolistDomainType[] = []
 
@@ -63,7 +63,7 @@ export const getTodolistsTC = (): AppThunkType => async dispatch => {
         dispatch(todolistsActions.setTodolists({ todolists: res.data }))
 
         res.data.forEach(todolist => {
-            dispatch(getTasksTC(todolist.id))
+            dispatch(tasksThunks.fetchTasks(todolist.id))
         })
     } catch (e) {
         if (axios.isAxiosError<ErrorType>(e)) {
