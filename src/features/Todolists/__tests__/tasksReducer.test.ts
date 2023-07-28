@@ -1,4 +1,4 @@
-import { tasksActions, tasksReducer, TasksStateType, tasksThunks } from '../tasksReducer'
+import { tasksReducer, TasksStateType, tasksThunks } from '../tasksReducer'
 import { TaskPriorities, TaskStatuses } from 'api/todolistAPI'
 import { todolistsActions } from 'features/Todolists/todolistsReducer'
 
