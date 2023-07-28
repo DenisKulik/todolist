@@ -1,10 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import {
-    TaskPriorities,
-    TaskStatuses,
-    todolistAPI,
-    UpdateTaskModelType,
-} from '../../../api/todolistAPI'
+import { todolistAPI, UpdateTaskModelType } from '../todolists.api'
+import { TaskPriorities, TaskStatuses } from 'common/enums'
 
 export default {
     title: 'API',

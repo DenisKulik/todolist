@@ -2,8 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { AppThunkType } from 'app/store'
 import { appActions } from 'app/appReducer'
-import { authAPI, ErrorType, LoginType, ResultCode } from 'api/todolistAPI'
-import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
+import { ResultCode } from 'common/enums'
+import { handleServerAppError, handleServerNetworkError } from 'common/utils'
+import { authAPI, LoginType } from 'features/auth/auth.api'
 import { todolistsActions } from 'features/Todolists/todolistsReducer'
 
 const slice = createSlice({
@@ -36,7 +37,7 @@ export const loginTC =
                 handleServerAppError(dispatch, res.data)
             }
         } catch (e) {
-            if (axios.isAxiosError<ErrorType>(e)) {
+            if (axios.isAxiosError(e)) {
                 const error = e.response ? e.response?.data.messages[0].message : e.message
                 handleServerNetworkError(dispatch, error)
                 return
@@ -59,7 +60,7 @@ export const meTC = (): AppThunkType => async dispatch => {
             handleServerAppError(dispatch, res.data)
         }
     } catch (e) {
-        if (axios.isAxiosError<ErrorType>(e)) {
+        if (axios.isAxiosError(e)) {
             const error = e.response ? e.response?.data.messages[0].message : e.message
             handleServerNetworkError(dispatch, error)
             return
@@ -85,7 +86,7 @@ export const logoutTC = (): AppThunkType => async dispatch => {
             handleServerAppError(dispatch, res.data)
         }
     } catch (e) {
-        if (axios.isAxiosError<ErrorType>(e)) {
+        if (axios.isAxiosError(e)) {
             const error = e.response ? e.response?.data.messages[0].message : e.message
             handleServerNetworkError(dispatch, error)
             return

@@ -1,13 +1,13 @@
 import { Navigate } from 'react-router-dom'
+import styled from 'styled-components'
 import Paper from '@mui/material/Paper'
-import { useAppDispatch, useAppSelector } from 'app/store'
 import { createTodolistTC, getTodolistsTC, TodolistDomainType } from './todolistsReducer'
 import { useCallback, useEffect } from 'react'
 import Grid from '@mui/material/Grid'
 import Todolist from './Todolist/Todolist'
-import AddItemForm from '../../components/AddItemForm/AddItemForm'
-import styled from 'styled-components'
-import { selectIsLoggedIn } from 'features/Login/auth.selectors'
+import AddItemForm from 'common/components/AddItemForm/AddItemForm'
+import { useAppDispatch, useAppSelector } from 'common/hooks'
+import { selectIsLoggedIn } from 'features/auth/auth.selectors'
 import { selectTodolists } from 'features/Todolists/todolists.selectors'
 
 type TodolistsPropsType = {

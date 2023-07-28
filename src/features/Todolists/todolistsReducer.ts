@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { ErrorType, ResultCode, todolistAPI, TodolistType } from 'api/todolistAPI'
 import { AppThunkType } from 'app/store'
 import { appActions, RequestStatusType } from 'app/appReducer'
-import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
-import { tasksThunks } from './tasksReducer'
+import { handleServerAppError, handleServerNetworkError } from 'common/utils'
+import { ResultCode } from 'common/enums'
+import { todolistAPI, TodolistType } from 'features/Todolists/todolists.api'
+import { tasksThunks } from 'features/Todolists/tasksReducer'
 
 const initialState: TodolistDomainType[] = []
 
@@ -66,7 +67,7 @@ export const getTodolistsTC = (): AppThunkType => async dispatch => {
             dispatch(tasksThunks.fetchTasks(todolist.id))
         })
     } catch (e) {
-        if (axios.isAxiosError<ErrorType>(e)) {
+        if (axios.isAxiosError(e)) {
             const error = e.response ? e.response?.data.messages[0].message : e.message
             handleServerNetworkError(dispatch, error)
             return
@@ -90,7 +91,7 @@ export const createTodolistTC =
                 handleServerAppError(dispatch, res.data)
             }
         } catch (e) {
-            if (axios.isAxiosError<ErrorType>(e)) {
+            if (axios.isAxiosError(e)) {
                 const error = e.response ? e.response?.data.messages[0].message : e.message
                 handleServerNetworkError(dispatch, error)
                 return
@@ -126,7 +127,7 @@ export const changeTodolistTitleTC =
                 handleServerAppError(dispatch, res.data)
             }
         } catch (e) {
-            if (axios.isAxiosError<ErrorType>(e)) {
+            if (axios.isAxiosError(e)) {
                 const error = e.response ? e.response?.data.messages[0].message : e.message
                 handleServerNetworkError(dispatch, error)
                 return
@@ -160,7 +161,7 @@ export const deleteTodolistTC =
                 todolistsActions.changeTodolistEntityStatus({ todolistId, entityStatus: 'failed' }),
             )
 
-            if (axios.isAxiosError<ErrorType>(e)) {
+            if (axios.isAxiosError(e)) {
                 const error = e.response ? e.response?.data.messages[0].message : e.message
                 handleServerNetworkError(dispatch, error)
                 return

@@ -2,9 +2,8 @@ import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
-import AddItemForm from 'components/AddItemForm/AddItemForm'
-import EditableSpan from 'components/EditableSpan/EditableSpan'
-import { useAppDispatch, useAppSelector } from 'app/store'
+import AddItemForm from 'common/components/AddItemForm/AddItemForm'
+import EditableSpan from 'common/components/EditableSpan/EditableSpan'
 import { TaskDomainType, tasksThunks } from 'features/Todolists/tasksReducer'
 import {
     changeTodolistTitleTC,
@@ -14,9 +13,10 @@ import {
     todolistsActions,
 } from 'features/Todolists/todolistsReducer'
 import Task from 'features/Todolists/Todolist/Task/Task'
-import { TaskStatuses } from 'api/todolistAPI'
+import { useAppDispatch, useAppSelector } from 'common/hooks'
+import { TaskStatuses } from 'common/enums'
 import { selectTasks } from 'features/Todolists/tasks.selectors'
-import CustomButton from 'components/CustomButton/CustomButton'
+import CustomButton from 'common/components/CustomButton/CustomButton'
 
 type TodolistPropsType = {
     todolist: TodolistDomainType

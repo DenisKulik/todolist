@@ -4,10 +4,11 @@ import { combineReducers } from 'redux'
 import { tasksReducer } from 'features/Todolists/tasksReducer'
 import { todolistsReducer } from 'features/Todolists/todolistsReducer'
 import { AppRootStateType, RootReducerType } from './store'
-import { TaskPriorities, TaskStatuses } from 'api/todolistAPI'
+
 import { appReducer } from './appReducer'
-import { authReducer } from 'features/Login/authReducer'
+import { authReducer } from 'features/auth/authReducer'
 import { configureStore } from '@reduxjs/toolkit'
+import { TaskPriorities, TaskStatuses } from 'common/enums'
 
 const rootReducer: RootReducerType = combineReducers({
     tasks: tasksReducer,

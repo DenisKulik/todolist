@@ -1,16 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-    ResultCode,
-    TaskPriorities,
-    TaskStatuses,
-    TaskType,
-    todolistAPI,
-    UpdateTaskModelType,
-} from 'api/todolistAPI'
 import { appActions, RequestStatusType } from 'app/appReducer'
-import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
+import { ResultCode, TaskPriorities, TaskStatuses } from 'common/enums'
+import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from 'common/utils'
 import { todolistsActions } from 'features/Todolists/todolistsReducer'
-import { createAppAsyncThunk } from 'utils/createAppAsyncThunk'
+import { TaskType, todolistAPI, UpdateTaskModelType } from 'features/Todolists/todolists.api'
 
 const initialState: TasksStateType = {}
 
@@ -151,7 +144,7 @@ const updateTask = createAppAsyncThunk<
             )
             return { todolistId, taskId, model }
         } else {
-            handleServerNetworkError(dispatch, res.data)
+            handleServerNetworkError(dispatch, { message: res.data.messages[0] })
             return rejectWithValue(null)
         }
     } catch (e) {

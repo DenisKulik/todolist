@@ -1,25 +1,6 @@
-import axios, { AxiosResponse } from 'axios'
-
-const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-    withCredentials: true,
-})
-
-export const authAPI = {
-    me() {
-        return instance.get<ResponseType<AuthUserType>>('auth/me')
-    },
-    login(data: LoginType) {
-        return instance.post<
-            ResponseType<{ userId: number }>,
-            AxiosResponse<ResponseType<{ userId: number }>>,
-            LoginType
-        >('auth/login', data)
-    },
-    logout() {
-        return instance.delete<ResponseType>('auth/login')
-    },
-}
+import { AxiosResponse } from 'axios'
+import { instance, ResponseType } from 'common/api'
+import { TaskPriorities, TaskStatuses } from 'common/enums'
 
 export const todolistAPI = {
     getTodolists() {
@@ -63,44 +44,11 @@ export const todolistAPI = {
 }
 
 // types
-export type AuthUserType = {
-    id: number
-    email: string
-    login: string
-}
-
-export type LoginType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
-
 export type TodolistType = {
     id: string
     addedDate: Date
     order: number
     title: string
-}
-
-export enum TaskStatuses {
-    New = 0,
-    InProgress = 1,
-    Completed = 2,
-    Draft = 3,
-}
-
-export enum TaskPriorities {
-    Low = 0,
-    Middle = 1,
-    Hi = 2,
-    Urgently = 3,
-    Later = 4,
-}
-
-export enum ResultCode {
-    SUCCESS = 0,
-    ERROR = 1,
-    ERROR_CAPTCHA = 10,
 }
 
 export type TaskType = {
@@ -117,6 +65,12 @@ export type TaskType = {
     addedDate: Date
 }
 
+type GetTasksResponse = {
+    error: string | null
+    totalCount: number
+    items: TaskType[]
+}
+
 export type UpdateTaskModelType = {
     title: string
     description: string
@@ -124,28 +78,4 @@ export type UpdateTaskModelType = {
     priority: TaskPriorities
     startDate: Date
     deadline: Date
-}
-
-type GetTasksResponse = {
-    error: string | null
-    totalCount: number
-    items: TaskType[]
-}
-
-export type ResponseType<T = {}> = {
-    resultCode: number
-    messages: string[]
-    fieldsErrors: string[]
-    data: T
-}
-
-export type ErrorType = {
-    statusCode: number
-    messages: [
-        {
-            message: string
-            field: string
-        },
-    ]
-    error: string
 }
