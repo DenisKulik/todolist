@@ -4,16 +4,10 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import CustomCheckbox from 'components/ChexboxItem/CustomCheckbox'
 import EditableSpan from 'components/EditableSpan/EditableSpan'
 import styled from 'styled-components'
-import { deleteTaskTC, updateTaskTC } from '../../tasksReducer'
+import { tasksThunks } from '../../tasksReducer'
 import { TaskStatuses, TaskType } from 'api/todolistAPI'
 import { useAppDispatch } from 'app/store'
 import { RequestStatusType } from 'app/appReducer'
-
-type TaskPropsType = {
-    task: TaskType
-    todolistId: string
-    entityStatus: RequestStatusType
-}
 
 const Task = (props: TaskPropsType) => {
     const { task, todolistId, entityStatus } = props
@@ -21,20 +15,20 @@ const Task = (props: TaskPropsType) => {
     const dispatch = useAppDispatch()
 
     const deleteTask = useCallback(() => {
-        dispatch(deleteTaskTC(todolistId, task.id))
+        dispatch(tasksThunks.deleteTask({ todolistId, taskId: task.id }))
     }, [dispatch, task.id, todolistId])
 
     const changeTaskStatus = useCallback(
         (checked: boolean) => {
             const status = checked ? TaskStatuses.Completed : TaskStatuses.New
-            dispatch(updateTaskTC(todolistId, task.id, { status }))
+            dispatch(tasksThunks.updateTask({ todolistId, taskId: task.id, data: { status } }))
         },
         [dispatch, task.id, todolistId],
     )
 
     const changeTaskTitle = useCallback(
         (title: string) => {
-            dispatch(updateTaskTC(todolistId, task.id, { title }))
+            dispatch(tasksThunks.updateTask({ todolistId, taskId: task.id, data: { title } }))
         },
         [dispatch, task.id, todolistId],
     )
@@ -65,3 +59,10 @@ const ListItem = styled.div`
 `
 
 export default memo(Task)
+
+// types
+type TaskPropsType = {
+    task: TaskType
+    todolistId: string
+    entityStatus: RequestStatusType
+}

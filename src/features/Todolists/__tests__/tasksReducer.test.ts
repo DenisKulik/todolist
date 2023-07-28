@@ -126,8 +126,8 @@ describe('tasksReducer', () => {
     })
 
     it('should delete task correctly', () => {
-        const action = tasksActions.deleteTask({ todolistId: 'todolistId2', taskId: '2' })
-
+        const args = { todolistId: 'todolistId2', taskId: '2' }
+        const action = tasksThunks.deleteTask.fulfilled(args, 'requestId', args)
         const endState = tasksReducer(startState, action)
 
         expect(endState['todolistId2'].length).toBe(2)
@@ -144,11 +144,15 @@ describe('tasksReducer', () => {
             deadline: new Date(),
         }
 
-        const action = tasksActions.updateTask({
-            todolistId: 'todolistId2',
-            taskId: '2',
-            model: updatedTask,
-        })
+        const action = tasksThunks.updateTask.fulfilled(
+            {
+                todolistId: 'todolistId2',
+                taskId: '2',
+                model: updatedTask,
+            },
+            'requestId',
+            { todolistId: 'todolistId2', taskId: '2', data: updatedTask },
+        )
 
         const endState = tasksReducer(startState, action)
 
