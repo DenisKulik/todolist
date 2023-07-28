@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { appActions, RequestStatusType } from 'app/appReducer'
 import { ResultCode, TaskPriorities, TaskStatuses } from 'common/enums'
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from 'common/utils'
-import { todolistsActions } from 'features/Todolists/todolistsReducer'
+import { todolistsActions, todolistsThunks } from 'features/Todolists/todolistsReducer'
 import { TaskType, todolistAPI, UpdateTaskModelType } from 'features/Todolists/todolists.api'
 
 const initialState: TasksStateType = {}
@@ -49,13 +49,13 @@ const slice = createSlice({
                 )
                 if (index !== -1) state[action.payload.todolistId].splice(index, 1)
             })
-            .addCase(todolistsActions.setTodolists, (state, action) => {
+            .addCase(todolistsThunks.fetchTodolists.fulfilled, (state, action) => {
                 action.payload.todolists.forEach(todolist => (state[todolist.id] = []))
             })
-            .addCase(todolistsActions.addTodolist, (state, action) => {
+            .addCase(todolistsThunks.addTodolist.fulfilled, (state, action) => {
                 state[action.payload.todolist.id] = []
             })
-            .addCase(todolistsActions.deleteTodolist, (state, action) => {
+            .addCase(todolistsThunks.deleteTodolist.fulfilled, (state, action) => {
                 delete state[action.payload.todolistId]
             })
             .addCase(todolistsActions.clearTodolists, () => initialState)

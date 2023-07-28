@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Paper from '@mui/material/Paper'
-import { createTodolistTC, getTodolistsTC, TodolistDomainType } from './todolistsReducer'
+import { TodolistDomainType, todolistsThunks } from './todolistsReducer'
 import { useCallback, useEffect } from 'react'
 import Grid from '@mui/material/Grid'
 import Todolist from './Todolist/Todolist'
@@ -21,12 +21,12 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
 
     useEffect(() => {
         if (!isLoggedIn || demo) return
-        dispatch(getTodolistsTC())
+        dispatch(todolistsThunks.fetchTodolists({}))
     }, [dispatch, demo, isLoggedIn])
 
     const addTodolist = useCallback(
         (title: string) => {
-            dispatch(createTodolistTC(title))
+            dispatch(todolistsThunks.addTodolist(title))
         },
         [dispatch],
     )

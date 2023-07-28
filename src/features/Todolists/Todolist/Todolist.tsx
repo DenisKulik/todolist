@@ -6,11 +6,10 @@ import AddItemForm from 'common/components/AddItemForm/AddItemForm'
 import EditableSpan from 'common/components/EditableSpan/EditableSpan'
 import { TaskDomainType, tasksThunks } from 'features/Todolists/tasksReducer'
 import {
-    changeTodolistTitleTC,
-    deleteTodolistTC,
     FilterType,
     TodolistDomainType,
     todolistsActions,
+    todolistsThunks,
 } from 'features/Todolists/todolistsReducer'
 import Task from 'features/Todolists/Todolist/Task/Task'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
@@ -35,12 +34,12 @@ const Todolist = (props: TodolistPropsType) => {
     )
 
     const deleteTodolistHandler = useCallback(() => {
-        dispatch(deleteTodolistTC(id))
+        dispatch(todolistsThunks.deleteTodolist(id))
     }, [dispatch, id])
 
     const changeTodolistTitle = useCallback(
         (title: string) => {
-            dispatch(changeTodolistTitleTC(id, title))
+            dispatch(todolistsThunks.changeTodolistTitle({ todolistId: id, title }))
         },
         [dispatch, id],
     )

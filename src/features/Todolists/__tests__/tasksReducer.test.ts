@@ -1,6 +1,6 @@
 import { tasksReducer, TasksStateType, tasksThunks } from '../tasksReducer'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
-import { todolistsActions } from 'features/Todolists/todolistsReducer'
+import { todolistsThunks } from 'features/Todolists/todolistsReducer'
 
 describe('tasksReducer', () => {
     let startState: TasksStateType = {}
@@ -161,7 +161,11 @@ describe('tasksReducer', () => {
     })
 
     it('should delete tasks for todolist correctly', () => {
-        const action = todolistsActions.deleteTodolist({ todolistId: 'todolistId2' })
+        const action = todolistsThunks.deleteTodolist.fulfilled(
+            { todolistId: 'todolistId2' },
+            'requestId',
+            'todolistId2',
+        )
 
         const endState = tasksReducer(startState, action)
 

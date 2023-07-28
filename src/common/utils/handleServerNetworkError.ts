@@ -4,7 +4,6 @@ import { appActions } from 'app/appReducer'
 
 export const handleServerNetworkError = (dispatch: Dispatch, e: unknown) => {
     const err = e as Error | AxiosError<{ error: string }>
-    debugger
     if (axios.isAxiosError(err)) {
         const error = err.message ? err.message : 'Some error occurred'
         dispatch(appActions.setAppError({ error }))

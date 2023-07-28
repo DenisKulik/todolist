@@ -1,4 +1,9 @@
-import { TodolistDomainType, todolistsActions, todolistsReducer } from '../todolistsReducer'
+import {
+    TodolistDomainType,
+    todolistsActions,
+    todolistsReducer,
+    todolistsThunks,
+} from '../todolistsReducer'
 
 describe('todolistsReducer', () => {
     let startState: TodolistDomainType[] = []
@@ -32,7 +37,11 @@ describe('todolistsReducer', () => {
             title: 'What to do',
         }
 
-        const action = todolistsActions.addTodolist({ todolist: newTodos })
+        const action = todolistsThunks.addTodolist.fulfilled(
+            { todolist: newTodos },
+            'requestId',
+            'What to do',
+        )
 
         const endState = todolistsReducer(startState, action)
 
@@ -42,7 +51,11 @@ describe('todolistsReducer', () => {
     })
 
     it('should delete todolist correctly', () => {
-        const action = todolistsActions.deleteTodolist({ todolistId: '2' })
+        const action = todolistsThunks.deleteTodolist.fulfilled(
+            { todolistId: '2' },
+            'requestId',
+            '2',
+        )
 
         const endState = todolistsReducer(startState, action)
 
@@ -62,8 +75,8 @@ describe('todolistsReducer', () => {
     })
 
     it('should change todolist title correctly', () => {
-        const action = todolistsActions.changeTodolistTitle({ todolistId: '2', title: 'New Title' })
-
+        const args = { todolistId: '2', title: 'New Title' }
+        const action = todolistsThunks.changeTodolistTitle.fulfilled(args, 'requestId', args)
         const endState = todolistsReducer(startState, action)
 
         expect(endState[1].title).toBe('New Title')

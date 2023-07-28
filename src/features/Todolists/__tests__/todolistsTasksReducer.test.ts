@@ -1,4 +1,4 @@
-import { TodolistDomainType, todolistsActions, todolistsReducer } from '../todolistsReducer'
+import { TodolistDomainType, todolistsReducer, todolistsThunks } from '../todolistsReducer'
 import { tasksReducer, TasksStateType } from '../tasksReducer'
 
 it('should be equals', () => {
@@ -12,7 +12,11 @@ it('should be equals', () => {
         title: 'What to do',
     }
 
-    const action = todolistsActions.addTodolist({ todolist: newTodos })
+    const action = todolistsThunks.addTodolist.fulfilled(
+        { todolist: newTodos },
+        'requestId',
+        'What to do',
+    )
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)
