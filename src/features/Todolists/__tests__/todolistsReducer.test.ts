@@ -76,14 +76,13 @@ describe('todolistsReducer', () => {
 
     it('should change todolist title correctly', () => {
         const args = { todolistId: '2', title: 'New Title' }
-        const action = todolistsThunks.changeTodolistTitle.fulfilled(args, 'requestId', args)
+        const action = todolistsThunks.updateTodolistTitle.fulfilled(args, 'requestId', args)
         const endState = todolistsReducer(startState, action)
 
         expect(endState[1].title).toBe('New Title')
     })
     it('should return the same state if action type is incorrect', () => {
         const action = { type: 'UNKNOWN_ACTION_TYPE' }
-
         // @ts-ignore
         const endState = todolistsReducer(startState, action)
 

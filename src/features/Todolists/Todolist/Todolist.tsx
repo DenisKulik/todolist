@@ -39,7 +39,7 @@ const Todolist = (props: TodolistPropsType) => {
 
     const changeTodolistTitle = useCallback(
         (title: string) => {
-            dispatch(todolistsThunks.changeTodolistTitle({ todolistId: id, title }))
+            dispatch(todolistsThunks.updateTodolistTitle({ todolistId: id, title }))
         },
         [dispatch, id],
     )
