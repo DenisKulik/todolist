@@ -3,7 +3,7 @@ import {
     todolistsActions,
     todolistsReducer,
     todolistsThunks,
-} from '../todolistsReducer'
+} from 'features/Todolists/todolists.reducer'
 
 describe('todolistsReducer', () => {
     let startState: TodolistDomainType[] = []

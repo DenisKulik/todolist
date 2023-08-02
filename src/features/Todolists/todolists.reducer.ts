@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { appActions, RequestStatusType } from 'app/appReducer'
+import { appActions, RequestStatusType } from 'app/app.reducer'
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from 'common/utils'
 import { ResultCode } from 'common/enums'
 import {
@@ -7,7 +7,7 @@ import {
     TodolistType,
     UpdateTodolistTitleType,
 } from 'features/Todolists/todolists.api'
-import { tasksThunks } from 'features/Todolists/tasksReducer'
+import { tasksThunks } from 'features/Todolists/tasks.reducer'
 
 const initialState: TodolistDomainType[] = []
 

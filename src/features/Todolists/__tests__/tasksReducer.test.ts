@@ -1,6 +1,6 @@
-import { tasksReducer, TasksStateType, tasksThunks } from '../tasksReducer'
+import { tasksReducer, TasksStateType, tasksThunks } from 'features/Todolists/tasks.reducer'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
-import { todolistsThunks } from 'features/Todolists/todolistsReducer'
+import { todolistsThunks } from 'features/Todolists/todolists.reducer'
 import { UpdateTaskModelType } from 'features/Todolists/todolists.api'
 
 describe('tasksReducer', () => {

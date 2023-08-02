@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { appActions } from 'app/appReducer'
+import { appActions } from 'app/app.reducer'
 import { AppDispatchType } from 'app/store'
 
 export const handleServerNetworkError = (dispatch: AppDispatchType, err: unknown) => {

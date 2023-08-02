@@ -1,4 +1,4 @@
-import { appActions, appReducer, InitialAppStateType, RequestStatusType } from 'app/appReducer'
+import { appActions, appReducer, InitialAppStateType, RequestStatusType } from 'app/app.reducer'
 
 describe('app-reducer', () => {
     let startState: InitialAppStateType

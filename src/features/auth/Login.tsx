@@ -10,7 +10,7 @@ import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { loginTC } from './authReducer'
+import { loginTC } from 'features/auth/auth.reducer'
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)

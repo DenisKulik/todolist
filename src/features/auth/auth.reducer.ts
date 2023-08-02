@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { AppThunkType } from 'app/store'
-import { appActions } from 'app/appReducer'
+import { appActions } from 'app/app.reducer'
 import { ResultCode } from 'common/enums'
 import { handleServerAppError, handleServerNetworkError } from 'common/utils'
 import { authAPI, LoginType } from 'features/auth/auth.api'
-import { todolistsActions } from 'features/Todolists/todolistsReducer'
+import { todolistsActions } from 'features/Todolists/todolists.reducer'
 
 const slice = createSlice({
     name: 'auth',

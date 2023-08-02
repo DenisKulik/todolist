@@ -1,12 +1,12 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { combineReducers } from 'redux'
-import { tasksReducer } from 'features/Todolists/tasksReducer'
-import { todolistsReducer } from 'features/Todolists/todolistsReducer'
+import { tasksReducer } from 'features/Todolists/tasks.reducer'
+import { todolistsReducer } from 'features/Todolists/todolists.reducer'
 import { AppRootStateType, RootReducerType } from './store'
 
-import { appReducer } from './appReducer'
-import { authReducer } from 'features/auth/authReducer'
+import { appReducer } from 'app/app.reducer'
+import { authReducer } from 'features/auth/auth.reducer'
 import { configureStore } from '@reduxjs/toolkit'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
 

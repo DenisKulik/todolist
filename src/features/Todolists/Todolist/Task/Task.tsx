@@ -4,10 +4,10 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import CustomCheckbox from 'common/components/ChexboxItem/CustomCheckbox'
 import EditableSpan from 'common/components/EditableSpan/EditableSpan'
 import styled from 'styled-components'
-import { tasksThunks } from '../../tasksReducer'
+import { tasksThunks } from 'features/Todolists/tasks.reducer'
 import { useAppDispatch } from 'common/hooks'
 import { TaskStatuses } from 'common/enums'
-import { RequestStatusType } from 'app/appReducer'
+import { RequestStatusType } from 'app/app.reducer'
 import { TaskType } from 'features/Todolists/todolists.api'
 
 const Task = (props: TaskPropsType) => {

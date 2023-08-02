@@ -6,9 +6,9 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import LinearProgress from '@mui/material/LinearProgress'
-import { RequestStatusType } from 'app/appReducer'
+import { RequestStatusType } from 'app/app.reducer'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { logoutTC } from 'features/auth/authReducer'
+import { logoutTC } from 'features/auth/auth.reducer'
 import { selectStatus } from 'app/app.selectors'
 
 const ButtonAppBar = () => {

@@ -4,13 +4,13 @@ import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddItemForm from 'common/components/AddItemForm/AddItemForm'
 import EditableSpan from 'common/components/EditableSpan/EditableSpan'
-import { TaskDomainType, tasksThunks } from 'features/Todolists/tasksReducer'
+import { TaskDomainType, tasksThunks } from 'features/Todolists/tasks.reducer'
 import {
     FilterType,
     TodolistDomainType,
     todolistsActions,
     todolistsThunks,
-} from 'features/Todolists/todolistsReducer'
+} from 'features/Todolists/todolists.reducer'
 import Task from 'features/Todolists/Todolist/Task/Task'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
 import { TaskStatuses } from 'common/enums'

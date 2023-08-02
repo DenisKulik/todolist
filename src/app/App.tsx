@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from 'common/hooks'
 import { Todolists } from 'features/Todolists/Todolists'
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar'
 import { Login } from 'features/auth/Login'
-import { meTC } from 'features/auth/authReducer'
+import { meTC } from 'features/auth/auth.reducer'
 import { selectIsInitialized } from 'app/app.selectors'
 
 type AppPropsType = {

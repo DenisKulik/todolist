@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Paper from '@mui/material/Paper'
-import { TodolistDomainType, todolistsThunks } from './todolistsReducer'
+import { TodolistDomainType, todolistsThunks } from 'features/Todolists/todolists.reducer'
 import { useCallback, useEffect } from 'react'
 import Grid from '@mui/material/Grid'
 import Todolist from './Todolist/Todolist'
