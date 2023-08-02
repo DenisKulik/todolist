@@ -144,7 +144,7 @@ const updateTask = createAppAsyncThunk<
             )
             return { todolistId, taskId, model }
         } else {
-            handleServerNetworkError(dispatch, { message: res.data.messages[0] })
+            handleServerNetworkError(dispatch, res.data)
             return rejectWithValue(null)
         }
     } catch (e) {
@@ -190,11 +190,9 @@ export const tasksThunks = { fetchTasks, addTask, updateTask, deleteTask }
 export type TaskDomainType = TaskType & {
     entityStatus: RequestStatusType
 }
-
 export type TasksStateType = {
     [todolistId: string]: TaskDomainType[]
 }
-
 type UpdateTaskType = {
     title?: string
     description?: string
