@@ -151,7 +151,7 @@ describe('tasksReducer', () => {
                 model: updatedTask,
             },
             'requestId',
-            { todolistId: 'todolistId2', taskId: '2', data: updatedTask },
+            { todolistId: 'todolistId2', taskId: '2', model: updatedTask },
         )
 
         const endState = tasksReducer(startState, action)

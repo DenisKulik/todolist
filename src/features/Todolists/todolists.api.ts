@@ -50,7 +50,6 @@ export type TodolistType = {
     order: number
     title: string
 }
-
 export type TaskType = {
     description: string
     title: string
@@ -64,18 +63,16 @@ export type TaskType = {
     order: number
     addedDate: Date
 }
-
 type GetTasksResponse = {
     error: string | null
     totalCount: number
     items: TaskType[]
 }
-
 export type UpdateTaskModelType = {
-    title: string
-    description: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: Date
-    deadline: Date
+    title?: string
+    description?: string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: Date
+    deadline?: Date
 }

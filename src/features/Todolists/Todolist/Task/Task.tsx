@@ -22,14 +22,14 @@ const Task = (props: TaskPropsType) => {
     const changeTaskStatus = useCallback(
         (checked: boolean) => {
             const status = checked ? TaskStatuses.Completed : TaskStatuses.New
-            dispatch(tasksThunks.updateTask({ todolistId, taskId: task.id, data: { status } }))
+            dispatch(tasksThunks.updateTask({ todolistId, taskId: task.id, model: { status } }))
         },
         [dispatch, task.id, todolistId],
     )
 
     const changeTaskTitle = useCallback(
         (title: string) => {
-            dispatch(tasksThunks.updateTask({ todolistId, taskId: task.id, data: { title } }))
+            dispatch(tasksThunks.updateTask({ todolistId, taskId: task.id, model: { title } }))
         },
         [dispatch, task.id, todolistId],
     )

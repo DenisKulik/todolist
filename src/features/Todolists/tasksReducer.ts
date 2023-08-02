@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { appActions, RequestStatusType } from 'app/appReducer'
-import { ResultCode, TaskPriorities, TaskStatuses } from 'common/enums'
+import { ResultCode } from 'common/enums'
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from 'common/utils'
 import { todolistsActions, todolistsThunks } from 'features/Todolists/todolistsReducer'
 import { TaskType, todolistAPI, UpdateTaskModelType } from 'features/Todolists/todolists.api'
@@ -108,8 +108,8 @@ const updateTask = createAppAsyncThunk<
         taskId: string
         model: UpdateTaskModelType
     },
-    { todolistId: string; taskId: string; data: UpdateTaskType }
->('tasks/updateTask', async ({ todolistId, taskId, data }, thunkAPI) => {
+    { todolistId: string; taskId: string; model: UpdateTaskModelType }
+>('tasks/updateTask', async ({ todolistId, taskId, model }, thunkAPI) => {
     const { dispatch, rejectWithValue, getState } = thunkAPI
     try {
         dispatch(appActions.setAppStatus({ status: 'loading' }))
@@ -122,17 +122,17 @@ const updateTask = createAppAsyncThunk<
             return rejectWithValue(null)
         }
 
-        const model: UpdateTaskModelType = {
+        const apiModel: UpdateTaskModelType = {
             title: task.title,
             description: task.description,
             status: task.status,
             priority: task.priority,
             startDate: task.startDate,
             deadline: task.deadline,
-            ...data,
+            ...model,
         }
 
-        const res = await todolistAPI.updateTask(todolistId, taskId, model)
+        const res = await todolistAPI.updateTask(todolistId, taskId, apiModel)
         if (res.data.resultCode === ResultCode.SUCCESS) {
             dispatch(appActions.setAppStatus({ status: 'succeeded' }))
             dispatch(
@@ -192,12 +192,4 @@ export type TaskDomainType = TaskType & {
 }
 export type TasksStateType = {
     [todolistId: string]: TaskDomainType[]
-}
-type UpdateTaskType = {
-    title?: string
-    description?: string
-    status?: TaskStatuses
-    priority?: TaskPriorities
-    startDate?: Date
-    deadline?: Date
 }
