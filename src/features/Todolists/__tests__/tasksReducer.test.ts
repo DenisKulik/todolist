@@ -1,6 +1,7 @@
 import { tasksReducer, TasksStateType, tasksThunks } from '../tasksReducer'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
 import { todolistsThunks } from 'features/Todolists/todolistsReducer'
+import { UpdateTaskModelType } from 'features/Todolists/todolists.api'
 
 describe('tasksReducer', () => {
     let startState: TasksStateType = {}
@@ -135,7 +136,7 @@ describe('tasksReducer', () => {
     })
 
     it('should update task correctly', () => {
-        const updatedTask = {
+        const updatedTask: UpdateTaskModelType = {
             title: 'eggs',
             description: '',
             status: TaskStatuses.Completed,
@@ -143,17 +144,8 @@ describe('tasksReducer', () => {
             startDate: new Date(),
             deadline: new Date(),
         }
-
-        const action = tasksThunks.updateTask.fulfilled(
-            {
-                todolistId: 'todolistId2',
-                taskId: '2',
-                model: updatedTask,
-            },
-            'requestId',
-            { todolistId: 'todolistId2', taskId: '2', model: updatedTask },
-        )
-
+        const arg = { todolistId: 'todolistId2', taskId: '2', model: updatedTask }
+        const action = tasksThunks.updateTask.fulfilled(arg, 'requestId', arg)
         const endState = tasksReducer(startState, action)
 
         expect(endState['todolistId2'][1].status).toBe(TaskStatuses.Completed)
@@ -177,7 +169,6 @@ describe('tasksReducer', () => {
 
     it('should return the same state if action type is incorrect', () => {
         const action = { type: 'UNKNOWN_ACTION_TYPE' }
-
         // @ts-ignore
         const endState = tasksReducer(startState, action)
 

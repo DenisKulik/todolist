@@ -187,7 +187,7 @@ export const DeleteTask = () => {
     }
 
     const deleteTask = () => {
-        todolistAPI.deleteTask(todolistId, taskId).then(response => setState(response.data))
+        todolistAPI.deleteTask({ todolistId, taskId }).then(response => setState(response.data))
 
         setTodolistId('')
         setTaskId('')
@@ -235,7 +235,9 @@ export const UpdateTask = () => {
             deadline: new Date(),
         }
 
-        todolistAPI.updateTask(todolistId, taskId, model).then(response => setState(response.data))
+        todolistAPI
+            .updateTask({ todolistId, taskId, model })
+            .then(response => setState(response.data))
 
         setTodolistId('')
         setTaskId('')
