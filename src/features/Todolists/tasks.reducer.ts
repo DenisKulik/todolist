@@ -153,7 +153,7 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
                 )
                 return arg
             } else {
-                handleServerNetworkError(dispatch, res.data)
+                handleServerAppError(dispatch, res.data)
                 return rejectWithValue(null)
             }
         } catch (e) {
