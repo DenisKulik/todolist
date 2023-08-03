@@ -7,12 +7,8 @@ import { useAppDispatch, useAppSelector } from 'common/hooks'
 import { Todolists } from 'features/Todolists/Todolists'
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar'
 import { Login } from 'features/auth/Login'
-import { meTC } from 'features/auth/auth.reducer'
+import { authThunks } from 'features/auth/auth.reducer'
 import { selectIsInitialized } from 'app/app.selectors'
-
-type AppPropsType = {
-    demo?: boolean
-}
 
 const App = ({ demo = false }: AppPropsType) => {
     const isInitialized = useAppSelector<boolean>(selectIsInitialized)
@@ -20,7 +16,7 @@ const App = ({ demo = false }: AppPropsType) => {
 
     useEffect(() => {
         if (demo) return
-        dispatch(meTC())
+        dispatch(authThunks.initializeApp())
     }, [dispatch, demo])
 
     if (!isInitialized) {
@@ -55,3 +51,8 @@ const App = ({ demo = false }: AppPropsType) => {
 }
 
 export default App
+
+// types
+type AppPropsType = {
+    demo?: boolean
+}

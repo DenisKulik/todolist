@@ -1,6 +1,6 @@
 import { AnyAction, combineReducers } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
-import { ThunkAction, ThunkDispatch } from 'redux-thunk'
+import { ThunkDispatch } from 'redux-thunk'
 import { tasksReducer } from 'features/Todolists/tasks.reducer'
 import { todolistsReducer } from 'features/Todolists/todolists.reducer'
 import { appReducer } from 'app/app.reducer'
@@ -21,9 +21,3 @@ export const store = configureStore({
 export type RootReducerType = typeof rootReducer
 export type AppRootStateType = ReturnType<RootReducerType>
 export type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, AnyAction>
-export type AppThunkType<ReturnType = void> = ThunkAction<
-    ReturnType,
-    AppRootStateType,
-    unknown,
-    AnyAction
->

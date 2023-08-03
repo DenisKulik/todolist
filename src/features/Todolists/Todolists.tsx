@@ -21,7 +21,7 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
 
     useEffect(() => {
         if (!isLoggedIn || demo) return
-        dispatch(todolistsThunks.fetchTodolists({}))
+        dispatch(todolistsThunks.fetchTodolists())
     }, [dispatch, demo, isLoggedIn])
 
     const addTodolist = useCallback(

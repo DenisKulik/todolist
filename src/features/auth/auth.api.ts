@@ -5,12 +5,12 @@ export const authAPI = {
     me() {
         return instance.get<ResponseType<AuthUserType>>('auth/me')
     },
-    login(data: LoginType) {
+    login(arg: LoginArgType) {
         return instance.post<
             ResponseType<{ userId: number }>,
             AxiosResponse<ResponseType<{ userId: number }>>,
-            LoginType
-        >('auth/login', data)
+            LoginArgType
+        >('auth/login', arg)
     },
     logout() {
         return instance.delete<ResponseType>('auth/login')
@@ -23,8 +23,7 @@ export type AuthUserType = {
     email: string
     login: string
 }
-
-export type LoginType = {
+export type LoginArgType = {
     email: string
     password: string
     rememberMe: boolean
