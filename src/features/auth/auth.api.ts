@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios'
-import { instance, ResponseType } from 'common/api'
+import { instance } from 'common/api'
+import { ResponseType } from 'common/types'
 
 export const authAPI = {
     me() {

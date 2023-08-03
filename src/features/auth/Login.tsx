@@ -1,4 +1,4 @@
-import { useFormik } from 'formik'
+import { FormikHelpers, useFormik } from 'formik'
 import styled from 'styled-components'
 import { Navigate } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
 import { authThunks } from 'features/auth/auth.reducer'
+import { LoginArgType } from 'features/auth/auth.api'
+import { ResponseType } from 'common/types'
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -39,15 +41,18 @@ export const Login = () => {
 
             return errors
         },
-        onSubmit: values => {
+        onSubmit: (values, formikHelpers: FormikHelpers<LoginArgType>) => {
             dispatch(authThunks.login(values))
-            formik.resetForm()
+                .unwrap()
+                .catch((data: ResponseType) => {
+                    data.fieldsErrors?.forEach(fieldError => {
+                        formikHelpers.setFieldError(fieldError.field, fieldError.error)
+                    })
+                })
         },
     })
 
-    if (isLoggedIn) {
-        return <Navigate to={'/'} />
-    }
+    if (isLoggedIn) return <Navigate to="/" />
 
     return (
         <Grid container justifyContent={'center'}>

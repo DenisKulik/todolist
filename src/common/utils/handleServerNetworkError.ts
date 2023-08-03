@@ -4,7 +4,6 @@ import { AppDispatchType } from 'app/store'
 
 export const handleServerNetworkError = (dispatch: AppDispatchType, err: unknown) => {
     let errorMessage = 'Some error occurred'
-    debugger
     if (axios.isAxiosError(err)) {
         errorMessage = err.response?.data?.message || err?.message || errorMessage
     } else if (err instanceof Error) {
