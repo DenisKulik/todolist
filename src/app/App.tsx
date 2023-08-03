@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import CircularProgress from '@mui/material/CircularProgress'
 import ButtonAppBar from 'common/components/ButtonAppBar/ButtonAppBar'
-import { useAppDispatch, useAppSelector } from 'common/hooks'
+import { useActions, useAppSelector } from 'common/hooks'
 import { Todolists } from 'features/Todolists/Todolists'
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar'
 import { Login } from 'features/auth/Login'
@@ -12,12 +12,12 @@ import { selectIsInitialized } from 'app/app.selectors'
 
 const App = ({ demo = false }: AppPropsType) => {
     const isInitialized = useAppSelector<boolean>(selectIsInitialized)
-    const dispatch = useAppDispatch()
+    const { initializeApp } = useActions(authThunks)
 
     useEffect(() => {
         if (demo) return
-        dispatch(authThunks.initializeApp())
-    }, [dispatch, demo])
+        initializeApp()
+    }, [demo, initializeApp])
 
     if (!isInitialized) {
         return (

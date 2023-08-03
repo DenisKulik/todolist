@@ -6,29 +6,25 @@ import { useCallback, useEffect } from 'react'
 import Grid from '@mui/material/Grid'
 import Todolist from './Todolist/Todolist'
 import AddItemForm from 'common/components/AddItemForm/AddItemForm'
-import { useAppDispatch, useAppSelector } from 'common/hooks'
+import { useActions, useAppSelector } from 'common/hooks'
 import { selectIsLoggedIn } from 'features/auth/auth.selectors'
 import { selectTodolists } from 'features/Todolists/todolists.selectors'
-
-type TodolistsPropsType = {
-    demo?: boolean
-}
 
 export const Todolists = ({ demo = false }: TodolistsPropsType) => {
     const todolists = useAppSelector<TodolistDomainType[]>(selectTodolists)
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
-    const dispatch = useAppDispatch()
+    const { fetchTodolists, addTodolist: addTodolistThunk } = useActions(todolistsThunks)
 
     useEffect(() => {
         if (!isLoggedIn || demo) return
-        dispatch(todolistsThunks.fetchTodolists())
-    }, [dispatch, demo, isLoggedIn])
+        fetchTodolists()
+    }, [fetchTodolists, demo, isLoggedIn])
 
     const addTodolist = useCallback(
         (title: string) => {
-            dispatch(todolistsThunks.addTodolist(title))
+            addTodolistThunk(title)
         },
-        [dispatch],
+        [addTodolistThunk],
     )
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {
@@ -41,9 +37,7 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
         )
     })
 
-    if (!isLoggedIn) {
-        return <Navigate to={'/login'} />
-    }
+    if (!isLoggedIn) return <Navigate to="/login" />
 
     return (
         <>
@@ -57,6 +51,7 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
     )
 }
 
+// styles
 const StyledPaper = styled(Paper)`
     padding: 10px;
 `
@@ -64,3 +59,8 @@ const StyledPaper = styled(Paper)`
 const StyledGrid = styled(Grid)`
     padding: 20px;
 `
+
+// types
+type TodolistsPropsType = {
+    demo?: boolean
+}
