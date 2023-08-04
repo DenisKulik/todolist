@@ -52,6 +52,9 @@ export const Login = () => {
         },
     })
 
+    const isEmailError = formik.touched.email && formik.errors.email
+    const isPasswordError = formik.touched.password && formik.errors.password
+
     if (isLoggedIn) return <Navigate to="/" />
 
     return (
@@ -80,7 +83,7 @@ export const Login = () => {
                                 margin="normal"
                                 {...formik.getFieldProps('email')}
                             />
-                            {formik.touched.email && formik.errors.email && (
+                            {isEmailError && (
                                 <div style={{ color: 'red' }}>{formik.errors.email}</div>
                             )}
                             <TextField
@@ -89,7 +92,7 @@ export const Login = () => {
                                 margin="normal"
                                 {...formik.getFieldProps('password')}
                             />
-                            {formik.touched.password && formik.errors.password && (
+                            {isPasswordError && (
                                 <div style={{ color: 'red' }}>{formik.errors.password}</div>
                             )}
                             <FormControlLabel
@@ -97,7 +100,12 @@ export const Login = () => {
                                 checked={formik.values.rememberMe}
                                 control={<Checkbox {...formik.getFieldProps('rememberMe')} />}
                             />
-                            <Button type="submit" variant="contained" color="primary">
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                disabled={!!isEmailError || !!isPasswordError}
+                            >
                                 Login
                             </Button>
                         </FormGroup>
