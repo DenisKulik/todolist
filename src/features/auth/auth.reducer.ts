@@ -67,13 +67,15 @@ const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(
     async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
         return thunkTryCatch(thunkAPI, async () => {
-            const res = await authAPI.me()
-            if (res.data.resultCode === ResultCode.SUCCESS) {
+            try {
+                const res = await authAPI.me()
+                if (res.data.resultCode === ResultCode.SUCCESS) {
+                    return { isLoggedIn: true }
+                } else {
+                    return rejectWithValue(null)
+                }
+            } finally {
                 dispatch(appActions.setInitialized({ isInitialized: true }))
-                return { isLoggedIn: true }
-            } else {
-                dispatch(appActions.setInitialized({ isInitialized: true }))
-                return rejectWithValue(null)
             }
         })
     },
