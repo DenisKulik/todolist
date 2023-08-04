@@ -112,8 +112,7 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
     'tasks/updateTask',
     async (arg, thunkAPI) => {
         const { dispatch, rejectWithValue, getState } = thunkAPI
-        try {
-            dispatch(appActions.setAppStatus({ status: 'loading' }))
+        return thunkTryCatch(thunkAPI, async () => {
             dispatch(
                 tasksActions.changeTaskEntityStatus({
                     todolistId: arg.todolistId,
@@ -142,6 +141,7 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
                 taskId: arg.taskId,
                 model: apiModel,
             })
+
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(appActions.setAppStatus({ status: 'succeeded' }))
                 dispatch(
@@ -153,13 +153,17 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
                 )
                 return arg
             } else {
+                dispatch(
+                    tasksActions.changeTaskEntityStatus({
+                        todolistId: arg.todolistId,
+                        taskId: arg.taskId,
+                        entityStatus: 'idle',
+                    }),
+                )
                 handleServerAppError(dispatch, res.data)
                 return rejectWithValue(null)
             }
-        } catch (e) {
-            handleServerNetworkError(dispatch, e)
-            return rejectWithValue(null)
-        }
+        })
     },
 )
 
@@ -168,8 +172,7 @@ const deleteTask = createAppAsyncThunk<DeleteTaskArgType, DeleteTaskArgType>(
     async (arg, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
 
-        try {
-            dispatch(appActions.setAppStatus({ status: 'loading' }))
+        return thunkTryCatch(thunkAPI, async () => {
             dispatch(
                 tasksActions.changeTaskEntityStatus({
                     todolistId: arg.todolistId,
@@ -181,17 +184,22 @@ const deleteTask = createAppAsyncThunk<DeleteTaskArgType, DeleteTaskArgType>(
                 todolistId: arg.todolistId,
                 taskId: arg.taskId,
             })
+
             if (res.data.resultCode === ResultCode.SUCCESS) {
                 dispatch(appActions.setAppStatus({ status: 'succeeded' }))
                 return arg
             } else {
+                dispatch(
+                    tasksActions.changeTaskEntityStatus({
+                        todolistId: arg.todolistId,
+                        taskId: arg.taskId,
+                        entityStatus: 'idle',
+                    }),
+                )
                 handleServerAppError(dispatch, res.data)
                 return rejectWithValue(null)
             }
-        } catch (e) {
-            handleServerNetworkError(dispatch, e)
-            return rejectWithValue(null)
-        }
+        })
     },
 )
 
