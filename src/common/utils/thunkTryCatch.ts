@@ -4,6 +4,13 @@ import { AppDispatchType, AppRootStateType } from 'app/store'
 import { appActions } from 'app/app.reducer'
 import { ResponseType } from 'common/types'
 
+/**
+ * Executes a logic function within the context of a Redux thunk, handling errors and dispatching appropriate actions.
+ * @param thunkAPI - base Thunk API object containing dispatch and rejectWithValue functions
+ * @param logic - function to be executed asynchronously
+ * @returns {Promise}
+ */
+
 export const thunkTryCatch = async <T>(
     thunkAPI: BaseThunkAPI<AppRootStateType, any, AppDispatchType, null | ResponseType>,
     logic: () => Promise<T>,
