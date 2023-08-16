@@ -6,8 +6,8 @@ import ButtonAppBar from 'common/components/ButtonAppBar/ButtonAppBar'
 import { useActions, useAppSelector } from 'common/hooks'
 import { Todolists } from 'features/Todolists/Todolists'
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar'
-import { Login } from 'features/auth/Login'
-import { authThunks } from 'features/auth/auth.reducer'
+import { Login } from 'features/Login/Login'
+import { authThunks } from 'features/Login/auth.reducer'
 import { selectIsInitialized } from 'app/app.selectors'
 
 const App = ({ demo = false }: AppPropsType) => {

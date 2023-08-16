@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { appActions } from 'app/app.reducer'
 import { ResultCode } from 'common/enums'
 import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from 'common/utils'
-import { authAPI, LoginArgType } from 'features/auth/auth.api'
+import { authAPI, LoginArgType } from 'features/Login/auth.api'
 import { todolistsActions } from 'features/Todolists/todolists.reducer'
 
 const slice = createSlice({
@@ -27,7 +27,7 @@ const slice = createSlice({
 
 // thunks
 const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginArgType>(
-    'auth/login',
+    'Login/login',
     async (arg, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
         return thunkTryCatch(thunkAPI, async () => {
@@ -45,7 +45,7 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginArgType>(
 )
 
 const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(
-    'auth/logout',
+    'Login/logout',
     async (arg, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
         return thunkTryCatch(thunkAPI, async () => {
@@ -63,7 +63,7 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(
 )
 
 const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(
-    'auth/initializeApp',
+    'Login/initializeApp',
     async (_, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
         return thunkTryCatch(thunkAPI, async () => {

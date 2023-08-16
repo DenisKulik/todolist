@@ -10,8 +10,8 @@ import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { authThunks } from 'features/auth/auth.reducer'
-import { LoginArgType } from 'features/auth/auth.api'
+import { authThunks } from 'features/Login/auth.reducer'
+import { LoginArgType } from 'features/Login/auth.api'
 import { ResponseType } from 'common/types'
 
 export const Login = () => {
