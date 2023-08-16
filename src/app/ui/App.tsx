@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import CircularProgress from '@mui/material/CircularProgress'
-import ButtonAppBar from 'common/components/ButtonAppBar/ButtonAppBar'
+
+import { ButtonAppBar } from 'common/components/ButtonAppBar/ButtonAppBar'
 import { useActions, useAppSelector } from 'common/hooks'
 import { Todolists } from 'features/todolist/todolists/ui/Todolists'
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar'
@@ -10,7 +11,11 @@ import { Login } from 'features/login/ui/Login'
 import { authThunks } from 'features/login/model/auth.slice'
 import { selectIsInitialized } from 'app/model/app.selectors'
 
-const App = ({ demo = false }: AppPropsType) => {
+type Props = {
+    demo?: boolean
+}
+
+export const App = ({ demo = false }: Props) => {
     const isInitialized = useAppSelector<boolean>(selectIsInitialized)
     const { initializeApp } = useActions(authThunks)
 
@@ -48,11 +53,4 @@ const App = ({ demo = false }: AppPropsType) => {
             </Container>
         </>
     )
-}
-
-export default App
-
-// types
-type AppPropsType = {
-    demo?: boolean
 }

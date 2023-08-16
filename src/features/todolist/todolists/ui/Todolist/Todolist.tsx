@@ -1,10 +1,10 @@
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import styled from 'styled-components'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-import AddItemForm from 'common/components/AddItemForm/AddItemForm'
-import EditableSpan from 'common/components/EditableSpan/EditableSpan'
+import { AddItemForm } from 'common/components/AddItemForm/AddItemForm'
+import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import { TaskDomainType, tasksThunks } from 'features/todolist/tasks/model/tasks.slice'
 import {
     FilterType,
@@ -15,10 +15,14 @@ import {
 import { Task } from 'features/todolist/tasks/ui/Task'
 import { useActions, useAppSelector } from 'common/hooks'
 import { selectTasks } from 'features/todolist/tasks/model/tasks.selectors'
-import CustomButton from 'common/components/CustomButton/CustomButton'
+import { CustomButton } from 'common/components/CustomButton/CustomButton'
 import { getFilteredTasks } from 'common/utils'
 
-export const Todolist = memo(({ todolist }: TodolistPropsType) => {
+type Props = {
+    todolist: TodolistDomainType
+}
+
+export const Todolist = memo(({ todolist }: Props) => {
     const { id, title, filter, entityStatus } = todolist
     const tasks = useAppSelector<TaskDomainType[]>(state => selectTasks(state, id))
     const { deleteTodolist, updateTodolistTitle, changeTodolistFilter } = useActions({
@@ -27,27 +31,36 @@ export const Todolist = memo(({ todolist }: TodolistPropsType) => {
     })
     const { addTask: addTaskThunk } = useActions(tasksThunks)
 
-    const addTask = (title: string) => {
-        addTaskThunk({ todolistId: id, title })
-    }
-    const onDeleteTodolist = () => {
+    const addTask = useCallback(
+        (title: string) => {
+            addTaskThunk({ todolistId: id, title })
+        },
+        [addTaskThunk, id],
+    )
+    const onDeleteTodolist = useCallback(() => {
         deleteTodolist(id)
-    }
-    const onChangeTodolistTitle = (title: string) => {
-        updateTodolistTitle({ todolistId: id, title })
-    }
-    const onChangeTodolistFilter = (filter: FilterType, todolistId: string) => {
-        changeTodolistFilter({ filter, todolistId })
-    }
-    const onAllTasksClick = () => {
+    }, [deleteTodolist, id])
+    const onChangeTodolistTitle = useCallback(
+        (title: string) => {
+            updateTodolistTitle({ todolistId: id, title })
+        },
+        [updateTodolistTitle, id],
+    )
+    const onChangeTodolistFilter = useCallback(
+        (filter: FilterType, todolistId: string) => {
+            changeTodolistFilter({ filter, todolistId })
+        },
+        [changeTodolistFilter],
+    )
+    const onAllTasksClick = useCallback(() => {
         onChangeTodolistFilter('all', id)
-    }
-    const onActiveTasksClick = () => {
+    }, [onChangeTodolistFilter, id])
+    const onActiveTasksClick = useCallback(() => {
         onChangeTodolistFilter('active', id)
-    }
-    const onCompletedTasksClick = () => {
+    }, [onChangeTodolistFilter, id])
+    const onCompletedTasksClick = useCallback(() => {
         onChangeTodolistFilter('completed', id)
-    }
+    }, [onChangeTodolistFilter, id])
 
     const tasksForTodolist = getFilteredTasks(tasks, filter)
 
@@ -112,8 +125,3 @@ export const Title = styled.h3`
 const TasksWrapper = styled.div`
     margin-bottom: 10px;
 `
-
-// types
-type TodolistPropsType = {
-    todolist: TodolistDomainType
-}

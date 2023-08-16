@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { memo, useCallback, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Paper from '@mui/material/Paper'
@@ -9,12 +9,16 @@ import {
     todolistsThunks,
 } from 'features/todolist/todolists/model/todolists.slice'
 import { Todolist } from 'features/todolist/todolists/ui/Todolist/Todolist'
-import AddItemForm from 'common/components/AddItemForm/AddItemForm'
+import { AddItemForm } from 'common/components/AddItemForm/AddItemForm'
 import { useActions, useAppSelector } from 'common/hooks'
 import { selectIsLoggedIn } from 'features/login/model/auth.selectors'
 import { selectTodolists } from 'features/todolist/todolists/model/todolists.selectors'
 
-export const Todolists = ({ demo = false }: TodolistsPropsType) => {
+type Props = {
+    demo?: boolean
+}
+
+export const Todolists = memo(({ demo = false }: Props) => {
     const todolists = useAppSelector<TodolistDomainType[]>(selectTodolists)
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const { fetchTodolists, addTodolist: addTodolistThunk } = useActions(todolistsThunks)
@@ -24,7 +28,7 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
         fetchTodolists()
     }, [fetchTodolists, demo, isLoggedIn])
 
-    const addTodolist = useCallback(
+    const onAddTodolist = useCallback(
         (title: string) => {
             addTodolistThunk(title)
         },
@@ -46,14 +50,14 @@ export const Todolists = ({ demo = false }: TodolistsPropsType) => {
     return (
         <>
             <StyledGrid container>
-                <AddItemForm addItem={addTodolist} />
+                <AddItemForm addItem={onAddTodolist} />
             </StyledGrid>
             <Grid container spacing={3}>
                 {todolistsItems}
             </Grid>
         </>
     )
-}
+})
 
 // styles
 const StyledPaper = styled(Paper)`
@@ -63,8 +67,3 @@ const StyledPaper = styled(Paper)`
 const StyledGrid = styled(Grid)`
     padding: 20px;
 `
-
-// types
-type TodolistsPropsType = {
-    demo?: boolean
-}

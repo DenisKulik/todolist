@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import styled from 'styled-components'
@@ -6,24 +6,36 @@ import styled from 'styled-components'
 import { TaskType } from 'features/todolist/tasks/api/tasks.api.types'
 import { RequestStatusType } from 'app/model/app.slice'
 import { tasksThunks } from 'features/todolist/tasks/model/tasks.slice'
-import CustomCheckbox from 'common/components/ChexboxItem/CustomCheckbox'
-import EditableSpan from 'common/components/EditableSpan/EditableSpan'
+import { CustomCheckbox } from 'common/components/ChexboxItem/CustomCheckbox'
+import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import { useActions } from 'common/hooks'
 import { TaskStatuses } from 'common/enums'
 
-export const Task = memo(({ task, todolistId, entityStatus }: TaskPropsType) => {
+type Props = {
+    task: TaskType
+    todolistId: string
+    entityStatus: RequestStatusType
+}
+
+export const Task = memo(({ task, todolistId, entityStatus }: Props) => {
     const { deleteTask, updateTask } = useActions(tasksThunks)
 
-    const onDeleteTask = () => {
+    const onDeleteTask = useCallback(() => {
         deleteTask({ todolistId, taskId: task.id })
-    }
-    const onChangeTaskStatus = (checked: boolean) => {
-        const status = checked ? TaskStatuses.Completed : TaskStatuses.New
-        updateTask({ todolistId, taskId: task.id, model: { status } })
-    }
-    const onChangeTaskTitle = (title: string) => {
-        updateTask({ todolistId, taskId: task.id, model: { title } })
-    }
+    }, [deleteTask, todolistId, task.id])
+    const onChangeTaskStatus = useCallback(
+        (checked: boolean) => {
+            const status = checked ? TaskStatuses.Completed : TaskStatuses.New
+            updateTask({ todolistId, taskId: task.id, model: { status } })
+        },
+        [task.id, todolistId, updateTask],
+    )
+    const onChangeTaskTitle = useCallback(
+        (title: string) => {
+            updateTask({ todolistId, taskId: task.id, model: { title } })
+        },
+        [updateTask, todolistId, task.id],
+    )
 
     return (
         <ListItem className={task.status === TaskStatuses.Completed ? 'isDone' : ''} key={task.id}>
@@ -50,10 +62,3 @@ const ListItem = styled.div`
         opacity: 0.5;
     }
 `
-
-// types
-type TaskPropsType = {
-    task: TaskType
-    todolistId: string
-    entityStatus: RequestStatusType
-}

@@ -1,16 +1,14 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, memo } from 'react'
 import Checkbox from '@mui/material/Checkbox'
 
-type CustomCheckboxPropsType = {
+type Props = {
     checked: boolean
     callback: (checked: boolean) => void
     disabled?: boolean
 }
 
-const CustomCheckbox = (props: CustomCheckboxPropsType) => {
-    const { checked, callback, disabled } = props
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+export const CustomCheckbox = memo(({ checked, callback, disabled }: Props) => {
+    const onChangeChecked = (e: ChangeEvent<HTMLInputElement>) => {
         callback(e.currentTarget.checked)
     }
 
@@ -19,10 +17,8 @@ const CustomCheckbox = (props: CustomCheckboxPropsType) => {
             checked={checked}
             color="success"
             size="small"
-            onChange={onChangeHandler}
+            onChange={onChangeChecked}
             disabled={disabled}
         />
     )
-}
-
-export default CustomCheckbox
+})

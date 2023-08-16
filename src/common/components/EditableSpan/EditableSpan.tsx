@@ -1,22 +1,22 @@
 import { ChangeEvent, memo, useState } from 'react'
 
-type EditableSpanType = {
+type Props = {
     title: string
     callback: (title: string) => void
     disabled?: boolean
 }
 
-const EditableSpan = ({ title, callback, disabled }: EditableSpanType) => {
+export const EditableSpan = memo(({ title, callback, disabled }: Props) => {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
     const [localTitle, setLocalTitle] = useState<string>(title)
 
-    const toggleEditMode = () => {
+    const onToggleEditMode = () => {
         if (!localTitle.trim() || disabled) return
         isEditMode && callback(localTitle)
         setIsEditMode(!isEditMode)
     }
 
-    const setLocalTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onSetLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setLocalTitle(e.currentTarget.value)
     }
 
@@ -24,13 +24,11 @@ const EditableSpan = ({ title, callback, disabled }: EditableSpanType) => {
         <input
             type="text"
             autoFocus
-            onBlur={toggleEditMode}
-            onChange={setLocalTitleHandler}
+            onBlur={onToggleEditMode}
+            onChange={onSetLocalTitle}
             value={localTitle}
         />
     ) : (
-        <span onDoubleClick={toggleEditMode}>{localTitle}</span>
+        <span onDoubleClick={onToggleEditMode}>{localTitle}</span>
     )
-}
-
-export default memo(EditableSpan)
+})

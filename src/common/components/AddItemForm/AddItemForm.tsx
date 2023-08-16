@@ -4,21 +4,21 @@ import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import AddIcon from '@mui/icons-material/Add'
 
-type AddItemFormType = {
+type Props = {
     addItem: (title: string) => void
     disabled?: boolean
 }
 
-const AddItemForm = ({ addItem, disabled }: AddItemFormType) => {
+export const AddItemForm = memo(({ addItem, disabled }: Props) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
 
-    const setTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onSetTitle = (e: ChangeEvent<HTMLInputElement>) => {
         error && setError(null)
         setTitle(e.currentTarget.value)
     }
 
-    const AddItemHandler = () => {
+    const onAddItem = () => {
         if (title.trim() === '') {
             setError('Field is required')
             return
@@ -28,16 +28,16 @@ const AddItemForm = ({ addItem, disabled }: AddItemFormType) => {
         setTitle('')
     }
 
-    const addItemOnEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        return e.key === 'Enter' && AddItemHandler()
+    const onAddItemOnEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+        return e.key === 'Enter' && onAddItem()
     }
 
     return (
         <StyledAddItemForm>
             <StyledInput
                 value={title}
-                onChange={setTitleHandler}
-                onKeyUp={addItemOnEnterHandler}
+                onChange={onSetTitle}
+                onKeyUp={onAddItemOnEnter}
                 error={!!error}
                 id="standard-basic"
                 label={error ? 'Title is required' : 'Enter title'}
@@ -45,12 +45,12 @@ const AddItemForm = ({ addItem, disabled }: AddItemFormType) => {
                 size="small"
                 disabled={disabled}
             />
-            <IconButton color="primary" onClick={AddItemHandler} disabled={disabled}>
+            <IconButton color="primary" onClick={onAddItem} disabled={disabled}>
                 <AddIcon />
             </IconButton>
         </StyledAddItemForm>
     )
-}
+})
 
 const StyledAddItemForm = styled.div`
     display: flex;
@@ -63,5 +63,3 @@ const StyledInput = styled(TextField)`
         border: red 1px solid;
     }
 `
-
-export default memo(AddItemForm)
