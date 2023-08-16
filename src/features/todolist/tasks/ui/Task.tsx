@@ -17,12 +17,10 @@ export const Task = memo(({ task, todolistId, entityStatus }: TaskPropsType) => 
     const onDeleteTask = () => {
         deleteTask({ todolistId, taskId: task.id })
     }
-
     const onChangeTaskStatus = (checked: boolean) => {
         const status = checked ? TaskStatuses.Completed : TaskStatuses.New
         updateTask({ todolistId, taskId: task.id, model: { status } })
     }
-
     const onChangeTaskTitle = (title: string) => {
         updateTask({ todolistId, taskId: task.id, model: { title } })
     }

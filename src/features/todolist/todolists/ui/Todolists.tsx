@@ -1,13 +1,14 @@
+import { useCallback, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Paper from '@mui/material/Paper'
+import Grid from '@mui/material/Grid'
+
 import {
     TodolistDomainType,
     todolistsThunks,
 } from 'features/todolist/todolists/model/todolists.slice'
-import { useCallback, useEffect } from 'react'
-import Grid from '@mui/material/Grid'
-import Todolist from 'features/todolist/todolists/ui/Todolist/Todolist'
+import { Todolist } from 'features/todolist/todolists/ui/Todolist/Todolist'
 import AddItemForm from 'common/components/AddItemForm/AddItemForm'
 import { useActions, useAppSelector } from 'common/hooks'
 import { selectIsLoggedIn } from 'features/login/model/auth.selectors'

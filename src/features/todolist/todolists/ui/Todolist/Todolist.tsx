@@ -2,6 +2,7 @@ import { memo } from 'react'
 import styled from 'styled-components'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
+
 import AddItemForm from 'common/components/AddItemForm/AddItemForm'
 import EditableSpan from 'common/components/EditableSpan/EditableSpan'
 import { TaskDomainType, tasksThunks } from 'features/todolist/tasks/model/tasks.slice'
@@ -13,12 +14,12 @@ import {
 } from 'features/todolist/todolists/model/todolists.slice'
 import { Task } from 'features/todolist/tasks/ui/Task'
 import { useActions, useAppSelector } from 'common/hooks'
-import { TaskStatuses } from 'common/enums'
 import { selectTasks } from 'features/todolist/tasks/model/tasks.selectors'
 import CustomButton from 'common/components/CustomButton/CustomButton'
+import { getFilteredTasks } from 'common/utils'
 
-const Todolist = (props: TodolistPropsType) => {
-    const { id, title, filter, entityStatus } = props.todolist
+export const Todolist = memo(({ todolist }: TodolistPropsType) => {
+    const { id, title, filter, entityStatus } = todolist
     const tasks = useAppSelector<TaskDomainType[]>(state => selectTasks(state, id))
     const { deleteTodolist, updateTodolistTitle, changeTodolistFilter } = useActions({
         ...todolistsThunks,
@@ -46,16 +47,6 @@ const Todolist = (props: TodolistPropsType) => {
     }
     const onCompletedTasksClick = () => {
         onChangeTodolistFilter('completed', id)
-    }
-    const getFilteredTasks = (tasks: TaskDomainType[], filter: FilterType): TaskDomainType[] => {
-        switch (filter) {
-            case 'active':
-                return tasks.filter(task => task.status === TaskStatuses.New)
-            case 'completed':
-                return tasks.filter(task => task.status === TaskStatuses.Completed)
-            default:
-                return tasks
-        }
     }
 
     const tasksForTodolist = getFilteredTasks(tasks, filter)
@@ -105,9 +96,7 @@ const Todolist = (props: TodolistPropsType) => {
             </div>
         </div>
     )
-}
-
-export default memo(Todolist)
+})
 
 // styles
 const Header = styled.header`
