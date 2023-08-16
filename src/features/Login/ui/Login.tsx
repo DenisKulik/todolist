@@ -1,4 +1,3 @@
-import { FormikHelpers, useFormik } from 'formik'
 import styled from 'styled-components'
 import { Navigate } from 'react-router-dom'
 import Grid from '@mui/material/Grid'
@@ -9,48 +8,12 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { authThunks } from 'features/Login/model/auth.reducer'
-import { LoginArgType } from 'features/Login/api/auth.api'
-import { ResponseType } from 'common/types'
+
+import { useAppSelector, useLogin } from 'common/hooks'
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const dispatch = useAppDispatch()
-
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-            password: '',
-            rememberMe: false,
-        },
-        validate: values => {
-            const errors: FormikErrorType = {}
-
-            if (!values.email) {
-                errors.email = 'Required'
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address'
-            }
-
-            if (!values.password) {
-                errors.password = 'Required'
-            } else if (values.password?.trim().length < 3) {
-                errors.password = 'Password must be at least 3 characters long'
-            }
-
-            return errors
-        },
-        onSubmit: (values, formikHelpers: FormikHelpers<LoginArgType>) => {
-            dispatch(authThunks.login(values))
-                .unwrap()
-                .catch((data: ResponseType) => {
-                    data.fieldsErrors?.forEach(fieldError => {
-                        formikHelpers.setFieldError(fieldError.field, fieldError.error)
-                    })
-                })
-        },
-    })
+    const { formik } = useLogin()
 
     const isEmailError = formik.touched.email && formik.errors.email
     const isPasswordError = formik.touched.password && formik.errors.password
@@ -120,6 +83,3 @@ export const Login = () => {
 const Link = styled('a')`
     margin-left: 5px;
 `
-
-// types
-type FormikErrorType = Partial<Omit<LoginArgType, 'captcha'>>
