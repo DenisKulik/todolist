@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid'
 import Todolist from './Todolist/Todolist'
 import AddItemForm from 'common/components/AddItemForm/AddItemForm'
 import { useActions, useAppSelector } from 'common/hooks'
-import { selectIsLoggedIn } from 'features/Login/auth.selectors'
+import { selectIsLoggedIn } from 'features/Login/model/auth.selectors'
 import { selectTodolists } from 'features/Todolists/todolists.selectors'
 
 export const Todolists = ({ demo = false }: TodolistsPropsType) => {

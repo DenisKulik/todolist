@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import LinearProgress from '@mui/material/LinearProgress'
 import { RequestStatusType } from 'app/app.reducer'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { authThunks } from 'features/Login/auth.reducer'
+import { authThunks } from 'features/Login/model/auth.reducer'
 import { selectStatus } from 'app/app.selectors'
 
 const ButtonAppBar = () => {

@@ -6,7 +6,7 @@ import { todolistsReducer } from 'features/Todolists/todolists.reducer'
 import { AppRootStateType, RootReducerType } from './store'
 
 import { appReducer } from 'app/app.reducer'
-import { authReducer } from 'features/Login/auth.reducer'
+import { authReducer } from 'features/Login/model/auth.reducer'
 import { configureStore } from '@reduxjs/toolkit'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
 
