@@ -211,6 +211,4 @@ export const tasksThunks = { fetchTasks, addTask, updateTask, deleteTask }
 export type TaskDomainType = TaskType & {
     entityStatus: RequestStatusType
 }
-export type TasksStateType = {
-    [todolistId: string]: TaskDomainType[]
-}
+export type TasksStateType = Record<string, TaskDomainType[]>

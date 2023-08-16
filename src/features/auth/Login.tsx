@@ -122,8 +122,4 @@ const Link = styled('a')`
 `
 
 // types
-type FormikErrorType = {
-    email?: string
-    password?: string
-    rememberMe?: boolean
-}
+type FormikErrorType = Partial<Omit<LoginArgType, 'captcha'>>
