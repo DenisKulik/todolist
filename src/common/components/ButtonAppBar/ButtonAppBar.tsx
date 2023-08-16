@@ -6,10 +6,10 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import LinearProgress from '@mui/material/LinearProgress'
-import { RequestStatusType } from 'app/app.reducer'
+import { RequestStatusType } from 'app/model/app.slice'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { authThunks } from 'features/Login/model/auth.reducer'
-import { selectStatus } from 'app/app.selectors'
+import { authThunks } from 'features/login/model/auth.slice'
+import { selectStatus } from 'app/model/app.selectors'
 
 const ButtonAppBar = () => {
     const status = useAppSelector<RequestStatusType>(selectStatus)

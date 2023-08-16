@@ -1,7 +1,7 @@
 import { useActions } from 'common/hooks/useActions/useActions'
-import { authThunks } from 'features/Login/model/auth.reducer'
+import { authThunks } from 'features/login/model/auth.slice'
 import { FormikHelpers, useFormik } from 'formik'
-import { LoginArgType } from 'features/Login/api/auth.api'
+import { LoginArgType } from 'features/login/api/auth.api'
 import { ResponseType } from 'common/types'
 
 export const useLogin = () => {
