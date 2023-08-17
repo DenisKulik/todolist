@@ -30,7 +30,7 @@ export const Todolists = ({ demo = false }: Props) => {
     }, [])
 
     const onAddTodolist = (title: string) => {
-        addTodolistThunk(title)
+        return addTodolistThunk(title).unwrap()
     }
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {

@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import AddIcon from '@mui/icons-material/Add'
+import { ResponseType } from 'common/types'
 
 type Props = {
-    addItem: (title: string) => void
+    addItem: (title: string) => Promise<any>
     disabled?: boolean
 }
 
@@ -25,7 +26,12 @@ export const AddItemForm = memo(({ addItem, disabled }: Props) => {
         }
 
         addItem(title)
-        setTitle('')
+            .then(() => {
+                setTitle('')
+            })
+            .catch((err: ResponseType) => {
+                setError(err.messages[0])
+            })
     }
 
     const onAddItemOnEnter = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -40,7 +46,7 @@ export const AddItemForm = memo(({ addItem, disabled }: Props) => {
                 onKeyUp={onAddItemOnEnter}
                 error={!!error}
                 id="standard-basic"
-                label={error ? 'Title is required' : 'Enter title'}
+                label={error ? error : 'Enter title'}
                 variant="standard"
                 size="small"
                 disabled={disabled}

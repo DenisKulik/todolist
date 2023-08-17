@@ -16,14 +16,14 @@ export const Todolist = memo(({ todolist }: Props) => {
     const { id, title, filter, entityStatus } = todolist
     const { addTask: addTaskThunk } = useActions(tasksThunks)
 
-    const addTask = (title: string) => {
-        addTaskThunk({ todolistId: id, title })
+    const onAddTask = (title: string) => {
+        return addTaskThunk({ todolistId: id, title }).unwrap()
     }
 
     return (
         <>
             <TodolistHeader todolistId={id} title={title} entityStatus={entityStatus} />
-            <AddItemForm addItem={addTask} disabled={entityStatus === 'loading'} />
+            <AddItemForm addItem={onAddTask} disabled={entityStatus === 'loading'} />
             <Tasks filter={filter} todolistId={id} />
             <FilterTasksButtons filter={filter} todolistId={id} />
         </>
