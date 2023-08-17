@@ -2,8 +2,8 @@ import {
     TodolistDomainType,
     todolistsSlice,
     todolistsThunks,
-} from 'features/todolist/todolists/model/todolists.slice'
-import { tasksSlice, TasksStateType } from 'features/todolist/tasks/model/tasks.slice'
+} from 'features/todolists-list/todolists/model/todolists.slice'
+import { tasksSlice, TasksStateType } from 'features/todolists-list/tasks/model/tasks.slice'
 
 it('should be equals', () => {
     const startTasksState: TasksStateType = {}

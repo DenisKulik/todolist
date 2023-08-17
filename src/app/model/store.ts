@@ -1,8 +1,8 @@
 import { AnyAction, combineReducers } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { ThunkDispatch } from 'redux-thunk'
-import { tasksSlice } from 'features/todolist/tasks/model/tasks.slice'
-import { todolistsSlice } from 'features/todolist/todolists/model/todolists.slice'
+import { tasksSlice } from 'features/todolists-list/tasks/model/tasks.slice'
+import { todolistsSlice } from 'features/todolists-list/todolists/model/todolists.slice'
 import { appSlice } from 'app/model/app.slice'
 import { authSlice } from 'features/login/model/auth.slice'
 

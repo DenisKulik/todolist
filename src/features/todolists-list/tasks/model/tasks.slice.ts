@@ -11,14 +11,14 @@ import {
 import {
     todolistsActions,
     todolistsThunks,
-} from 'features/todolist/todolists/model/todolists.slice'
-import { tasksAPI } from 'features/todolist/tasks/api/tasks.api'
+} from 'features/todolists-list/todolists/model/todolists.slice'
+import { tasksAPI } from 'features/todolists-list/tasks/api/tasks.api'
 import {
     DeleteTaskArgType,
     TaskType,
     UpdateTaskArgType,
     UpdateTaskModelType,
-} from 'features/todolist/tasks/api/tasks.api.types'
+} from 'features/todolists-list/tasks/api/tasks.api.types'
 
 const initialState: TasksStateType = {}
 

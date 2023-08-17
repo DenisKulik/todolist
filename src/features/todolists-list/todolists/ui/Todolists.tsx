@@ -7,12 +7,12 @@ import Grid from '@mui/material/Grid'
 import {
     TodolistDomainType,
     todolistsThunks,
-} from 'features/todolist/todolists/model/todolists.slice'
-import { Todolist } from 'features/todolist/todolists/ui/Todolist/Todolist'
+} from 'features/todolists-list/todolists/model/todolists.slice'
+import { Todolist } from 'features/todolists-list/todolists/ui/Todolist/Todolist'
 import { AddItemForm } from 'common/components/AddItemForm/AddItemForm'
 import { useActions, useAppSelector } from 'common/hooks'
 import { selectIsLoggedIn } from 'features/login/model/auth.selectors'
-import { selectTodolists } from 'features/todolist/todolists/model/todolists.selectors'
+import { selectTodolists } from 'features/todolists-list/todolists/model/todolists.selectors'
 
 type Props = {
     demo?: boolean

@@ -5,16 +5,16 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 import { AddItemForm } from 'common/components/AddItemForm/AddItemForm'
 import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
-import { TaskDomainType, tasksThunks } from 'features/todolist/tasks/model/tasks.slice'
+import { TaskDomainType, tasksThunks } from 'features/todolists-list/tasks/model/tasks.slice'
 import {
     FilterType,
     TodolistDomainType,
     todolistsActions,
     todolistsThunks,
-} from 'features/todolist/todolists/model/todolists.slice'
-import { Task } from 'features/todolist/tasks/ui/Task'
+} from 'features/todolists-list/todolists/model/todolists.slice'
+import { Task } from 'features/todolists-list/tasks/ui/Task'
 import { useActions, useAppSelector } from 'common/hooks'
-import { selectTasks } from 'features/todolist/tasks/model/tasks.selectors'
+import { selectTasks } from 'features/todolists-list/tasks/model/tasks.selectors'
 import { CustomButton } from 'common/components/CustomButton/CustomButton'
 import { getFilteredTasks } from 'common/utils'
 
