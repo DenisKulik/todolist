@@ -19,7 +19,7 @@ const TaskWithRedux = () => {
     const todolistId = 'todolistId1'
     let task = useSelector<AppRootStateType, TaskDomainType>(state => state.tasks[todolistId][0])
 
-    return <Task task={task} todolistId={todolistId} entityStatus="idle" />
+    return <Task task={task} />
 }
 
 export const TaskStory: Story = {

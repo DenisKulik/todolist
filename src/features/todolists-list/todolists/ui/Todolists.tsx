@@ -26,7 +26,8 @@ export const Todolists = ({ demo = false }: Props) => {
     useEffect(() => {
         if (!isLoggedIn || demo) return
         fetchTodolists()
-    }, [fetchTodolists, demo, isLoggedIn])
+        // eslint-disable-next-line
+    }, [])
 
     const onAddTodolist = (title: string) => {
         addTodolistThunk(title)
