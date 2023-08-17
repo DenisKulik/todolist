@@ -1,10 +1,7 @@
 import { memo } from 'react'
 
 import { CustomButton } from 'common/components/CustomButton/CustomButton'
-import {
-    FilterType,
-    todolistsActions,
-} from 'features/todolists-list/todolists/model/todolists.slice'
+import { FilterType, todolistsActions } from 'features/todolists/model/todolists.slice'
 import { useActions } from 'common/hooks'
 
 type Props = {

@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
-import { Task } from 'features/todolists-list/tasks/ui/Task'
+import { Task } from 'features/todolists/ui/Todolist/Tasks/Task/Task'
 import { getFilteredTasks } from 'common/utils'
 import { useAppSelector } from 'common/hooks'
-import { TaskDomainType } from 'features/todolists-list/tasks/model/tasks.slice'
-import { selectTasks } from 'features/todolists-list/tasks/model/tasks.selectors'
-import { FilterType } from 'features/todolists-list/todolists/model/todolists.slice'
+import { TaskDomainType } from 'features/todolists/model/tasks.slice'
+import { selectTasks } from 'features/todolists/model/tasks.selectors'
+import { FilterType } from 'features/todolists/model/todolists.slice'
 
 type Props = {
     filter: FilterType

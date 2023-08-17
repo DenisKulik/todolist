@@ -3,7 +3,7 @@ import {
     todolistsActions,
     todolistsSlice,
     todolistsThunks,
-} from 'features/todolists-list/todolists/model/todolists.slice'
+} from 'features/todolists/model/todolists.slice'
 import { createFulfilledAction } from 'common/utils'
 
 describe('todolistsReducer', () => {

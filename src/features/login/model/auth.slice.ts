@@ -4,7 +4,7 @@ import { appActions } from 'app/model/app.slice'
 import { ResultCode } from 'common/enums'
 import { createAppAsyncThunk } from 'common/utils'
 import { authAPI, LoginArgType } from 'features/login/api/auth.api'
-import { todolistsActions } from 'features/todolists-list/todolists/model/todolists.slice'
+import { todolistsActions } from 'features/todolists/model/todolists.slice'
 
 const slice = createSlice({
     name: 'auth',

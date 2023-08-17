@@ -1,8 +1,8 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { combineReducers } from 'redux'
-import { tasksSlice } from 'features/todolists-list/tasks/model/tasks.slice'
-import { todolistsSlice } from 'features/todolists-list/todolists/model/todolists.slice'
+import { tasksSlice } from 'features/todolists/model/tasks.slice'
+import { todolistsSlice } from 'features/todolists/model/todolists.slice'
 import { AppRootStateType, RootReducerType } from 'app/model/store'
 
 import { appSlice } from 'app/model/app.slice'

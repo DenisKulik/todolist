@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { todolistAPI } from 'features/todolists-list/todolists/api/todolists.api'
+import { todolistAPI } from 'features/todolists/api/todolists.api'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
-import { tasksAPI } from 'features/todolists-list/tasks/api/tasks.api'
-import { UpdateTaskModelType } from 'features/todolists-list/tasks/api/tasks.api.types'
+import { tasksAPI } from 'features/todolists/api/tasks.api'
+import { UpdateTaskModelType } from 'features/todolists/api/types/tasks.api.types'
 
 export default {
     title: 'API',

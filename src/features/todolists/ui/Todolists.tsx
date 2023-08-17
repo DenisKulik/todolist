@@ -4,15 +4,12 @@ import styled from 'styled-components'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 
-import {
-    TodolistDomainType,
-    todolistsThunks,
-} from 'features/todolists-list/todolists/model/todolists.slice'
-import { Todolist } from 'features/todolists-list/todolists/ui/Todolist/Todolist'
+import { TodolistDomainType, todolistsThunks } from 'features/todolists/model/todolists.slice'
+import { Todolist } from 'features/todolists/ui/Todolist/Todolist'
 import { AddItemForm } from 'common/components/AddItemForm/AddItemForm'
 import { useActions, useAppSelector } from 'common/hooks'
 import { selectIsLoggedIn } from 'features/login/model/auth.selectors'
-import { selectTodolists } from 'features/todolists-list/todolists/model/todolists.selectors'
+import { selectTodolists } from 'features/todolists/model/todolists.selectors'
 
 type Props = {
     demo?: boolean

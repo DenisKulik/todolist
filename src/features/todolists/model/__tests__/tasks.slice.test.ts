@@ -1,11 +1,7 @@
-import {
-    tasksSlice,
-    TasksStateType,
-    tasksThunks,
-} from 'features/todolists-list/tasks/model/tasks.slice'
+import { tasksSlice, TasksStateType, tasksThunks } from 'features/todolists/model/tasks.slice'
 import { TaskPriorities, TaskStatuses } from 'common/enums'
-import { todolistsThunks } from 'features/todolists-list/todolists/model/todolists.slice'
-import { UpdateTaskModelType } from 'features/todolists-list/tasks/api/tasks.api.types'
+import { todolistsThunks } from 'features/todolists/model/todolists.slice'
+import { UpdateTaskModelType } from 'features/todolists/api/types/tasks.api.types'
 import { createFulfilledAction } from 'common/utils'
 
 describe('tasksReducer', () => {

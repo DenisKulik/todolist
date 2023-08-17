@@ -3,17 +3,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { appActions, RequestStatusType } from 'app/model/app.slice'
 import { ResultCode } from 'common/enums'
 import { createAppAsyncThunk } from 'common/utils'
-import {
-    todolistsActions,
-    todolistsThunks,
-} from 'features/todolists-list/todolists/model/todolists.slice'
-import { tasksAPI } from 'features/todolists-list/tasks/api/tasks.api'
+import { todolistsActions, todolistsThunks } from 'features/todolists/model/todolists.slice'
+import { tasksAPI } from 'features/todolists/api/tasks.api'
 import {
     DeleteTaskArgType,
     TaskType,
     UpdateTaskArgType,
     UpdateTaskModelType,
-} from 'features/todolists-list/tasks/api/tasks.api.types'
+} from 'features/todolists/api/types/tasks.api.types'
 
 const initialState: TasksStateType = {}
 

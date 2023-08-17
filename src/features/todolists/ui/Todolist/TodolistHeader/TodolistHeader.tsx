@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import { useActions } from 'common/hooks'
-import { todolistsThunks } from 'features/todolists-list/todolists/model/todolists.slice'
+import { todolistsThunks } from 'features/todolists/model/todolists.slice'
 import { RequestStatusType } from 'app/model/app.slice'
 
 type Props = {

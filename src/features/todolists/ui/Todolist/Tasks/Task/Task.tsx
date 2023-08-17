@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import styled from 'styled-components'
 
-import { TaskDomainType, tasksThunks } from 'features/todolists-list/tasks/model/tasks.slice'
+import { TaskDomainType, tasksThunks } from 'features/todolists/model/tasks.slice'
 import { CustomCheckbox } from 'common/components/ChexboxItem/CustomCheckbox'
 import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import { useActions } from 'common/hooks'

@@ -3,12 +3,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { appActions, RequestStatusType } from 'app/model/app.slice'
 import { createAppAsyncThunk } from 'common/utils'
 import { ResultCode } from 'common/enums'
-import { todolistAPI } from 'features/todolists-list/todolists/api/todolists.api'
-import { tasksThunks } from 'features/todolists-list/tasks/model/tasks.slice'
+import { todolistAPI } from 'features/todolists/api/todolists.api'
+import { tasksThunks } from 'features/todolists/model/tasks.slice'
 import {
     TodolistType,
     UpdateTodolistTitleType,
-} from 'features/todolists-list/todolists/api/todolists.api.types'
+} from 'features/todolists/api/types/todolists.api.types'
 
 const initialState: TodolistDomainType[] = []
 
@@ -57,7 +57,7 @@ const slice = createSlice({
 
 // thunks
 export const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(
-    'todolists-list/fetchTodolists',
+    'todolists/fetchTodolists',
     async (_, thunkAPI) => {
         const { dispatch } = thunkAPI
         const res = await todolistAPI.getTodolists()
@@ -70,7 +70,7 @@ export const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] },
 )
 
 export const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
-    'todolists-list/addTodolist',
+    'todolists/addTodolist',
     async (title, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
         const res = await todolistAPI.createTodolist(title)
@@ -86,7 +86,7 @@ export const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, strin
 export const updateTodolistTitle = createAppAsyncThunk<
     UpdateTodolistTitleType,
     UpdateTodolistTitleType
->('todolists-list/updateTodolistTitle', async (arg, thunkAPI) => {
+>('todolists/updateTodolistTitle', async (arg, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI
     dispatch(
         todolistsActions.changeTodolistEntityStatus({
@@ -119,7 +119,7 @@ export const updateTodolistTitle = createAppAsyncThunk<
 })
 
 export const deleteTodolist = createAppAsyncThunk<{ todolistId: string }, string>(
-    'todolists-list/deleteTodolist',
+    'todolists/deleteTodolist',
     async (todolistId, thunkAPI) => {
         const { dispatch, rejectWithValue } = thunkAPI
         dispatch(

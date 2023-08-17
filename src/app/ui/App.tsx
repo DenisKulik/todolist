@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 import { ButtonAppBar } from 'common/components/ButtonAppBar/ButtonAppBar'
 import { useActions, useAppSelector } from 'common/hooks'
-import { Todolists } from 'features/todolists-list/todolists/ui/Todolists'
+import { Todolists } from 'features/todolists/ui/Todolists'
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar'
 import { Login } from 'features/login/ui/Login'
 import { authThunks } from 'features/login/model/auth.slice'

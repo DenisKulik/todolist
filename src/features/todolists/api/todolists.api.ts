@@ -5,7 +5,7 @@ import { ResponseType } from 'common/types'
 import {
     TodolistType,
     UpdateTodolistTitleType,
-} from 'features/todolists-list/todolists/api/todolists.api.types'
+} from 'features/todolists/api/types/todolists.api.types'
 
 export const todolistAPI = {
     getTodolists() {
