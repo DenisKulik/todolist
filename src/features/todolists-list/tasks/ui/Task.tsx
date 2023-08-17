@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import styled from 'styled-components'
@@ -20,22 +20,16 @@ type Props = {
 export const Task = memo(({ task, todolistId, entityStatus }: Props) => {
     const { deleteTask, updateTask } = useActions(tasksThunks)
 
-    const onDeleteTask = useCallback(() => {
+    const onDeleteTask = () => {
         deleteTask({ todolistId, taskId: task.id })
-    }, [deleteTask, todolistId, task.id])
-    const onChangeTaskStatus = useCallback(
-        (checked: boolean) => {
-            const status = checked ? TaskStatuses.Completed : TaskStatuses.New
-            updateTask({ todolistId, taskId: task.id, model: { status } })
-        },
-        [task.id, todolistId, updateTask],
-    )
-    const onChangeTaskTitle = useCallback(
-        (title: string) => {
-            updateTask({ todolistId, taskId: task.id, model: { title } })
-        },
-        [updateTask, todolistId, task.id],
-    )
+    }
+    const onChangeTaskStatus = (checked: boolean) => {
+        const status = checked ? TaskStatuses.Completed : TaskStatuses.New
+        updateTask({ todolistId, taskId: task.id, model: { status } })
+    }
+    const onChangeTaskTitle = (title: string) => {
+        updateTask({ todolistId, taskId: task.id, model: { title } })
+    }
 
     return (
         <ListItem className={task.status === TaskStatuses.Completed ? 'isDone' : ''} key={task.id}>

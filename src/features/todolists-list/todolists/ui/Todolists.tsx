@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Paper from '@mui/material/Paper'
@@ -18,7 +18,7 @@ type Props = {
     demo?: boolean
 }
 
-export const Todolists = memo(({ demo = false }: Props) => {
+export const Todolists = ({ demo = false }: Props) => {
     const todolists = useAppSelector<TodolistDomainType[]>(selectTodolists)
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const { fetchTodolists, addTodolist: addTodolistThunk } = useActions(todolistsThunks)
@@ -28,12 +28,9 @@ export const Todolists = memo(({ demo = false }: Props) => {
         fetchTodolists()
     }, [fetchTodolists, demo, isLoggedIn])
 
-    const onAddTodolist = useCallback(
-        (title: string) => {
-            addTodolistThunk(title)
-        },
-        [addTodolistThunk],
-    )
+    const onAddTodolist = (title: string) => {
+        addTodolistThunk(title)
+    }
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {
         return (
@@ -57,7 +54,7 @@ export const Todolists = memo(({ demo = false }: Props) => {
             </Grid>
         </>
     )
-})
+}
 
 // styles
 const StyledPaper = styled(Paper)`

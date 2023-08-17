@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import styled from 'styled-components'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -31,36 +31,27 @@ export const Todolist = memo(({ todolist }: Props) => {
     })
     const { addTask: addTaskThunk } = useActions(tasksThunks)
 
-    const addTask = useCallback(
-        (title: string) => {
-            addTaskThunk({ todolistId: id, title })
-        },
-        [addTaskThunk, id],
-    )
-    const onDeleteTodolist = useCallback(() => {
+    const addTask = (title: string) => {
+        addTaskThunk({ todolistId: id, title })
+    }
+    const onDeleteTodolist = () => {
         deleteTodolist(id)
-    }, [deleteTodolist, id])
-    const onChangeTodolistTitle = useCallback(
-        (title: string) => {
-            updateTodolistTitle({ todolistId: id, title })
-        },
-        [updateTodolistTitle, id],
-    )
-    const onChangeTodolistFilter = useCallback(
-        (filter: FilterType, todolistId: string) => {
-            changeTodolistFilter({ filter, todolistId })
-        },
-        [changeTodolistFilter],
-    )
-    const onAllTasksClick = useCallback(() => {
+    }
+    const onChangeTodolistTitle = (title: string) => {
+        updateTodolistTitle({ todolistId: id, title })
+    }
+    const onChangeTodolistFilter = (filter: FilterType, todolistId: string) => {
+        changeTodolistFilter({ filter, todolistId })
+    }
+    const onAllTasksClick = () => {
         onChangeTodolistFilter('all', id)
-    }, [onChangeTodolistFilter, id])
-    const onActiveTasksClick = useCallback(() => {
+    }
+    const onActiveTasksClick = () => {
         onChangeTodolistFilter('active', id)
-    }, [onChangeTodolistFilter, id])
-    const onCompletedTasksClick = useCallback(() => {
+    }
+    const onCompletedTasksClick = () => {
         onChangeTodolistFilter('completed', id)
-    }, [onChangeTodolistFilter, id])
+    }
 
     const tasksForTodolist = getFilteredTasks(tasks, filter)
 
