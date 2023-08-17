@@ -4,6 +4,7 @@ import {
     todolistsSlice,
     todolistsThunks,
 } from 'features/todolists-list/todolists/model/todolists.slice'
+import { createFulfilledAction } from 'common/utils'
 
 describe('todolistsReducer', () => {
     let startState: TodolistDomainType[] = []
@@ -36,13 +37,7 @@ describe('todolistsReducer', () => {
             order: 0,
             title: 'What to do',
         }
-
-        const action = todolistsThunks.addTodolist.fulfilled(
-            { todolist: newTodos },
-            'requestId',
-            'What to do',
-        )
-
+        const action = createFulfilledAction(todolistsThunks.addTodolist, { todolist: newTodos })
         const endState = todolistsSlice(startState, action)
 
         expect(endState.length).toBe(3)
@@ -51,12 +46,7 @@ describe('todolistsReducer', () => {
     })
 
     it('should delete Todolist correctly', () => {
-        const action = todolistsThunks.deleteTodolist.fulfilled(
-            { todolistId: '2' },
-            'requestId',
-            '2',
-        )
-
+        const action = createFulfilledAction(todolistsThunks.deleteTodolist, { todolistId: '2' })
         const endState = todolistsSlice(startState, action)
 
         expect(endState.length).toBe(1)
@@ -68,7 +58,6 @@ describe('todolistsReducer', () => {
             filter: 'completed',
             todolistId: '1',
         })
-
         const endState = todolistsSlice(startState, action)
 
         expect(endState[0].filter).toBe('completed')
@@ -76,7 +65,7 @@ describe('todolistsReducer', () => {
 
     it('should change Todolist title correctly', () => {
         const args = { todolistId: '2', title: 'New Title' }
-        const action = todolistsThunks.updateTodolistTitle.fulfilled(args, 'requestId', args)
+        const action = createFulfilledAction(todolistsThunks.updateTodolistTitle, args)
         const endState = todolistsSlice(startState, action)
 
         expect(endState[1].title).toBe('New Title')

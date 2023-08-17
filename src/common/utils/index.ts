@@ -3,3 +3,4 @@ export { handleServerNetworkError } from 'common/utils/handleServerNetworkError/
 export { createAppAsyncThunk } from 'common/utils/createAppAsyncThunk/createAppAsyncThunk'
 export { thunkTryCatch } from 'common/utils/thunkTryCatch/thunkTryCatch'
 export { getFilteredTasks } from 'common/utils/getFilteredTasks/getFilteredTasks'
+export { createFulfilledAction } from 'common/utils/createFulfilledAction/createFulfilledAction'

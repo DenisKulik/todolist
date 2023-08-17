@@ -6,6 +6,7 @@ import {
 import { TaskPriorities, TaskStatuses } from 'common/enums'
 import { todolistsThunks } from 'features/todolists-list/todolists/model/todolists.slice'
 import { UpdateTaskModelType } from 'features/todolists-list/tasks/api/tasks.api.types'
+import { createFulfilledAction } from 'common/utils'
 
 describe('tasksReducer', () => {
     let startState: TasksStateType = {}
@@ -118,11 +119,9 @@ describe('tasksReducer', () => {
             addedDate: new Date(),
         }
 
-        const action = tasksThunks.addTask.fulfilled({ task: newTask }, 'requestId', {
-            todolistId: 'todolistId2',
-            title: 'React book',
+        const action = createFulfilledAction(tasksThunks.addTask, {
+            task: newTask,
         })
-
         const endState = tasksSlice(startState, action)
 
         expect(endState['todolistId2'].length).toBe(4)
@@ -132,7 +131,7 @@ describe('tasksReducer', () => {
 
     it('should delete tasks correctly', () => {
         const args = { todolistId: 'todolistId2', taskId: '2' }
-        const action = tasksThunks.deleteTask.fulfilled(args, 'requestId', args)
+        const action = createFulfilledAction(tasksThunks.deleteTask, args)
         const endState = tasksSlice(startState, action)
 
         expect(endState['todolistId2'].length).toBe(2)
@@ -148,8 +147,8 @@ describe('tasksReducer', () => {
             startDate: new Date(),
             deadline: new Date(),
         }
-        const arg = { todolistId: 'todolistId2', taskId: '2', model: updatedTask }
-        const action = tasksThunks.updateTask.fulfilled(arg, 'requestId', arg)
+        const args = { todolistId: 'todolistId2', taskId: '2', model: updatedTask }
+        const action = createFulfilledAction(tasksThunks.updateTask, args)
         const endState = tasksSlice(startState, action)
 
         expect(endState['todolistId2'][1].status).toBe(TaskStatuses.Completed)
@@ -157,14 +156,10 @@ describe('tasksReducer', () => {
     })
 
     it('should delete tasks for Todolist correctly', () => {
-        const action = todolistsThunks.deleteTodolist.fulfilled(
-            { todolistId: 'todolistId2' },
-            'requestId',
-            'todolistId2',
-        )
-
+        const action = createFulfilledAction(todolistsThunks.deleteTodolist, {
+            todolistId: 'todolistId2',
+        })
         const endState = tasksSlice(startState, action)
-
         const keys = Object.keys(endState)
 
         expect(keys.length).toBe(1)
