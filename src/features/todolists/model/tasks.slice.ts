@@ -143,7 +143,7 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
                     entityStatus: 'idle',
                 }),
             )
-            return rejectWithValue({ data: res.data, showGlobalError: false })
+            return rejectWithValue({ data: res.data, showGlobalError: true })
         }
     },
 )
