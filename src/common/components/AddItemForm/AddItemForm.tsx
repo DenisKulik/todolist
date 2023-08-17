@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import AddIcon from '@mui/icons-material/Add'
-import { ResponseType } from 'common/types'
+
+import { RejectValueType } from 'common/utils/createAppAsyncThunk/createAppAsyncThunk'
 
 type Props = {
     addItem: (title: string) => Promise<any>
@@ -20,18 +21,20 @@ export const AddItemForm = memo(({ addItem, disabled }: Props) => {
     }
 
     const onAddItem = () => {
-        if (title.trim() === '') {
-            setError('Field is required')
-            return
+        if (title.trim() !== '') {
+            addItem(title)
+                .then(() => {
+                    setTitle('')
+                })
+                .catch((err: RejectValueType) => {
+                    if (err.data) {
+                        const messages = err.data.messages
+                        setError(messages.length ? messages[0] : 'Some error occurred')
+                    }
+                })
+        } else {
+            setError('Title is required')
         }
-
-        addItem(title)
-            .then(() => {
-                setTitle('')
-            })
-            .catch((err: ResponseType) => {
-                setError(err.messages[0])
-            })
     }
 
     const onAddItemOnEnter = (e: KeyboardEvent<HTMLInputElement>) => {

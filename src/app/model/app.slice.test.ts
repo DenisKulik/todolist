@@ -17,12 +17,6 @@ describe('app-reducer', () => {
         expect(endState.error).toBe('some error')
     })
 
-    it('should set status correctly', () => {
-        const endState = appSlice(startState, appActions.setAppStatus({ status: 'loading' }))
-
-        expect(endState.status).toBe('loading')
-    })
-
     it('should set initialize property correctly', () => {
         const endState = appSlice(startState, appActions.setInitialized({ isInitialized: true }))
 

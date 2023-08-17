@@ -22,6 +22,4 @@ export const handleServerAppError = <T>(
             }),
         )
     }
-
-    dispatch(appActions.setAppStatus({ status: 'failed' }))
 }

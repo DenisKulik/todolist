@@ -1,4 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+    AnyAction,
+    createSlice,
+    isFulfilled,
+    isPending,
+    isRejected,
+    PayloadAction,
+} from '@reduxjs/toolkit'
 
 const initialState = {
     status: 'idle' as RequestStatusType,
@@ -19,6 +26,28 @@ const slice = createSlice({
         setInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
             state.isInitialized = action.payload.isInitialized
         },
+    },
+    extraReducers: builder => {
+        builder
+            .addMatcher(isPending, state => {
+                state.status = 'loading'
+            })
+            .addMatcher(isFulfilled, state => {
+                state.status = 'succeeded'
+            })
+            .addMatcher(isRejected, (state, action: AnyAction) => {
+                const { payload, error } = action
+                if (payload) {
+                    if (payload.showGlobalError) {
+                        state.error = payload.data.messages.length
+                            ? payload.data.messages[0]
+                            : 'Some error occurred'
+                    }
+                } else {
+                    state.error = error.message ? error.message : 'Some error occurred'
+                }
+                state.status = 'failed'
+            })
     },
 })
 
