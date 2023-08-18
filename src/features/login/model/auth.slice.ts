@@ -96,4 +96,4 @@ const initializeApp = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(
 )
 
 export const authSlice = slice.reducer
-export const authThunks = { login, logout, initializeApp }
+export const authThunks = { login, getCaptcha, logout, initializeApp }
