@@ -151,7 +151,7 @@ describe('tasksReducer', () => {
         expect(endState['todolistId2'][1].title).toBe('eggs')
     })
 
-    it('should delete tasks for Todolist correctly', () => {
+    it('should delete tasks for todolist correctly', () => {
         const action = createFulfilledAction(todolistsThunks.deleteTodolist, {
             todolistId: 'todolistId2',
         })

@@ -30,7 +30,7 @@ describe('todolistsReducer', () => {
         ]
     })
 
-    it('should add Todolist correctly', () => {
+    it('should add todolist correctly', () => {
         const newTodos = {
             id: '3',
             addedDate: new Date(),
@@ -45,7 +45,7 @@ describe('todolistsReducer', () => {
         expect(endState[0].filter).toBe('all')
     })
 
-    it('should delete Todolist correctly', () => {
+    it('should delete todolist correctly', () => {
         const action = createFulfilledAction(todolistsThunks.deleteTodolist, { todolistId: '2' })
         const endState = todolistsSlice(startState, action)
 
@@ -53,7 +53,7 @@ describe('todolistsReducer', () => {
         expect(endState.every(t => t.id !== '2')).toBeTruthy()
     })
 
-    it('should change Todolist filter correctly', () => {
+    it('should change todolist filter correctly', () => {
         const action = todolistsActions.changeTodolistFilter({
             filter: 'completed',
             todolistId: '1',
@@ -63,7 +63,7 @@ describe('todolistsReducer', () => {
         expect(endState[0].filter).toBe('completed')
     })
 
-    it('should change Todolist title correctly', () => {
+    it('should change todolist title correctly', () => {
         const args = { todolistId: '2', title: 'New Title' }
         const action = createFulfilledAction(todolistsThunks.updateTodolistTitle, args)
         const endState = todolistsSlice(startState, action)
