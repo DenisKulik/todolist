@@ -11,6 +11,12 @@ describe('app-reducer', () => {
         }
     })
 
+    it('should set app status correctly', () => {
+        const endState = appSlice(startState, appActions.setAppStatus({ status: 'loading' }))
+
+        expect(endState.status).toBe('loading')
+    })
+
     it('should set error message correctly', () => {
         const endState = appSlice(startState, appActions.setAppError({ error: 'some error' }))
 
@@ -20,6 +26,6 @@ describe('app-reducer', () => {
     it('should set initialize property correctly', () => {
         const endState = appSlice(startState, appActions.setInitialized({ isInitialized: true }))
 
-        expect(endState.isInitialized).toBe(true)
+        expect(endState.isInitialized).toBeTruthy()
     })
 })
