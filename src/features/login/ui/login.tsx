@@ -13,6 +13,7 @@ import { useAppSelector, useLogin } from 'common/hooks'
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const captchaUrl = useAppSelector(state => state.auth.captchaUrl)
     const { formik } = useLogin()
 
     const isEmailError = formik.touched.email && formik.errors.email
@@ -63,6 +64,14 @@ export const Login = () => {
                                 checked={formik.values.rememberMe}
                                 control={<Checkbox {...formik.getFieldProps('rememberMe')} />}
                             />
+                            {captchaUrl && <img src={captchaUrl} alt="captcha" />}
+                            {captchaUrl && (
+                                <TextField
+                                    label="captcha"
+                                    margin="normal"
+                                    {...formik.getFieldProps('captcha')}
+                                />
+                            )}
                             <Button
                                 type="submit"
                                 variant="contained"

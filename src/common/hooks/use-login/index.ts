@@ -1,7 +1,7 @@
 import { useActions } from 'common/hooks/use-actions'
 import { authThunks } from 'features/login/model/auth.slice'
 import { FormikHelpers, useFormik } from 'formik'
-import { LoginArgType } from 'features/login/api/auth.api'
+import { LoginArgType } from 'features/login/api/types/auth.api.types'
 import { ResponseType } from 'common/types'
 
 export const useLogin = () => {
@@ -12,6 +12,7 @@ export const useLogin = () => {
             email: '',
             password: '',
             rememberMe: false,
+            captcha: '',
         },
         validate: values => {
             const errors: FormikErrorType = {}
@@ -44,4 +45,4 @@ export const useLogin = () => {
     return { formik }
 }
 
-type FormikErrorType = Partial<Omit<LoginArgType, 'captcha'>>
+type FormikErrorType = Partial<LoginArgType>

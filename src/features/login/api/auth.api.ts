@@ -1,6 +1,11 @@
 import { AxiosResponse } from 'axios'
 import { instance } from 'common/api'
 import { ResponseType } from 'common/types'
+import {
+    AuthUserType,
+    getCaptchaUrlType,
+    LoginArgType,
+} from 'features/login/api/types/auth.api.types'
 
 export const authAPI = {
     me() {
@@ -18,15 +23,8 @@ export const authAPI = {
     },
 }
 
-// types
-export type AuthUserType = {
-    id: number
-    email: string
-    login: string
-}
-export type LoginArgType = {
-    email: string
-    password: string
-    rememberMe: boolean
-    captcha?: string
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get<getCaptchaUrlType>('security/get-captcha-url').then(res => res.data)
+    },
 }
