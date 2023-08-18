@@ -12,7 +12,7 @@ import { useActions, useAppSelector } from 'common/hooks'
 import { authThunks } from 'features/login/model/auth.slice'
 import { selectStatus } from 'app/model/app.selectors'
 
-export const ButtonAppBar = () => {
+export const AppHeader = () => {
     const status = useAppSelector<RequestStatusType>(selectStatus)
     const { logout } = useActions(authThunks)
 

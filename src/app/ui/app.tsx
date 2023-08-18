@@ -1,15 +1,12 @@
 import { useEffect } from 'react'
-import { Route, Routes, Navigate } from 'react-router-dom'
-import Container from '@mui/material/Container'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { ButtonAppBar } from 'common/components/button-app-bar'
 import { useActions, useAppSelector } from 'common/hooks'
-import { Todolists } from 'features/todolists/ui/todolists'
 import { ErrorSnackbar } from 'common/components/error-snackbar'
-import { Login } from 'features/login/ui/login'
 import { authThunks } from 'features/login/model/auth.slice'
 import { selectIsInitialized } from 'app/model/app.selectors'
+import { AppHeader } from 'app/ui/app-header'
+import { Routing } from 'app/ui/pages'
 
 type Props = {
     demo?: boolean
@@ -22,7 +19,8 @@ export const App = ({ demo = false }: Props) => {
     useEffect(() => {
         if (demo) return
         initializeApp()
-    }, [demo, initializeApp])
+        // eslint-disable-next-line
+    }, [])
 
     if (!isInitialized) {
         return (
@@ -42,15 +40,8 @@ export const App = ({ demo = false }: Props) => {
     return (
         <>
             <ErrorSnackbar />
-            <ButtonAppBar />
-            <Container fixed>
-                <Routes>
-                    <Route path="/" element={<Todolists demo={demo} />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>} />
-                    <Route path="*" element={<Navigate to="/404" />} />
-                </Routes>
-            </Container>
+            <AppHeader />
+            <Routing demo={demo} />
         </>
     )
 }
