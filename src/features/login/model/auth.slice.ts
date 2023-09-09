@@ -18,6 +18,7 @@ const slice = createSlice({
         builder
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoggedIn = action.payload.isLoggedIn
+                state.captchaUrl = ''
             })
             .addCase(getCaptcha.fulfilled, (state, action) => {
                 state.captchaUrl = action.payload.captchaUrl
