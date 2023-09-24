@@ -47,7 +47,7 @@ export const Todolists = ({ demo = false }: Props) => {
             <StyledGrid container>
                 <AddItemForm addItem={onAddTodolist} />
             </StyledGrid>
-            <Grid container spacing={3}>
+            <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
                 {todolistsItems}
             </Grid>
         </>
