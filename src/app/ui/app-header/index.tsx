@@ -28,7 +28,7 @@ export const AppHeader = ({ isDarkMode, changeMode }: Props) => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="relative">
                 <Toolbar>
                     <S.HeaderWrapper>
                         <Typography variant="h6" component="div">
@@ -42,7 +42,15 @@ export const AppHeader = ({ isDarkMode, changeMode }: Props) => {
                         </Button>
                     )}
                 </Toolbar>
-                {status === 'loading' && <LinearProgress />}
+                {status === 'loading' && (
+                    <LinearProgress
+                        sx={{
+                            position: 'absolute',
+                            top: 0,
+                            width: '100%',
+                        }}
+                    />
+                )}
             </AppBar>
         </Box>
     )

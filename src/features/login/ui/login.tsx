@@ -22,10 +22,10 @@ export const Login = () => {
     if (isLoggedIn) return <Navigate to="/" />
 
     return (
-        <Grid container justifyContent={'center'}>
+        <Grid container justifyContent={'center'} sx={{ paddingTop: '25px' }}>
             <Grid item justifyContent={'center'}>
                 <FormControl>
-                    <FormLabel>
+                    <FormLabel sx={{ textAlign: 'center' }}>
                         <p>
                             To log in get registered
                             <Link
@@ -91,4 +91,5 @@ export const Login = () => {
 // styles
 const Link = styled('a')`
     margin-left: 5px;
+    color: #2424ff;
 `
