@@ -4,13 +4,14 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import { store } from 'app/model/store'
-import './index.scss'
 import { App } from 'app/ui/app'
+import { Global } from 'styles'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
     <Provider store={store}>
         <BrowserRouter basename="/todolist">
+            <Global />
             <App />
         </BrowserRouter>
     </Provider>,
