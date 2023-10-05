@@ -37,7 +37,7 @@ export const AppHeader = ({ isDarkMode, changeMode }: Props) => {
                         <S.ThemeSwitch sx={{ m: 1 }} onChange={changeMode} checked={isDarkMode} />
                     </S.HeaderWrapper>
                     {isLoggedIn && (
-                        <Button onClick={onLogout} color="inherit">
+                        <Button onClick={onLogout} color="inherit" variant="outlined">
                             Log out
                         </Button>
                     )}
