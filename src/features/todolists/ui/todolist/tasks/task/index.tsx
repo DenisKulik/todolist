@@ -39,20 +39,26 @@ export const Task = memo(({ task }: Props) => {
                 callback={onChangeTaskTitle}
                 disabled={task.entityStatus === 'loading'}
             />
-            <IconButton
+            <StyledIconButton
                 size="small"
                 onClick={onDeleteTask}
                 disabled={task.entityStatus === 'loading'}
             >
                 <DeleteIcon fontSize="inherit" />
-            </IconButton>
+            </StyledIconButton>
         </ListItem>
     )
 })
 
 // styles
 const ListItem = styled.div`
+    display: flex;
+    align-items: center;
+
     &.isDone {
         opacity: 0.5;
     }
+`
+const StyledIconButton = styled(IconButton)`
+    margin-left: auto !important;
 `

@@ -32,9 +32,9 @@ export const TodolistHeader = ({ todolistId, title, entityStatus }: Props) => {
                     disabled={entityStatus === 'loading'}
                 />
             </Title>
-            <IconButton onClick={onDeleteTodolist} disabled={entityStatus === 'loading'}>
+            <StyledIconButton onClick={onDeleteTodolist} disabled={entityStatus === 'loading'}>
                 <DeleteIcon />
-            </IconButton>
+            </StyledIconButton>
         </Header>
     )
 }
@@ -45,7 +45,9 @@ const Header = styled.header`
     align-items: center;
     gap: 10px;
 `
-
 const Title = styled.h3`
     margin: 0;
+`
+const StyledIconButton = styled(IconButton)`
+    margin-left: auto !important;
 `
