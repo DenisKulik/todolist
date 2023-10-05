@@ -1,4 +1,5 @@
 import { ComponentType, memo } from 'react'
+import styled from 'styled-components'
 
 import { CustomButton } from 'common/components/custom-button'
 import { FilterType, todolistsActions } from 'features/todolists/model/todolists.slice'
@@ -28,10 +29,16 @@ export const FilterTasksButtons = memo(({ filter, todolistId }: Props) => {
     )
 
     return (
-        <div>
+        <StyledFilterTasksButtons>
             {createButton('all', 'all', 'primary')}
             {createButton('active', 'active', 'secondary')}
             {createButton('completed', 'completed', 'success')}
-        </div>
+        </StyledFilterTasksButtons>
     )
 })
+
+// styles
+const StyledFilterTasksButtons = styled.div`
+    display: flex;
+    gap: 5px;
+`
