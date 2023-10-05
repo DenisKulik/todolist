@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import styled from 'styled-components'
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 
 import { TodolistDomainType, todolistsThunks } from 'features/todolists/model/todolists.slice'
@@ -31,13 +30,7 @@ export const Todolists = ({ demo = false }: Props) => {
     }
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {
-        return (
-            <Grid item key={todolist.id}>
-                <StyledPaper elevation={3}>
-                    <Todolist todolist={todolist} />
-                </StyledPaper>
-            </Grid>
-        )
+        return <Todolist todolist={todolist} />
     })
 
     if (!isLoggedIn) return <Navigate to="/login" />
@@ -55,10 +48,6 @@ export const Todolists = ({ demo = false }: Props) => {
 }
 
 // styles
-const StyledPaper = styled(Paper)`
-    padding: 10px;
-`
-
 const StyledGrid = styled(Grid)`
     padding: 20px;
 `

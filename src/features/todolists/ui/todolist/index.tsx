@@ -1,4 +1,7 @@
 import { memo } from 'react'
+import styled from 'styled-components'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
 
 import { AddItemForm } from 'common/components/add-Item-form'
 import { tasksThunks } from 'features/todolists/model/tasks.slice'
@@ -21,13 +24,18 @@ export const Todolist = memo(({ todolist }: Props) => {
     }
 
     return (
-        <>
-            <TodolistHeader todolistId={id} title={title} entityStatus={entityStatus} />
-            <AddItemForm addItem={onAddTask} disabled={entityStatus === 'loading'} />
-            <Tasks filter={filter} todolistId={id} />
-            <FilterTasksButtons filter={filter} todolistId={id} />
-        </>
+        <Grid item key={todolist.id}>
+            <StyledPaper elevation={3}>
+                <TodolistHeader todolistId={id} title={title} entityStatus={entityStatus} />
+                <AddItemForm addItem={onAddTask} disabled={entityStatus === 'loading'} />
+                <Tasks filter={filter} todolistId={id} />
+                <FilterTasksButtons filter={filter} todolistId={id} />
+            </StyledPaper>
+        </Grid>
     )
 })
 
 // styles
+const StyledPaper = styled(Paper)`
+    padding: 10px;
+`
