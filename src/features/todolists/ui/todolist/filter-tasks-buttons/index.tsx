@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { ComponentType, memo } from 'react'
 
 import { CustomButton } from 'common/components/custom-button'
 import { FilterType, todolistsActions } from 'features/todolists/model/todolists.slice'
@@ -8,37 +8,30 @@ type Props = {
     filter: FilterType
     todolistId: string
 }
+type CustomButtonProps = typeof CustomButton extends ComponentType<infer P> ? P : never
 
 export const FilterTasksButtons = memo(({ filter, todolistId }: Props) => {
     const { changeTodolistFilter } = useActions(todolistsActions)
 
-    const onChangeTodolistFilter = (filter: FilterType) => {
-        changeTodolistFilter({ filter, todolistId })
-    }
+    const createButton = (
+        title: string,
+        targetFilter: FilterType,
+        color: CustomButtonProps['color'],
+    ) => (
+        <CustomButton
+            title={title}
+            variant={filter === targetFilter ? 'outlined' : 'text'}
+            color={color}
+            size="small"
+            onClick={() => changeTodolistFilter({ filter: targetFilter, todolistId })}
+        />
+    )
 
     return (
         <div>
-            <CustomButton
-                title="all"
-                variant={filter === 'all' ? 'outlined' : 'text'}
-                color="primary"
-                size="small"
-                onClick={() => onChangeTodolistFilter('all')}
-            />
-            <CustomButton
-                title="active"
-                variant={filter === 'active' ? 'outlined' : 'text'}
-                color="secondary"
-                size="small"
-                onClick={() => onChangeTodolistFilter('active')}
-            />
-            <CustomButton
-                title="completed"
-                variant={filter === 'completed' ? 'outlined' : 'text'}
-                color="success"
-                size="small"
-                onClick={() => onChangeTodolistFilter('completed')}
-            />
+            {createButton('all', 'all', 'primary')}
+            {createButton('active', 'active', 'secondary')}
+            {createButton('completed', 'completed', 'success')}
         </div>
     )
 })
