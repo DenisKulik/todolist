@@ -20,10 +20,20 @@ export const Tasks = ({ filter, todolistId }: Props) => {
         return <Task key={task.id} task={task} />
     })
 
-    return <TasksWrapper>{tasksItems}</TasksWrapper>
+    return (
+        <StyledTasks>
+            {tasksItems.length === 0 && <EmptyTasksListMessage>No tasks</EmptyTasksListMessage>}
+            {tasksItems}
+        </StyledTasks>
+    )
 }
 
 // styles
-const TasksWrapper = styled.div`
+const StyledTasks = styled.div`
     margin-bottom: 10px;
+`
+
+const EmptyTasksListMessage = styled.div`
+    padding-top: 10px;
+    color: grey;
 `
