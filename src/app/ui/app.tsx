@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import CircularProgress from '@mui/material/CircularProgress'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
@@ -17,7 +18,7 @@ type Props = {
 export const App = ({ demo = false }: Props) => {
     const isInitialized = useAppSelector<boolean>(selectIsInitialized)
     const { initializeApp } = useActions(authThunks)
-    const [darkMode, setDarkMode] = useState(true)
+    const [darkMode, setDarkMode] = useState(false)
 
     const theme = createTheme({
         palette: {
@@ -33,26 +34,31 @@ export const App = ({ demo = false }: Props) => {
 
     if (!isInitialized) {
         return (
-            <div
-                style={{
-                    position: 'fixed',
-                    top: '30%',
-                    textAlign: 'center',
-                    width: '100%',
-                }}
-            >
+            <CircularProgressWrapper>
                 <CircularProgress />
-            </div>
+            </CircularProgressWrapper>
         )
     }
 
     return (
         <ThemeProvider theme={theme}>
-            <Paper style={{ minHeight: '100vh' }}>
+            <StyledPaper>
                 <ErrorSnackbar />
                 <AppHeader isDarkMode={darkMode} changeMode={() => setDarkMode(!darkMode)} />
                 <Routing demo={demo} />
-            </Paper>
+            </StyledPaper>
         </ThemeProvider>
     )
 }
+
+// styles
+const CircularProgressWrapper = styled.div`
+    position: fixed;
+    top: 30%;
+    text-align: center;
+    width: 100%;
+`
+
+const StyledPaper = styled(Paper)`
+    min-height: 100vh;
+`
