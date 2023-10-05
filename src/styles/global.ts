@@ -9,6 +9,10 @@ export const Global = createGlobalStyle`
     box-sizing: inherit;
   }
 
+  a:visited {
+    color: inherit;
+  }
+
   html {
     box-sizing: border-box;
     font-family: Roboto, sans-serif;
