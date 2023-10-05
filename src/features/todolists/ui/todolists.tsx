@@ -30,24 +30,30 @@ export const Todolists = ({ demo = false }: Props) => {
     }
 
     const todolistsItems: JSX.Element[] = todolists.map(todolist => {
-        return <Todolist todolist={todolist} />
+        return <Todolist key={todolist.id} todolist={todolist} />
     })
 
     if (!isLoggedIn) return <Navigate to="/login" />
 
     return (
         <>
-            <StyledGrid container>
+            <StyledGridAddItemForm container>
                 <AddItemForm addItem={onAddTodolist} />
-            </StyledGrid>
-            <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+            </StyledGridAddItemForm>
+            <StyledGridTodolists container spacing={3}>
                 {todolistsItems}
-            </Grid>
+            </StyledGridTodolists>
         </>
     )
 }
 
 // styles
-const StyledGrid = styled(Grid)`
+const StyledGridAddItemForm = styled(Grid)`
     padding: 20px;
+`
+
+const StyledGridTodolists = styled(Grid)`
+    min-height: 85vh;
+    flex-wrap: nowrap !important;
+    overflow-x: scroll;
 `

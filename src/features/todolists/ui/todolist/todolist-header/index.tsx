@@ -46,7 +46,10 @@ const Header = styled.header`
     gap: 10px;
 `
 const Title = styled.h3`
+    max-width: 200px;
     margin: 0;
+    word-wrap: break-word;
+    overflow: hidden;
 `
 const StyledIconButton = styled(IconButton)`
     margin-left: auto !important;

@@ -37,5 +37,7 @@ export const Todolist = memo(({ todolist }: Props) => {
 
 // styles
 const StyledPaper = styled(Paper)`
+    max-width: 320px;
+    width: 100%;
     padding: 10px;
 `
