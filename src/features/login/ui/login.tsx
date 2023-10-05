@@ -7,9 +7,9 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
 
 import { useAppSelector, useLogin } from 'common/hooks'
+import { CustomButton } from 'common/components/custom-button'
 
 export const Login = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -22,8 +22,8 @@ export const Login = () => {
     if (isLoggedIn) return <Navigate to="/" />
 
     return (
-        <Grid container justifyContent={'center'} sx={{ paddingTop: '25px' }}>
-            <Grid item justifyContent={'center'}>
+        <Grid container justifyContent="center" sx={{ paddingTop: '25px' }}>
+            <Grid item justifyContent="center">
                 <FormControl>
                     <FormLabel sx={{ textAlign: 'center' }}>
                         <p>
@@ -72,14 +72,13 @@ export const Login = () => {
                                     {...formik.getFieldProps('captcha')}
                                 />
                             )}
-                            <Button
+                            <CustomButton
+                                title="Login"
                                 type="submit"
                                 variant="contained"
                                 color="primary"
                                 disabled={!!isEmailError || !!isPasswordError}
-                            >
-                                Login
-                            </Button>
+                            />
                         </FormGroup>
                     </form>
                 </FormControl>
