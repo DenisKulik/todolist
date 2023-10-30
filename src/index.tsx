@@ -7,6 +7,8 @@ import { store } from 'app/model/store'
 import { App } from 'app/ui/app'
 import { Global } from 'styles'
 
+import 'overlayscrollbars/css/OverlayScrollbars.min.css'
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
     <Provider store={store}>
