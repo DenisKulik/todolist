@@ -1,4 +1,4 @@
-import {RefObject, useEffect} from 'react'
+import {RefObject, useEffect, useRef} from 'react'
 import OverlayScrollbars from 'overlayscrollbars'
 
 type ScrollbarConfig = {
@@ -16,17 +16,19 @@ const config: ScrollbarConfig = {
 };
 
 export const useScrollbar = (root: RefObject<HTMLElement>) => {
-    let scrollbar: OverlayScrollbars;
+    const scrollbarRef = useRef<OverlayScrollbars | null>(null);
 
     useEffect(() => {
         if (root.current) {
-            scrollbar = OverlayScrollbars(root.current, config as OverlayScrollbars.Options)
+            scrollbarRef.current = OverlayScrollbars(root.current, config as OverlayScrollbars.Options)
         }
 
         return () => {
-            if (scrollbar) {
-                scrollbar.destroy();
+            if (scrollbarRef.current) {
+                scrollbarRef.current.destroy()
             }
-        }
-    }, [root])
-}
+        };
+    }, [root]);
+
+    return scrollbarRef;
+};
