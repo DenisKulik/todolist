@@ -29,8 +29,19 @@ export const App = ({ demo = false }: Props) => {
     useEffect(() => {
         if (demo) return
         initializeApp()
+
+        const savedTheme = localStorage.getItem('theme')
+        if (savedTheme) setDarkMode(savedTheme === 'dark')
         // eslint-disable-next-line
     }, [])
+
+    const changeMode = () => {
+        setDarkMode(prevMode => {
+            const newMode = !prevMode
+            localStorage.setItem('theme', newMode ? 'dark' : 'light')
+            return newMode
+        })
+    }
 
     if (!isInitialized) {
         return (
@@ -44,7 +55,7 @@ export const App = ({ demo = false }: Props) => {
         <ThemeProvider theme={theme}>
             <StyledPaper>
                 <ErrorSnackbar />
-                <AppHeader isDarkMode={darkMode} changeMode={() => setDarkMode(!darkMode)} />
+                <AppHeader isDarkMode={darkMode} changeMode={changeMode} />
                 <Routing demo={demo} />
             </StyledPaper>
         </ThemeProvider>
